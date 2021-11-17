@@ -10,12 +10,12 @@ import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.RoomRepository;
 
 @Controller
-public class RoomController {
+public class RoomAdminController {
 
     private final RoomRepository roomRepository;
 
     @Autowired
-    public RoomController(RoomRepository roomRepository) {
+    public RoomAdminController(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }
 
