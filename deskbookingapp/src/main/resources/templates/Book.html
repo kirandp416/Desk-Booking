@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>Book</title>
 </head>
 <body>
@@ -9,10 +10,16 @@
 <p>Book page</p>
 
 <form action="/PostBooking" method="post">
-    <label for="booking_date">Date:</label>
-    <input type="date" id="booking_date" name="booking_date">
+    <label for="bookingDate">Date:</label>
+    <input type="date" id="bookingDate" name="bookingDate">
     <input type="submit">
 </form>
 
 </body>
+
+<script>
+    $("form :input").change(function() {
+        console.log($(this).closest('form').serialize());
+    });
+</script>
 </html>

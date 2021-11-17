@@ -8,6 +8,8 @@ public class BookingForm {
         this.bookingDate = bookingDate;
         System.out.println("BookingForm object instantiated with bookingDate:");
         System.out.println(this.bookingDate);
+        System.out.println("The BookingForm constructor was supplied:");
+        System.out.println(bookingDate);
     }
 
     public String getBookingDate() {

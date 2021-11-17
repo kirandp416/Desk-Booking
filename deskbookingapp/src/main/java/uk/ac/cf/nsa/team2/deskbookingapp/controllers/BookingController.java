@@ -1,5 +1,6 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,12 @@ import uk.ac.cf.nsa.team2.deskbookingapp.repositories.BookingRepository;
 public class BookingController {
 
     private BookingRepository bookingRepository;
+
+    @Autowired
+    public BookingController(BookingRepository bRepo){
+        bookingRepository = bRepo;
+    }
+
 
     @RequestMapping(path="/PostBooking", method = RequestMethod.POST)
     public ModelAndView postBooking(BookingForm bookingForm, BindingResult br){

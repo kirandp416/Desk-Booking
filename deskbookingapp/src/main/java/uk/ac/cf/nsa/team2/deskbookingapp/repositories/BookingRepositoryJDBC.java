@@ -9,13 +9,19 @@ public class BookingRepositoryJDBC implements BookingRepository{
 
     private JdbcTemplate jdbcTemplate;
 
+    public BookingRepositoryJDBC(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public boolean addBooking(BookingForm bookingForm){
 
         // Use update function that returns the number of rows affected by
         // the update.
+        System.out.println("addBooking supplied the following date");
+        System.out.println(bookingForm.getBookingDate());
 
-        int rows = jdbcTemplate.update("insert into booking(booking_id) values(?)",
+        int rows = jdbcTemplate.update("insert into booking (booking_date) values(?)",
                 new Object[]{bookingForm.getBookingDate()}
         );
 
