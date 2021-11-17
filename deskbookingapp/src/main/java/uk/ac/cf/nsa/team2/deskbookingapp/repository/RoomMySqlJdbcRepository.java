@@ -3,12 +3,14 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
 
 /**
  * An implementation of the {@link RoomRepository} which uses
  * a MySQL database as the underlying store via JDBC.
  */
+@Repository
 public class RoomMySqlJdbcRepository implements RoomRepository {
 
     private final JdbcTemplate jdbc;
