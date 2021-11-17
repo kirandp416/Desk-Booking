@@ -4,9 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
-import uk.ac.cf.nsa.team2.deskbookingapp.model.Room;
-
-import java.util.Optional;
 
 /**
  * An implementation of the {@link RoomRepository} which uses
