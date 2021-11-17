@@ -1,9 +1,6 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
-import uk.ac.cf.nsa.team2.deskbookingapp.model.Room;
-
-import java.util.Optional;
 
 /**
  * A repository which manages the data for rooms in the underlying store.

@@ -8,6 +8,10 @@ public class RoomDTO {
     private int id;
     private String name;
 
+    public RoomDTO() {
+
+    }
+
     public RoomDTO(int id, String name) {
         this.id = id;
         this.name = name;
