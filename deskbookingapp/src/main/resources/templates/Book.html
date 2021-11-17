@@ -17,8 +17,9 @@
 
 <script>
 
-    // Print whatever is in the form fields, whenever there is a change to that data:
-    // The code below was adapted from https://stackoverflow.com/questions/33697683/html-previous-date-validation
+    // For debuggin purposes you can uncomment the code below. It will print whatever is in
+    // the form fields, whenever there is a change to the data in the fields.
+    // This debugger code was adapted from https://stackoverflow.com/questions/33697683/html-previous-date-validation
 
     $("form :input").change(function() {
         console.log($(this).closest('form').serialize());
@@ -43,10 +44,14 @@
 
         var bookingDate = document.getElementById("bookingDate").value;
 
+        // If the user submits an empty date, return false
+
         if (bookingDate.length == 0){
             alert('You must select a date!');
             return false;
         }
+
+        // If the user submits a past date (despite the warning), return false
 
         var bookingDate = new Date(document.getElementById("bookingDate").value);
         var today = new Date();
@@ -57,11 +62,7 @@
             return false;
         }
 
-
-
     }
-
-
 
 </script>
 </html>
