@@ -19,6 +19,11 @@ public class RoomController {
         this.roomRepository = roomRepository;
     }
 
+    /**
+     * Route to get the admin page for adding a room.
+     *
+     * @return A model and view object.
+     */
     @GetMapping("/admin/room/add")
     public ModelAndView addRoomPage() {
         return new ModelAndView("/admin/add_room");
