@@ -10,4 +10,10 @@ public class MainController {
     public String home(){
         return "Home";
     }
+
+    @RequestMapping(path="/book")
+    public String book(){
+        return "Book";
+    }
+
 }
