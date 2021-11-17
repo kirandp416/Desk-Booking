@@ -15,11 +15,17 @@ public class BookingController {
 
     private BookingRepository bookingRepository;
 
+    // Create a constructor for the Booking repository. This will
+    // be used by Spring to instantiate a BookingRepository automatically
+
     @Autowired
     public BookingController(BookingRepository bRepo){
         bookingRepository = bRepo;
     }
 
+    // A method that posts a new booking to the database. If the post was
+    // successful we will take them to the BookingAdded page. Otherwise,
+    // we take them to the BookingNotAdded page.
 
     @RequestMapping(path="/PostBooking", method = RequestMethod.POST)
     public ModelAndView postBooking(BookingForm bookingForm, BindingResult br){

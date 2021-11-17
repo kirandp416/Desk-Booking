@@ -13,21 +13,29 @@ public class BookingRepositoryJDBC implements BookingRepository{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // Implement addBooking method from BookingRepository Interface.
+    // This method just adds a new booking to the booking table in
+    // the MySQL database:
+
     @Override
     public boolean addBooking(BookingForm bookingForm){
 
+        // Some code that can be used to check that bookingForm
+        // holds the correct data:
+
+        // System.out.println("addBooking supplied the following date");
+        // System.out.println(bookingForm.getBookingDate());
+
         // Use update function that returns the number of rows affected by
-        // the update.
-        System.out.println("addBooking supplied the following date");
-        System.out.println(bookingForm.getBookingDate());
+        // the update:
 
         int rows = jdbcTemplate.update("insert into booking (booking_date) values(?)",
                 new Object[]{bookingForm.getBookingDate()}
         );
 
-        // if the number of rows affected by the update is more than zero,
+        // If the number of rows affected by the update is more than zero,
         // the update must have worked. If this is the case we return true
-        // back to the addBooking method caller
+        // back to the addBooking method caller:
 
         return rows > 0;
     }
