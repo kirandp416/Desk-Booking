@@ -70,13 +70,13 @@ public class BookingController {
      * @return a Model and View object
      *
      */
-//    @RequestMapping(path="/bookings", method = RequestMethod.GET)
-//    public ModelAndView getUserBookingsPage(Principal principal){
-//
-//        ModelAndView mav = new ModelAndView();
-//        mav.addObject("bookings", bookingRepository.findAllUsersBookings(principal.getName()));
-//        mav.setViewName("Bookings");
-//        return mav;
-//    }
+    @RequestMapping(path="/bookings", method = RequestMethod.GET)
+    public ModelAndView getUserBookingsPage(Principal principal){
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("bookings", bookingRepository.findAllUsersBookings(principal.getName()));
+        mav.setViewName("Bookings");
+        return mav;
+    }
 
 }

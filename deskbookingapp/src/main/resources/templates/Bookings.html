@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,14 @@
 <body>
 
 <p>Here are your bookings:</p>
+
+<table>
+    <tr th:each="booking: ${bookings}">
+<!--        <td th:text="${booking.id}" />-->
+        <td th:text="${booking.username}" />
+        <td th:text="${booking.date}" />
+    </tr>
+</table>
 
 </body>
 </html>

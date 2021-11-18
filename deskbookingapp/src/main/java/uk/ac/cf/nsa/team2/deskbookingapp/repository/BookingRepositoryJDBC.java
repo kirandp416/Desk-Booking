@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.model.BookingMapper;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
 
 import java.util.List;
@@ -49,12 +50,13 @@ public class BookingRepositoryJDBC implements BookingRepository {
 
     }
 
-//    @Override
-//    public List<BookingDTO> findAllUsersBookings(String username){
-//        return jdbcTemplate.query("insert query here",
-//                new BookingMapper());
-//
-//    }
+    @Override
+    public List<BookingDTO> findAllUsersBookings(String username){
+        return jdbcTemplate.query("select * from booking where username=?",
+                new Object[]{username},
+                new BookingMapper());
+
+    }
 
 
 }
