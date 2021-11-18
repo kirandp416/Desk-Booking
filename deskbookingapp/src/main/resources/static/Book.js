@@ -10,9 +10,9 @@
 
 function pastDateWarn() {
     console.log("Date changed");
-    var bookingDate = new Date(document.getElementById("bookingDate").value);
-    var today = new Date();
-    var todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
+    let bookingDate = new Date(document.getElementById("bookingDate").value);
+    let today = new Date();
+    let todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
 
     if (bookingDate < todayDate) {
         alert('You cannot choose a date in the past.');
@@ -23,20 +23,17 @@ function pastDateWarn() {
 
 function validateForm() {
 
-    var bookingDate = document.getElementById("bookingDate").value;
+    let bookingDate = document.getElementById("bookingDate").value;
 
     // If the user submits an empty date, return false
-
     if (bookingDate.length == 0) {
         alert('You must select a date!');
         return false;
     }
 
     // If the user submits a past date (despite the warning), return false
-
-    var bookingDate = new Date(document.getElementById("bookingDate").value);
-    var today = new Date();
-    var todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
+    let today = new Date();
+    let todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
 
     if (bookingDate < todayDate) {
         alert('You cannot choose a date in the past.');
