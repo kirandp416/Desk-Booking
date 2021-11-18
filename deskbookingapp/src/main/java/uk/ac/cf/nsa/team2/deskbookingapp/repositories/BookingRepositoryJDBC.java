@@ -4,6 +4,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.forms.BookingForm;
 
+/**
+ * A MYSQL JDBC implementation of the BookingRepository interface
+ * that we have created.
+ */
 @Repository
 public class BookingRepositoryJDBC implements BookingRepository {
 
@@ -13,10 +17,14 @@ public class BookingRepositoryJDBC implements BookingRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // Implement addBooking method from BookingRepository Interface.
-    // This method just adds a new booking to the booking table in
-    // the MySQL database:
-
+    /**
+     * Implement method from BookingRepository that deals with adding
+     * a new booking to the booking table in MySQL database.
+     * @param bookingForm A form object we can use to hold the html
+     *                    form data for one booking submission.
+     * @return if the number of rows affected is greater than
+     * zero, we return true. Otherwise, we return false.
+     */
     @Override
     public boolean addBooking(BookingForm bookingForm) {
 
@@ -26,18 +34,15 @@ public class BookingRepositoryJDBC implements BookingRepository {
         // System.out.println("addBooking supplied the following date");
         // System.out.println(bookingForm.getBookingDate());
 
-        // Use update function that returns the number of rows affected by
-        // the update:
-
         int rows = jdbcTemplate.update("insert into booking (booking_date) values(?)",
                 new Object[]{bookingForm.getBookingDate()}
         );
 
-        // If the number of rows affected by the update is more than zero,
-        // the update must have worked. If this is the case we return true
-        // back to the addBooking method caller:
+        if (rows > 0)
+            return true;
+        else
+            return false;
 
-        return rows > 0;
     }
 
 
