@@ -58,4 +58,14 @@ public class BookingController {
         }
 
     }
+
+    /**
+     * Route for Bookings page
+     * @return a String that will map to an
+     * html file.
+     */
+    @RequestMapping(path="/bookings", method = RequestMethod.GET)
+    public String getBookingsPage(){
+        return "Bookings";
+    }
 }
