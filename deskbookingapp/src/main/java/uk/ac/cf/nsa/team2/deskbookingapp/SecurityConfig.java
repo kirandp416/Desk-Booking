@@ -2,6 +2,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,18 +14,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+
+        http.antMatcher("/**")
                 .authorizeRequests()
-                .mvcMatchers("/Home").permitAll()
-                .mvcMatchers("/admin").hasRole("ADMIN")
-                .mvcMatchers("/admin/**").hasRole("ADMIN")
-                .mvcMatchers("/PostBooking").permitAll()
-                .mvcMatchers("/book").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST,"/BookingAdded,/BookingNotAdded").hasAnyRole("ADMIN,USER")
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();
+        http.cors().and().csrf().disable();
 
     }
 
