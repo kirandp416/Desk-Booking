@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="Book.js"></script>
+
     <title>Book</title>
 </head>
 <body>
+
+<!--<p>You are logged in as <span sec:authentication="name"></span></p>-->
 
 <form action="/PostBooking" method="post" onsubmit="return validateForm()">
     <label for="bookingDate">Date:</label>
@@ -15,5 +18,7 @@
 </form>
 
 </body>
+
+<script type="text/javascript" src="Book.js"></script>
 
 </html>

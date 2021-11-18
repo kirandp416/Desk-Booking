@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
 
@@ -38,8 +39,9 @@ public class BookingController {
      * @return A ModelAndView object
      */
     @RequestMapping(path = "/PostBooking", method = RequestMethod.POST)
-    public ModelAndView postBooking(BookingForm bookingForm, BindingResult br) {
+    public ModelAndView postBooking(BookingForm bookingForm, BindingResult br, Principal principal) {
 
+        BookingDTO bookingDTO = new BookingDTO(bookingForm.getBookingDate(), principal.getName());
         ModelAndView mav = new ModelAndView();
 
         if (br.hasErrors()) {
@@ -47,7 +49,7 @@ public class BookingController {
             mav.setViewName("BookingNotAdded");
             return mav;
         } else {
-            if (bookingRepository.addBooking(bookingForm)) {
+            if (bookingRepository.addBooking(bookingDTO)) {
                 System.out.println("You added a booking.");
                 mav.setViewName("BookingAdded");
                 return mav;
@@ -68,13 +70,13 @@ public class BookingController {
      * @return a Model and View object
      *
      */
-    @RequestMapping(path="/bookings", method = RequestMethod.GET)
-    public ModelAndView getUserBookingsPage(Principal principal){
-
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("bookings", bookingRepository.findAllUsersBookings(principal.getName()));
-        mav.setViewName("Bookings");
-        return mav;
-    }
+//    @RequestMapping(path="/bookings", method = RequestMethod.GET)
+//    public ModelAndView getUserBookingsPage(Principal principal){
+//
+//        ModelAndView mav = new ModelAndView();
+//        mav.addObject("bookings", bookingRepository.findAllUsersBookings(principal.getName()));
+//        mav.setViewName("Bookings");
+//        return mav;
+//    }
 
 }

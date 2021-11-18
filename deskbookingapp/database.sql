@@ -13,6 +13,7 @@ CREATE TABLE room
 CREATE TABLE booking
 (
     booking_id   INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
     booking_date DATE
 );
 

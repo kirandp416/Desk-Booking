@@ -4,11 +4,18 @@ public class BookingDTO {
 
     private int id;
     private String date;
+    private String username;
 
-    public BookingDTO() {
+    public BookingDTO(String date, String username) {
+        this.date = date;
+        this.username = username;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getDate() {
+        return date;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

@@ -24,13 +24,13 @@ public class BookingRepositoryJDBC implements BookingRepository {
     /**
      * Implement method from BookingRepository that deals with adding
      * a new booking to the booking table in MySQL database.
-     * @param bookingForm A form object we can use to hold the html
-     *                    form data for one booking submission.
+     * @param bookingDTO A DTO booking object we can use to hold the
+     *                   data associated with one booking submission.
      * @return if the number of rows affected is greater than
      * zero, we return true. Otherwise, we return false.
      */
     @Override
-    public boolean addBooking(BookingForm bookingForm) {
+    public boolean addBooking(BookingDTO bookingDTO) {
 
         // Some code that can be used to check that bookingForm
         // holds the correct data:
@@ -38,8 +38,8 @@ public class BookingRepositoryJDBC implements BookingRepository {
         // System.out.println("addBooking supplied the following date");
         // System.out.println(bookingForm.getBookingDate());
 
-        int rows = jdbcTemplate.update("insert into booking (booking_date) values(?)",
-                new Object[]{bookingForm.getBookingDate()}
+        int rows = jdbcTemplate.update("insert into booking (username, booking_date) values(?,?)",
+                new Object[]{bookingDTO.getUsername(), bookingDTO.getDate()}
         );
 
         if (rows > 0)
@@ -49,12 +49,12 @@ public class BookingRepositoryJDBC implements BookingRepository {
 
     }
 
-    @Override
-    public List<BookingDTO> findAllUsersBookings(String username){
-        return jdbcTemplate.query("insert query here",
-                new BookingMapper());
-
-    }
+//    @Override
+//    public List<BookingDTO> findAllUsersBookings(String username){
+//        return jdbcTemplate.query("insert query here",
+//                new BookingMapper());
+//
+//    }
 
 
 }
