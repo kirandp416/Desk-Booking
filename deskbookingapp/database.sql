@@ -1,7 +1,22 @@
-CREATE DATABASE deskbooking;
+DROP
+DATABASE IF EXISTS deskbooking;
 
-CREATE TABLE booking (
-    booking_id int PRIMARY KEY AUTO_INCREMENT,
+CREATE
+DATABASE deskbooking;
+
+USE
+deskbooking;
+
+CREATE TABLE room
+(
+    room_id   INT PRIMARY KEY AUTO_INCREMENT,
+    room_name VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE booking
+(
+    booking_id   INT PRIMARY KEY AUTO_INCREMENT,
     booking_date DATE
-                     );
+);
 
