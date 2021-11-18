@@ -9,3 +9,10 @@ CREATE TABLE room
     room_id   INT PRIMARY KEY AUTO_INCREMENT,
     room_name VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE booking
+(
+    booking_id   INT PRIMARY KEY AUTO_INCREMENT,
+    booking_date DATE
+);
+

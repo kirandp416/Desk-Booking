@@ -6,8 +6,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
-    @RequestMapping(path="/")
-    public String home(){
+    /**
+     * Route for homepage
+     * @return A string that will map to an
+     * html file
+     */
+    @RequestMapping(path = "/")
+    public String home() {
         return "Home";
     }
+
+    /**
+     * Route for Book a desk page
+     * @return A string that will map to an
+     *      * html file
+     */
+    @RequestMapping(path = "/book")
+    public String book() {
+        return "Book";
+    }
+
 }
