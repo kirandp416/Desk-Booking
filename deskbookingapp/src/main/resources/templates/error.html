@@ -24,12 +24,18 @@
                 <h1 class="oops">Oops!</h1>
                 <h2 class="message">403 Permission Denied</h2>
                 <div class="error-details">
-                    Sorry, you do not have access to this page, please contact your administrator
+                    Sorry, you do not have access to this page. Please logout and login with valid credentials.
+                    <div>
+                        <form action="#" th:action="@{/logout}" method="post">
+                            <input type="submit" style="background-color: red" value="Logout" />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 </body>
 </html>
