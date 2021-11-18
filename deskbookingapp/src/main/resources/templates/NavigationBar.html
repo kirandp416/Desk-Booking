@@ -1,0 +1,169 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>title</title>
+
+    <style type="text/css">
+
+        .box{
+
+            width: 850px;
+
+            height: 51px;
+
+            position:absolute;
+
+            z-index: 2;
+
+            margin-left: 300px;
+
+            background: #3776C6;
+
+        }
+
+        .box ul{
+
+            list-style: none;
+
+            padding-left: 100px;
+
+        }
+
+        .box ul li{
+
+            float: left;
+
+            padding-left: 0px;
+
+            padding-top: 0px;
+
+            margin: -5px 20px 0 10px;
+
+        }
+
+        .box ul li a{
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            display: block;
+
+            font-size: 20px;
+
+            line-height: 40px;
+
+            text-shadow: 10px 10px 50px #fff;
+
+            padding-right: 6px;
+
+        }
+
+        .box ul li:hover{
+
+            color: #fff;
+
+            background: #3776C6;
+
+            transition: 0.5s;
+
+        }
+
+        .box ul li a:hover{
+
+            color: #000000;
+
+        }
+
+        .box ul li ul{
+
+            padding-left: 0px;
+
+            margin-left: 0px;
+
+        }
+
+        .box ul li ul li{
+
+            display: none;
+
+            float: inherit;
+
+            font-size: 20px;
+
+        }
+
+        .box ul li:hover ul li{
+
+            display: block;
+
+            border-top: 1px solid rgba(158,54,56,1.00);
+
+        }
+
+        .box ul li ul li:hover{
+
+            background: #D9530B;
+
+        }
+
+        .box ul li ul li a:hover{
+
+            background: #3776c6;
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+<div class="box">
+
+    <ul>
+
+        <li><a href="Home.html">Home</a></li>
+
+        <li><a href="#">Login</a>
+
+            <ul>
+
+                <li><a href="UserLogin.html" style="font-size: 16px">User</a></li>
+
+                <li><a href="AdminLogin.html" style="font-size: 16px">Admin</a></li>
+
+            </ul>
+
+        </li>
+
+        <li><a href="#">About Desk</a>
+
+            <ul>
+
+                <li><a href="desk.html" style="font-size: 16px">Query office desk</a></li>
+
+                <li><a href="#" style="font-size: 16px">option 2</a></li>
+
+            </ul>
+
+        </li>
+
+        <li><a href="Booking.html">Booking</a></li>
+
+        <li><a href="#">Related introduction</a></li>
+
+        <li>
+
+    </ul></div>
+
+</body>
+
+</html>
