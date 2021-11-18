@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.forms.BookingForm;
 
 @Repository
-public class BookingRepositoryJDBC implements BookingRepository{
+public class BookingRepositoryJDBC implements BookingRepository {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -18,7 +18,7 @@ public class BookingRepositoryJDBC implements BookingRepository{
     // the MySQL database:
 
     @Override
-    public boolean addBooking(BookingForm bookingForm){
+    public boolean addBooking(BookingForm bookingForm) {
 
         // Some code that can be used to check that bookingForm
         // holds the correct data:

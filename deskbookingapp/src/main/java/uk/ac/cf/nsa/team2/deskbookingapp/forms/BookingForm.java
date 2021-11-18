@@ -7,13 +7,13 @@ public class BookingForm {
     public BookingForm(String bookingDate) {
         this.bookingDate = bookingDate;
 
-        // Some code to check what data is coming in to the contructor
+        // Some code to check what data is coming in to the constructor
         // from the form
 
-         System.out.println("BookingForm object instantiated with bookingDate:");
-         System.out.println(this.bookingDate.length());
-         System.out.println("The BookingForm constructor was supplied:");
-         System.out.println(bookingDate);
+//        System.out.println("BookingForm object instantiated with bookingDate:");
+//        System.out.println(this.bookingDate.length());
+//        System.out.println("The BookingForm constructor was supplied:");
+//        System.out.println(bookingDate);
     }
 
     public String getBookingDate() {

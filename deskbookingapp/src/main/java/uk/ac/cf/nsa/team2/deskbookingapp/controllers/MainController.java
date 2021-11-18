@@ -6,13 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
-    @RequestMapping(path="/")
-    public String home(){
+    // Route to get homepage
+    @RequestMapping(path = "/")
+    public String home() {
         return "Home";
     }
 
-    @RequestMapping(path="/book")
-    public String book(){
+    // Route to get booking page
+    @RequestMapping(path = "/book")
+    public String book() {
         return "Book";
     }
 
