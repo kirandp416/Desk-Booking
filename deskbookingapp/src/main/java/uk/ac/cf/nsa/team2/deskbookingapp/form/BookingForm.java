@@ -1,4 +1,4 @@
-package uk.ac.cf.nsa.team2.deskbookingapp.forms;
+package uk.ac.cf.nsa.team2.deskbookingapp.form;
 
 /**
  * A class that is instantiated when someone submits a booking.

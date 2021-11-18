@@ -6,8 +6,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.cf.nsa.team2.deskbookingapp.forms.BookingForm;
-import uk.ac.cf.nsa.team2.deskbookingapp.repositories.BookingRepository;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
 
 @Controller
 public class BookingController {

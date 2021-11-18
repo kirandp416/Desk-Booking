@@ -1,6 +1,6 @@
-package uk.ac.cf.nsa.team2.deskbookingapp.repositories;
+package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
-import uk.ac.cf.nsa.team2.deskbookingapp.forms.BookingForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 
 /**
  * A interface that will hold hold abstract versions of all the methods we

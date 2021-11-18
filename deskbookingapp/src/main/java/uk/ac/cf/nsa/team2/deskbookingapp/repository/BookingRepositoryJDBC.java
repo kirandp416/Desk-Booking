@@ -1,8 +1,9 @@
-package uk.ac.cf.nsa.team2.deskbookingapp.repositories;
+package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import uk.ac.cf.nsa.team2.deskbookingapp.forms.BookingForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
 
 /**
  * A MYSQL JDBC implementation of the BookingRepository interface
