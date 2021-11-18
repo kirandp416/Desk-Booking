@@ -25,7 +25,7 @@ public class RoomAdminController {
      *
      * @return A model and view object.
      */
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/admin/room/add")
     public ModelAndView addRoomPage() {
         return new ModelAndView("/admin/add_room");
@@ -37,7 +37,7 @@ public class RoomAdminController {
      * @param form The form data.
      * @return A model and view object.
      */
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/admin/room/add/process_form")
     public ModelAndView addRoomProcessForm(RoomForm form) {
         // Create DTO and add room to repository store.

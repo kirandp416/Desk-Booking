@@ -36,7 +36,7 @@ public class BookingController {
      *           validation errors in our form object
      * @return A ModelAndView object
      */
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/PostBooking", method = RequestMethod.POST)
     public ModelAndView postBooking(BookingForm bookingForm, BindingResult br) {
 
