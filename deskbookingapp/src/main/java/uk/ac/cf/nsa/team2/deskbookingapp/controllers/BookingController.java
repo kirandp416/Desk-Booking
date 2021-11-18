@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
 
+import java.security.Principal;
+
 @Controller
 public class BookingController {
 
@@ -60,12 +62,19 @@ public class BookingController {
     }
 
     /**
-     * Route for Bookings page
-     * @return a String that will map to an
-     * html file.
+     * Create a Model and View object that contains all of the bookings
+     * that have been made by a particular user in the Model and the
+     * Bookings page as the View
+     * @return a Model and View object
+     *
      */
     @RequestMapping(path="/bookings", method = RequestMethod.GET)
-    public String getBookingsPage(){
-        return "Bookings";
+    public ModelAndView getUserBookingsPage(Principal principal){
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("bookings", bookingRepository.findAllUsersBookings(principal.getName()));
+        mav.setViewName("Bookings");
+        return mav;
     }
+
 }

@@ -2,6 +2,8 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 
+import java.security.Principal;
+
 /**
  * A interface that will hold hold abstract versions of all the methods we
  * would like to perform on Booking objects. This allows us to abstract
@@ -11,4 +13,6 @@ import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 public interface BookingRepository {
 
     public boolean addBooking(BookingForm bookingForm);
+
+    public Object findAllUsersBookings(String username);
 }

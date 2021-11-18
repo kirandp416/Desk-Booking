@@ -2,8 +2,11 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
+
+import java.util.List;
 
 /**
  * A MYSQL JDBC implementation of the BookingRepository interface
@@ -43,6 +46,13 @@ public class BookingRepositoryJDBC implements BookingRepository {
             return true;
         else
             return false;
+
+    }
+
+    @Override
+    public List<BookingDTO> findAllUsersBookings(String username){
+        return jdbcTemplate.query("insert query here",
+                new BookingMapper());
 
     }
 
