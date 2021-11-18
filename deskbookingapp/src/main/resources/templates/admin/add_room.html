@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Add Room</title>
+</head>
+
+<body>
+    <h1>Add Room</h1>
+    <form method="post" action="/admin/room/add/process_form">
+        <p>
+            <label for="name">Room Name: </label>
+            <!-- Input pattern: Must start with alphanumeric and allow spaces anywhere afterwards. -->
+            <input type="text" id="name" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
+        </p>
+        <p>
+            <input type="submit" value="Submit">
+        </p>
+    </form>
+    <p th:if="${result}">Successfully added room.</p>
+    <p th:if="${result != null && !result}">Failed to add room.</p>
+</body>
+
+</html>
