@@ -45,9 +45,6 @@
 
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status === 200) {
-                console.log("xhttp came back with responseText:");
-                console.log(xhttp.getAllResponseHeaders());
-                console.log("responseText printing completed.");
                 console.log("Removing deleted item from DOM...")
                 removeDeletedBookingFromDOM(id);
             }
@@ -64,8 +61,10 @@
     }
 
     function removeDeletedBookingFromDOM(id){
-        let bookingRow = document.querySelector(“data-“ + id);
-        console.log(bookingRow);
+        // const user = document.querySelector("[data-user='poppy']");
+        const bookingRow = document.querySelector('[data-id="'+ id +'"]');
+        // console.log(bookingRow);
+        bookingRow.parentElement.removeChild(bookingRow);
     }
 
 
