@@ -39,31 +39,25 @@
         let id = document.forms["deleteBookingForm"]["id"].value;
         let params = 'id=' + id;
         let xhttp = new XMLHttpRequest();
-        xhttp.open("DELETE","/booking/delete?"+params,true);
+        xhttp.open("DELETE","/booking/delete",true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status === 200) {
-                console.log("xhttp came back with responseText:")
-                console.log(xhttp.responseText);
+                console.log("xhttp came back with responseText:");
+                console.log(xhttp.getAllResponseHeaders());
+                console.log("responseText printing completed.");
             }
             else
             {
                 console.error(xhttp.statusText);
             }
         }
-
+        
         xhttp.send(params);
 
         return false;
 
-    }
-
-    function sleep(milliseconds) {
-        let currentTime = new Date().getTime();
-
-        while (currentTime + milliseconds >= new Date().getTime()) {
-        }
     }
 
 
