@@ -9,6 +9,7 @@ import uk.ac.cf.nsa.team2.deskbookingapp.json.AddDeskJsonRequest;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.DeskRepository;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 /**
  * A REST API controller for managing desks as an admin.
@@ -36,6 +37,21 @@ public class DeskAdminRestController {
      */
     @PostMapping("/api/admin/desks")
     public void createDesk(@RequestBody AddDeskJsonRequest request, HttpServletResponse response) {
+        // Query if a desk with the same name exists for the room.
+        Optional<Boolean> deskExists = deskRepository.checkDeskNameExistsForRoom(request.getRoom(), request.getName());
+
+        // If optional is empty, return a 500 internal status.
+        if (deskExists.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
+
+        // If desk exists, return a 409 conflict status.
+        if (deskExists.get()) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            return;
+        }
+
         // Create DTO.
         DeskDTO dto = new DeskDTO();
         dto.setRoomId(request.getRoom());
@@ -44,9 +60,10 @@ public class DeskAdminRestController {
         // Create desk.
         boolean successful = deskRepository.add(dto);
 
-        // Set status to 500 internal if unsuccessful.
+        // Return 500 internal status if unsuccessful.
         if (!successful) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
         }
 
         // Set status to 201 created.

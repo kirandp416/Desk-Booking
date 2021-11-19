@@ -3,8 +3,13 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * An implementation of the {@link DeskRepository} which uses
@@ -38,6 +43,20 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
         }
 
         return rowsAffected == 1;
+    }
+
+    @Override
+    public Optional<Boolean> checkDeskNameExistsForRoom(int roomId, String deskName) {
+        final String sql = "SELECT * FROM desk WHERE room_id = ? AND desk_name = ?;";
+
+        try {
+            List<Map<String, Object>> resultSet = jdbc.queryForList(sql, roomId, deskName);
+            return Optional.of(!resultSet.isEmpty());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
     }
 
 }

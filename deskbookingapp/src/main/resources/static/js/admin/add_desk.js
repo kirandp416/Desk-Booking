@@ -21,11 +21,19 @@ function onSubmit(e) {
     xhttp.open("POST", "/api/admin/desks", true);
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.onreadystatechange = function () {
-        // If response is 201 created, the request was successful.
+        // Check response status.
         if (xhttp.readyState === 4) {
+            // 201 created: success.
             if (xhttp.status === 201) {
                 document.getElementById("result").innerText = "Successfully create desk.";
-            } else {
+            }
+            // 409 conflict: desk with same name for the room already exists.
+            else if (xhttp.status === 409) {
+                document.getElementById("result").innerText =
+                    "A desk with the same name already exists for the selected room.";
+            }
+            // Any other status.
+            else {
                 document.getElementById("result").innerText = "An error occurred.";
             }
         }
