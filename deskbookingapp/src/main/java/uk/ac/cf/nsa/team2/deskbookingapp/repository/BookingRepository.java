@@ -13,4 +13,6 @@ public interface BookingRepository {
     public boolean addBooking(BookingDTO bookingDTO);
 
     public Object findAllUsersBookings(String username);
+
+    public void deleteBooking(Integer id);
 }

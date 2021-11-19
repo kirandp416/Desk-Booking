@@ -1,10 +1,13 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
@@ -29,6 +32,16 @@ public class BookingController {
     }
 
     /**
+     * Route for Book a desk page
+     * @return A string that will map to an
+     *      * html file
+     */
+    @RequestMapping(path = "/booking/add")
+    public String book() {
+        return "Book";
+    }
+
+    /**
      * Post a new booking to the booking table in the database.
      * If it was successful we direct the user to BookingAdded
      * page. Otherwise, direct them to BookingNotAdded page.
@@ -38,7 +51,7 @@ public class BookingController {
      *           validation errors in our form object
      * @return A ModelAndView object
      */
-    @RequestMapping(path = "/PostBooking", method = RequestMethod.POST)
+    @RequestMapping(path = "/booking/add/process_form", method = RequestMethod.POST)
     public ModelAndView postBooking(BookingForm bookingForm, BindingResult br, Principal principal) {
 
         BookingDTO bookingDTO = new BookingDTO(bookingForm.getBookingDate(), principal.getName());
@@ -70,13 +83,31 @@ public class BookingController {
      * @return a Model and View object
      *
      */
-    @RequestMapping(path="/bookings", method = RequestMethod.GET)
+    @RequestMapping(path="/booking/all", method = RequestMethod.GET)
     public ModelAndView getUserBookingsPage(Principal principal){
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("bookings", bookingRepository.findAllUsersBookings(principal.getName()));
         mav.setViewName("Bookings");
         return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(path="/booking/delete", method= RequestMethod.DELETE)
+    public String bookingDelete(@RequestParam(value="id", defaultValue = "null") String StringId){
+
+        Integer id;
+
+        if (!StringId.equals("null")){
+            id  = Integer.valueOf(StringId);
+        }
+        else{
+            return "null";
+        }
+
+        bookingRepository.deleteBooking(id);
+
+        return "deletion complete";
     }
 
 }

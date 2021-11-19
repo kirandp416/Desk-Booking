@@ -16,8 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .mvcMatchers("/public/**").permitAll()
-                .mvcMatchers("/book").authenticated()
-                .mvcMatchers("/bookings").authenticated()
+                .mvcMatchers("/booking/**").authenticated()
                 .and()
                 .formLogin();
 

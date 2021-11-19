@@ -10,16 +10,60 @@
 
 <table>
     <tr>
-<!--        <th>id</th>-->
-<!--        <th>username</th>-->
+        <th>id</th>
+        <th>username</th>
         <th>date</th>
     </tr>
     <tr th:each="booking: ${bookings}">
-<!--        <td th:text="${booking.id}" />-->
-<!--        <td th:text="${booking.username}" />-->
-        <td th:text="${booking.date}" />
+        <td th:text="${booking.id}"/>
+        <td th:text="${booking.username}"/>
+        <td th:text="${booking.date}"/>
     </tr>
 </table>
+<br>
+<form id="deleteBookingForm" name="deleteBookingForm" onsubmit="return sendForm()">
+    <label for="id">Booking ID to Delete</label><br>
+    <input type="text" id="id" name="id" value=""><br>
+    <input type="submit" value="Submit">
+</form>
+
+
+
+<br>
+<a href="/">Home</a>
 
 </body>
+
+<script>
+    function sendForm(){
+        let id = document.forms["deleteBookingForm"]["id"];
+        params ='id='+id;
+        let xhttp = new XMLHttpRequest();
+        xhhtp.open("DELETE","/booking/delete",false);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        sleep(3000)
+
+        xhttp.onreadystatechange = function(){
+            if(xhttp.readyState==4 && xhttp.status === 200)
+                console.log("xhttp came back with responseText:")
+                console.log(xhttp.responseText);
+            }
+
+        xhttp.send(params);
+
+        return false;
+
+        }
+
+    function sleep(miliseconds) {
+        var currentTime = new Date().getTime();
+
+        while (currentTime + miliseconds >= new Date().getTime()) {
+        }
+    }
+
+
+
+</script>
 </html>

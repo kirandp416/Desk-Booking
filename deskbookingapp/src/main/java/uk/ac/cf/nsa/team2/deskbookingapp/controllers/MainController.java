@@ -16,14 +16,4 @@ public class MainController {
         return "Home";
     }
 
-    /**
-     * Route for Book a desk page
-     * @return A string that will map to an
-     *      * html file
-     */
-    @RequestMapping(path = "/book")
-    public String book() {
-        return "Book";
-    }
-
 }

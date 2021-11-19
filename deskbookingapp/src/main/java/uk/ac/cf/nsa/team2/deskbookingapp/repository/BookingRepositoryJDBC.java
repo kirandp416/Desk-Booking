@@ -39,7 +39,9 @@ public class BookingRepositoryJDBC implements BookingRepository {
         // System.out.println("addBooking supplied the following date");
         // System.out.println(bookingForm.getBookingDate());
 
-        int rows = jdbcTemplate.update("insert into booking (username, booking_date) values(?,?)",
+        String query = "insert into booking (username, booking_date) values(?,?)";
+
+        int rows = jdbcTemplate.update(query,
                 new Object[]{bookingDTO.getUsername(), bookingDTO.getDate()}
         );
 
@@ -56,6 +58,15 @@ public class BookingRepositoryJDBC implements BookingRepository {
                 new Object[]{username},
                 new BookingMapper());
 
+    }
+
+    @Override
+    public void deleteBooking(Integer id){
+        String query = "DELETE from booking WHERE booking_id=?";
+
+        int rows = jdbcTemplate.update(query, id);
+
+        System.out.println("Rows affected:" + rows);
     }
 
 
