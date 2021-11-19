@@ -1,6 +1,7 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ public class BookingController {
      *           validation errors in our form object
      * @return A ModelAndView object
      */
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/PostBooking", method = RequestMethod.POST)
     public ModelAndView postBooking(BookingForm bookingForm, BindingResult br) {
 
