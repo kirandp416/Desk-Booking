@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Add Desk</title>
+    <script src="/js/admin/add_desk.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <section>
+            <h1>Add Desk</h1>
+            <form id="form">
+                <!-- Room dropdown. -->
+                <p>
+                    <label for="room">Room: </label>
+                    <select id="room" name="room" required>
+                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+                </p>
+                <!-- Desk name input. -->
+                <p>
+                    <label for="name">Desk Name: </label>
+                    <!-- Input pattern: Must start with alphanumeric and allow spaces anywhere afterwards. -->
+                    <input type="text" id="name" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
+                </p>
+                <p>
+                    <input type="submit" value="Submit">
+                </p>
+            </form>
+        </section>
+
+        <div>
+            <p id="result"></p>
+        </div>
+    </main>
+</body>
+
+</html>
