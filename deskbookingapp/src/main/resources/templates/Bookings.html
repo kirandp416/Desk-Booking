@@ -23,10 +23,9 @@
 <br>
 <form id="deleteBookingForm" name="deleteBookingForm" onsubmit="return sendForm()">
     <label for="id">Booking ID to Delete</label><br>
-    <input type="text" id="id" name="id" value=""><br>
+    <input type="text" id="id" name="id"><br>
     <input type="submit" value="Submit">
 </form>
-
 
 
 <br>
@@ -35,34 +34,37 @@
 </body>
 
 <script>
-    function sendForm(){
-        let id = document.forms["deleteBookingForm"]["id"];
-        params ='id='+id;
+    function sendForm() {
+
+        let id = document.forms["deleteBookingForm"]["id"].value;
+        let params = 'id=' + id;
         let xhttp = new XMLHttpRequest();
-        xhhtp.open("DELETE","/booking/delete",false);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.open("DELETE","/booking/delete?"+params,true);
+        xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 
-        sleep(3000)
-
-        xhttp.onreadystatechange = function(){
-            if(xhttp.readyState==4 && xhttp.status === 200)
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status === 200) {
                 console.log("xhttp came back with responseText:")
                 console.log(xhttp.responseText);
             }
+            else
+            {
+                console.error(xhttp.statusText);
+            }
+        }
 
         xhttp.send(params);
 
         return false;
 
-        }
-
-    function sleep(miliseconds) {
-        var currentTime = new Date().getTime();
-
-        while (currentTime + miliseconds >= new Date().getTime()) {
-        }
     }
 
+    function sleep(milliseconds) {
+        let currentTime = new Date().getTime();
+
+        while (currentTime + milliseconds >= new Date().getTime()) {
+        }
+    }
 
 
 </script>

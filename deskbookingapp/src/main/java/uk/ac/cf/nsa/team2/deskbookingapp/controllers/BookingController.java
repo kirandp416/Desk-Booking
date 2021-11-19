@@ -94,18 +94,20 @@ public class BookingController {
 
     @ResponseBody
     @RequestMapping(path="/booking/delete", method= RequestMethod.DELETE)
-    public String bookingDelete(@RequestParam(value="id", defaultValue = "null") String StringId){
+    public String bookingDelete(@RequestParam(value="id", defaultValue = "null") String id){
 
-        Integer id;
+        System.out.println("param in delete url is " + id);
 
-        if (!StringId.equals("null")){
-            id  = Integer.valueOf(StringId);
+        Integer idInt;
+
+        if (!id.equals("null")){
+            idInt  = Integer.valueOf(id);
         }
         else{
             return "null";
         }
 
-        bookingRepository.deleteBooking(id);
+        bookingRepository.deleteBooking(idInt);
 
         return "deletion complete";
     }
