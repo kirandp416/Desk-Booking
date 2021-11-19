@@ -1,6 +1,7 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class RoomAdminController {
      *
      * @return A model and view object.
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/admin/room/add")
     public ModelAndView addRoomPage() {
         return new ModelAndView("/admin/add_room");
@@ -35,6 +37,7 @@ public class RoomAdminController {
      * @param form The form data.
      * @return A model and view object.
      */
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/admin/room/add/process_form")
     public ModelAndView addRoomProcessForm(RoomForm form) {
         // Create DTO and add room to repository store.
