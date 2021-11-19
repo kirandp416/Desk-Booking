@@ -17,3 +17,9 @@ CREATE TABLE booking
     booking_date DATE
 );
 
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
+

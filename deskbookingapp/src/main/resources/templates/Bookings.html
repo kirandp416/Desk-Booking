@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Bookings</title>
+<!--    <link href="/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    Table reference:-->
+<!--    https://www.geeksforgeeks.org/bootstrap-4-tables/-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<p>Here are your bookings:</p>
+<div class="container">
 
-<table>
-    <tr>
-        <th>id</th>
-        <th>username</th>
-        <th>date</th>
-    </tr>
-    <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
-        <td th:text="${booking.id}"/>
-        <td th:text="${booking.username}"/>
-        <td th:text="${booking.date}"/>
-    </tr>
-</table>
+    <h1 style="text-align:center;color:green;">Bookings</h1>
 
-<br>
-<form id="deleteBookingForm" name="deleteBookingForm" onsubmit="return sendForm()">
-    <label for="id">Booking ID to Delete</label><br>
-    <input type="text" id="id" name="id"><br>
-    <input type="submit" value="Submit">
-</form>
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Booking ID</td>
+                <th scope="col">Username</td>
+                <th scope="col">Date</td>
+                <th scope="col">Action</td>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
+            <td th:text="${booking.id}"/>
+            <td th:text="${booking.username}"/>
+            <td th:text="${booking.date}"/>
+            <td><button th:id="${booking.id}" onclick="sendForm(this.id)" class="btn btn-danger">Delete</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <br>
 <a href="/">Home</a>
@@ -35,9 +43,9 @@
 </body>
 
 <script>
-    function sendForm() {
+    function sendForm(id) {
 
-        let id = document.forms["deleteBookingForm"]["id"].value;
+        // let id = document.forms["deleteBookingForm"]["id"].value;
         let params = 'id=' + id;
         let xhttp = new XMLHttpRequest();
         xhttp.open("DELETE","/booking/delete",true);
