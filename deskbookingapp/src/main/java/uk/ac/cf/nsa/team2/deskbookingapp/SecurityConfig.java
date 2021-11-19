@@ -7,7 +7,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-/**Create Web Security for Login and Logout flows. Added redirection after logout. Navigating to homepage after logout*/
+/**Create Web Security for Login and Logout flows.
+ *  Added redirection after logout. Navigating to homepage after logout*/
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -28,7 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
     }
 
-//Adding user roles and their details for in memory auth
+/**Adding user roles and their details for in memory auth.
+*Added in memory users as a dummy data to temporarily test the webpages and forms*/
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
