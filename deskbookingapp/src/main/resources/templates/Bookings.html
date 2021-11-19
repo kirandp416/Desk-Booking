@@ -9,9 +9,14 @@
 <p>Here are your bookings:</p>
 
 <table>
+    <tr>
+<!--        <th>id</th>-->
+<!--        <th>username</th>-->
+        <th>date</th>
+    </tr>
     <tr th:each="booking: ${bookings}">
 <!--        <td th:text="${booking.id}" />-->
-        <td th:text="${booking.username}" />
+<!--        <td th:text="${booking.username}" />-->
         <td th:text="${booking.date}" />
     </tr>
 </table>

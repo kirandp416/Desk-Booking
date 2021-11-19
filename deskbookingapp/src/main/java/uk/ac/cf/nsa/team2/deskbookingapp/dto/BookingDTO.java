@@ -25,4 +25,8 @@ public class BookingDTO {
     public String getUsername() {
         return username;
     }
+
+    public int getId() {
+        return id;
+    }
 }
