@@ -2,13 +2,12 @@ package uk.ac.cf.nsa.team2.deskbookingapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//Create Web Security for Login and Logout flows. Added redirection after logout
+
+/**Create Web Security for Login and Logout flows. Added redirection after logout. Navigating to homepage after logout*/
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)

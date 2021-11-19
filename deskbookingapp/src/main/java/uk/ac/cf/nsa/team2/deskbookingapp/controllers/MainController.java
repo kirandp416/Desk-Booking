@@ -36,11 +36,13 @@ public class MainController {
     public String book() {
         return "Book";
     }
-
+    /**
+     * Route for login page if already logged in.
+     *or redirect to login page if authentication fails
+     */
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
@@ -50,11 +52,5 @@ public class MainController {
     }
 
 }
-
-//    @RequestMapping(value = "/username", method = RequestMethod.GET)
-//    @ResponseBody
-//    public String currentUserName(Authentication authentication) {
-//        return authentication.getName();
-//    }
 
 

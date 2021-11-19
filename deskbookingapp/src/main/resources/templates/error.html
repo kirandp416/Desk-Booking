@@ -16,6 +16,8 @@
         }
     </style>
 </head>
+
+<!--* Container for error page with logout button. Redirects to homepage.*/-->
 <body>
 <div class="container text-center">
     <div class="row vcenter" style="margin-top: 20%;">
@@ -24,10 +26,10 @@
                 <h1 class="oops">Oops!</h1>
                 <h2 class="message">403 Permission Denied</h2>
                 <div class="error-details">
-                    Sorry, you do not have access to this page. Please logout and login with valid credentials.
+                    Sorry, you do not have access to this page. Please logout and login with valid credentials.<br><br>
                     <div>
                         <form action="#" th:action="@{/logout}" method="post">
-                            <input type="submit" style="background-color: red" value="Logout" />
+                            <input type="submit" class="btn bt-danger" value="Logout" />
                         </form>
                     </div>
                 </div>
