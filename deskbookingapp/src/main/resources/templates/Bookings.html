@@ -14,12 +14,13 @@
         <th>username</th>
         <th>date</th>
     </tr>
-    <tr th:each="booking: ${bookings}">
+    <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
         <td th:text="${booking.id}"/>
         <td th:text="${booking.username}"/>
         <td th:text="${booking.date}"/>
     </tr>
 </table>
+
 <br>
 <form id="deleteBookingForm" name="deleteBookingForm" onsubmit="return sendForm()">
     <label for="id">Booking ID to Delete</label><br>
@@ -47,17 +48,24 @@
                 console.log("xhttp came back with responseText:");
                 console.log(xhttp.getAllResponseHeaders());
                 console.log("responseText printing completed.");
+                console.log("Removing deleted item from DOM...")
+                removeDeletedBookingFromDOM(id);
             }
             else
             {
                 console.error(xhttp.statusText);
             }
         }
-        
+
         xhttp.send(params);
 
         return false;
 
+    }
+
+    function removeDeletedBookingFromDOM(id){
+        let bookingRow = document.querySelector(“data-“ + id);
+        console.log(bookingRow);
     }
 
 

@@ -96,8 +96,6 @@ public class BookingController {
     @RequestMapping(path="/booking/delete", method= RequestMethod.DELETE)
     public String bookingDelete(@RequestParam(value="id", defaultValue = "null") String id){
 
-        System.out.println("param in delete url is " + id);
-
         Integer idInt;
 
         if (!id.equals("null")){
