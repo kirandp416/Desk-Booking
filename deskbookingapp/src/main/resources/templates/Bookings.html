@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookings</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!--    Reference for table styling: -->
+    <!--    https://www.geeksforgeeks.org/bootstrap-4-tables/-->
+</head>
+
+<body>
+
+
+<div class="container">
+
+    <h1 style="text-align:center;color:green;">Bookings</h1>
+
+<!--    Thymeleaf for loop over all bookings that are associated
+        with the currently logged-in user, where each booking
+        corresponds to one row in an HTML table. At the end of
+        each row, a cell for a deletion button is also rendered.-->
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Booking ID</td>
+            <th scope="col">Username</td>
+            <th scope="col">Date</td>
+            <th scope="col">Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
+            <td th:text="${booking.id}"/>
+            <td th:text="${booking.username}"/>
+            <td th:text="${booking.date}"/>
+            <td>
+                <button th:id="${booking.id}" onclick="deleteBooking(this.id)" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br>
+<br>
+
+<div>
+    <form action="#" th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout" />
+    </form>
+</div>
+
+<br>
+<br>
+
+<a href="/">Home</a>
+
+</body>
+
+<script type="text/javascript" src="/Bookings.js"></script>
+
+</html>

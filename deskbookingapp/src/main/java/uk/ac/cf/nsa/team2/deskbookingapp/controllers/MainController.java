@@ -7,10 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.Cookie;
 
 @Controller
 public class MainController {
@@ -27,16 +23,6 @@ public class MainController {
     }
 
     /**
-     * Route for Book a desk page
-     *
-     * @return A string that will map to an
-     * * html file
-     */
-    @RequestMapping(path = "/book")
-    public String book() {
-        return "Book";
-    }
-    /**
      * Route for login page if already logged in.
      *or redirect to login page if authentication fails
      */
@@ -52,5 +38,3 @@ public class MainController {
     }
 
 }
-
-

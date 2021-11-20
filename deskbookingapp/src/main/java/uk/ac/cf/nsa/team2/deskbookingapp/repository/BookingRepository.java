@@ -1,6 +1,6 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
-import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
 /**
  * A interface that will hold hold abstract versions of all the methods we
@@ -10,5 +10,9 @@ import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
  */
 public interface BookingRepository {
 
-    public boolean addBooking(BookingForm bookingForm);
+    public boolean addBooking(BookingDTO bookingDTO);
+
+    public Object findAllUsersBookings(String username);
+
+    public boolean deleteBooking(Integer id);
 }

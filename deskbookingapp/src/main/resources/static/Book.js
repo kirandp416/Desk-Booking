@@ -2,14 +2,15 @@
 // the form fields, whenever there is a change to the data in the fields.
 // This debugger code was adapted from https://stackoverflow.com/questions/33697683/html-previous-date-validation
 
-// $("form :input").change(function () {
-//     console.log($(this).closest('form').serialize());
-// });
+$("form :input").change(function () {
+    console.log("Form data changed.")
+    console.log($(this).closest('form').serialize());
+});
 
 // Show an alert if the user ever selects a date from in the past:
 
 function pastDateWarn() {
-    console.log("Date changed");
+    // console.log("Date changed");
     let bookingDate = new Date(document.getElementById("bookingDate").value);
     let today = new Date();
     let todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
