@@ -1,18 +1,16 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
-
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import java.security.Principal;
 
 @Controller
@@ -54,6 +52,7 @@ public class BookingController {
      *                    validation errors in our form object
      * @return A ModelAndView object
      */
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/booking/add/process_form", method = RequestMethod.POST)
     public ModelAndView postBooking(BookingForm bookingForm, BindingResult br, Principal principal) {
 
@@ -126,6 +125,7 @@ public class BookingController {
 
         return mav;
 
-    }
+        }
+
 
 }

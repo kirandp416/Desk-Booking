@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="Book.js"></script>
     <title>Book</title>
 </head>
 <body>
@@ -15,8 +16,12 @@
     <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
     <input type="submit">
 </form>
-<br>
-<a href="/">Home</a>
+
+<div>
+    <form action="#" th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
 
 </body>
 

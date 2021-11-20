@@ -6,7 +6,12 @@
 </head>
 <body>
 <p>Your Booking was not added!</p>
-<br>
-<a href="/">Home</a>
+
+<div>
+    <form action="#" th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout" />
+    </form>
+</div>
+
 </body>
 </html>
