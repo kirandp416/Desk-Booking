@@ -21,11 +21,15 @@ function deleteBooking(id) {
     // print what the state change was to the console.
 
     xhttp.onreadystatechange = function () {
-        if (xhttp.readyState == 4 && xhttp.status === 200) {
-            console.log("Removing deleted item from DOM...")
-            removeMyParent(id);
-        } else {
-            console.error(xhttp.statusText);
+
+        if (xhttp.readyState == 4){
+            if (xhttp.status === 200){
+                console.log("Removing deleted item from DOM...")
+                removeMyParent(id);
+            }
+            else{
+                console.error(xhttp.statusText);
+            }
         }
     }
 

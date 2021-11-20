@@ -16,9 +16,8 @@ import java.sql.SQLException;
  * is to create Objects that can facilitate the mapping of ResultSet Objects to
  * BoookingDTO Objects.
  */
-public class BookingMapper implements RowMapper {
-
-
+public class BookingMapper implements RowMapper <BookingDTO> {
+    
     /**
      * Method that allows us to pass a new BookingMapper to the query() method
      * and have query be able to take the ResultSet Objects that comeback and
@@ -30,7 +29,7 @@ public class BookingMapper implements RowMapper {
      * @throws SQLException
      */
     @Override
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public BookingDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new BookingDTO(rs.getInt("booking_id"), rs.getString("username"), rs.getString("booking_date"));
     }
 }

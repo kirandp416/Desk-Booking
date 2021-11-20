@@ -17,14 +17,8 @@ CREATE TABLE booking
     booking_date DATE
 );
 
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2022-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
+INSERT INTO booking (username, booking_date) VALUES ("user1", '2021-11-12');
+INSERT INTO booking (username, booking_date) VALUES ("user1", '2022-03-26');
+INSERT INTO booking (username, booking_date) VALUES ("user2", '2023-10-01');
+INSERT INTO booking (username, booking_date) VALUES ("user2", '2026-06-20');
 
