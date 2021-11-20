@@ -1,4 +1,4 @@
-package uk.ac.cf.nsa.team2.deskbookingapp;
+package uk.ac.cf.nsa.team2.deskbookingapp.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

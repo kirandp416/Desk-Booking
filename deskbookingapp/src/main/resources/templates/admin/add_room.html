@@ -19,16 +19,24 @@
             <input type="submit" value="Submit">
         </p>
         <br>
-        <a href="/">Home</a>
+
     </form>
     <p th:if="${result}">Successfully added room.</p>
     <p th:if="${result != null && !result}">Failed to add room.</p>
+
+    <br>
+    <br>
 
     <div>
         <form action="#" th:action="@{/logout}" method="post">
             <input type="submit" value="Logout" />
         </form>
     </div>
+
+    <br>
+    <br>
+
+    <a href="/">Home</a>
 
 </body>
 
