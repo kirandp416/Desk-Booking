@@ -21,5 +21,10 @@ INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", 
 INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
 INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
 INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
-INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2021-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user1", '2022-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
+INSERT INTO booking (booking_id, username, booking_date) VALUES (null, "user2", '2022-11-19');
 

@@ -1,5 +1,9 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.dto;
 
+/**
+ * A class that will be used to instantiate Objects
+ * that each represent one booking made in our system.
+ */
 public class BookingDTO {
 
     private int id;

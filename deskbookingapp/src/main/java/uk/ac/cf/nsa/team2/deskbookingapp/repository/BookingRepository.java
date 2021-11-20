@@ -14,5 +14,5 @@ public interface BookingRepository {
 
     public Object findAllUsersBookings(String username);
 
-    public void deleteBooking(Integer id);
+    public boolean deleteBooking(Integer id);
 }

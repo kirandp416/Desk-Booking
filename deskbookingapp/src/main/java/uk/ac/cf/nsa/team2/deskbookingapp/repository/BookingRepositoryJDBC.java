@@ -25,6 +25,7 @@ public class BookingRepositoryJDBC implements BookingRepository {
     /**
      * Implement method from BookingRepository that deals with adding
      * a new booking to the booking table in MySQL database.
+     *
      * @param bookingDTO A DTO booking object we can use to hold the
      *                   data associated with one booking submission.
      * @return if the number of rows affected is greater than
@@ -52,21 +53,35 @@ public class BookingRepositoryJDBC implements BookingRepository {
 
     }
 
+    /**
+     * Implement method from BookingRepository that deals with returning all
+     * bookings that a user has made by querying the MySQL database using that
+     * user's username.
+     * @param username The username of the currently logged-in user
+     * @return Bookings returned as a List of BookingDTO objects
+     */
     @Override
-    public List<BookingDTO> findAllUsersBookings(String username){
+    public List<BookingDTO> findAllUsersBookings(String username) {
         return jdbcTemplate.query("select * from booking where username=?",
                 new Object[]{username},
                 new BookingMapper());
 
     }
 
+    /**
+     * Implement method from BookingRepository that deals with deleting
+     * a single booking from the table of bookings in the MySQL database
+     * @param id The id of the booking that a delete is being attempted on
+     * @return A boolean that will be true if 1 or more rows were affected
+     * by the update. In all other cases, it will be false.
+     */
     @Override
-    public void deleteBooking(Integer id){
+    public boolean deleteBooking(Integer id) {
+
         String query = "DELETE from booking WHERE booking_id=?";
+        int rowsAffected = jdbcTemplate.update(query, id);
 
-        int rows = jdbcTemplate.update(query, id);
-
-        System.out.println("Rows affected:" + rows);
+        return rowsAffected > 0;
     }
 
 

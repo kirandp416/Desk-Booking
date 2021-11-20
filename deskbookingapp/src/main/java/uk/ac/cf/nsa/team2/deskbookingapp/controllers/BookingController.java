@@ -23,6 +23,7 @@ public class BookingController {
     /**
      * Constructor that will be used by Sprint to instantiate
      * a BookingRepository object automatically
+     *
      * @param bRepo A BookingRepository object that we can use
      *              to hold our Booking objects in
      */
@@ -33,8 +34,9 @@ public class BookingController {
 
     /**
      * Route for Book a desk page
+     *
      * @return A string that will map to an
-     *      * html file
+     * * html file
      */
     @RequestMapping(path = "/booking/add")
     public String book() {
@@ -45,10 +47,11 @@ public class BookingController {
      * Post a new booking to the booking table in the database.
      * If it was successful we direct the user to BookingAdded
      * page. Otherwise, direct them to BookingNotAdded page.
+     *
      * @param bookingForm A form object we can use to hold the html
      *                    form data for one booking submission.
-     * @param br A BindingResult object we can use to access
-     *           validation errors in our form object
+     * @param br          A BindingResult object we can use to access
+     *                    validation errors in our form object
      * @return A ModelAndView object
      */
     @RequestMapping(path = "/booking/add/process_form", method = RequestMethod.POST)
@@ -80,11 +83,11 @@ public class BookingController {
      * Create a Model and View object that contains all of the bookings
      * that have been made by a particular user in the Model and the
      * Bookings page as the View
-     * @return a Model and View object
      *
+     * @return a Model and View object
      */
-    @RequestMapping(path="/booking/all", method = RequestMethod.GET)
-    public ModelAndView getUserBookingsPage(Principal principal){
+    @RequestMapping(path = "/booking/all", method = RequestMethod.GET)
+    public ModelAndView getUserBookingsPage(Principal principal) {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("bookings", bookingRepository.findAllUsersBookings(principal.getName()));
@@ -92,22 +95,37 @@ public class BookingController {
         return mav;
     }
 
-    @ResponseBody
-    @RequestMapping(path="/booking/delete", method= RequestMethod.DELETE)
-    public String bookingDelete(@RequestParam(value="id", defaultValue = "null") String id){
+    /**
+     * Create route that will attempt to delete a booking from the booking
+     * database, by booking id. If it is successful you will see a view that
+     * say successful and if it is not you will see a view that says it failed.
+     * We will be calling this method via AJAX so you will not see these views.
+     * However, if you would like to see the views and test it, please change
+     * request method below to GET and try the route with a valid id in the
+     * address bar of browser.
+     *
+     * @param id the Booking id
+     * @return ModelAndView object with a view that will tell you if deletion
+     * was a success.
+     */
+    @RequestMapping(path = "/booking/delete", method = RequestMethod.DELETE)
+    public ModelAndView bookingDelete(@RequestParam(value = "id", defaultValue = "null") String id) {
 
-        Integer idInt;
+        ModelAndView mav = new ModelAndView();
 
-        if (!id.equals("null")){
-            idInt  = Integer.valueOf(id);
+        if (!id.equals("null")) {
+            Integer idInt = Integer.valueOf(id);
+            if (bookingRepository.deleteBooking(idInt)) {
+                mav.setViewName("BookingDeleteSuccess");
+            } else {
+                mav.setViewName("BookingDeleteFail");
+            }
+        } else {
+            mav.setViewName("BookingDeleteFail");
         }
-        else{
-            return "null";
-        }
 
-        bookingRepository.deleteBooking(idInt);
+        return mav;
 
-        return "deletion complete";
     }
 
 }
