@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DesksDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.DeskRepository;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +16,7 @@ import java.util.Optional;
 /**
  * A REST API controller for desks.
  */
-@Controller
+@RestController
 public class DeskRestController {
 
     private final DeskRepository deskRepository;
@@ -39,18 +41,23 @@ public class DeskRestController {
      * @return A JSON array of desks.
      */
     @GetMapping(path = "/api/desks", produces = "application/json")
-    public List<DeskDTO> getDesks(@RequestParam("room_id") int roomId, @RequestParam("offset") int offset,
-                                  @RequestParam("limit") int limit, HttpServletResponse response) {
-        // Query for desks.
+    public DesksDTO getDesks(@RequestParam("room_id") int roomId, @RequestParam("offset") int offset,
+                             @RequestParam("limit") int limit, HttpServletResponse response) {
+        // Query for desks and count of desks.
         Optional<List<DeskDTO>> desks = deskRepository.findByRoom(roomId, offset, limit);
+        Optional<Integer> desksCount = deskRepository.findByRoomCount(roomId);
 
         // Return 500 status if there was an error.
         if (desks.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        if (desksCount.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        }
 
-        return desks.get();
+        return new DesksDTO(desks.get(), desksCount.get());
     }
 
 }
