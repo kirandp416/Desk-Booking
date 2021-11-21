@@ -1,9 +1,6 @@
 // Get elements.
 const resultsText = document.getElementById("resultsText");
-let roomSelect = document.getElementById("room");
-const tablePreviousBtn = document.getElementById("tablePreviousBtn");
-const tableNextBtn = document.getElementById("tableNextBtn");
-const viewDesksBtn = document.getElementById("viewDesksBtn");
+const roomSelect = document.getElementById("room");
 
 // Table pagination state.
 const limit = 10;
@@ -11,7 +8,7 @@ let offset = 0;
 let totalResults = 0;
 
 // Add event listener to table previous button.
-tablePreviousBtn.addEventListener("click", function () {
+document.getElementById("tablePreviousBtn").addEventListener("click", function () {
     // If the offset is 0, there are no more previous records.
     if (offset === 0) {
         return;
@@ -23,7 +20,7 @@ tablePreviousBtn.addEventListener("click", function () {
 });
 
 // Add event listener to table next button.
-tableNextBtn.addEventListener("click", function () {
+document.getElementById("tableNextBtn").addEventListener("click", function () {
     // If offset + limit becomes greater or equal to total results, there are no more records.
     if (offset + limit >= totalResults) {
         return;
@@ -35,7 +32,7 @@ tableNextBtn.addEventListener("click", function () {
 });
 
 // Add click listener for view desks button.
-viewDesksBtn.addEventListener("click", function () {
+document.getElementById("viewDesksBtn").addEventListener("click", function () {
     // Get desks.
     getDesks();
 });
