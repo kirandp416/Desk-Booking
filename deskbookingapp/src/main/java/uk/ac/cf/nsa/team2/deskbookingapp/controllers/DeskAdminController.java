@@ -49,4 +49,25 @@ public class DeskAdminController {
                 .addObject("rooms", rooms.get());
     }
 
+    /**
+     * Route to get the manage desks page.
+     *
+     * @return a ModelAndView object.
+     */
+    @GetMapping("/admin/manage_desks")
+    public ModelAndView manageDesksPage() {
+        // Get rooms from repository.
+        Optional<List<RoomDTO>> rooms = roomRepository.findAll();
+
+        // If the optional is empty, redirect user to server error page.
+        if (rooms.isEmpty()) {
+            return new ModelAndView("redirect:/internal_server_error");
+        }
+
+        // Return a model and view for the manage desks page,
+        // passing the rooms into the view.
+        return new ModelAndView("admin/manage_desks")
+                .addObject("rooms", rooms.get());
+    }
+
 }
