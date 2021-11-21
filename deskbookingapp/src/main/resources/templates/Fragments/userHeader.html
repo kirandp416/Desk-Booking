@@ -36,7 +36,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/booking/all"><span class="glyphicon glyphicon-user"></span> View your Bookings</a></li>
                 <li sec:authorize="isAnonymous()"><a href="/login"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
-                <li sec:authorize="isAuthenticated()"><a href="/login"><span class="glyphicon glyphicon-log-in" ></span> Logout</a></li>
+                <li sec:authorize="isAuthenticated()"><a href="/logout"><span class="glyphicon glyphicon-log-in" ></span> Logout</a></li>
                 <li sec:authorize="isAuthenticated()"> Welcome, <span sec:authentication="name" style="color: wheat"></span></li>
             </ul>
         </div>
