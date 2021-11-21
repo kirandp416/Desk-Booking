@@ -38,4 +38,12 @@ public interface DeskRepository {
      */
     Optional<List<DeskDTO>> findByRoom(int roomId, int offset, int limit);
 
+    /**
+     * Counts the number of desks by room.
+     *
+     * @param roomId the ID of the room.
+     * @return An optional containing the count of desks if the operation was successful.
+     */
+    Optional<Integer> findByRoomCount(int roomId);
+
 }

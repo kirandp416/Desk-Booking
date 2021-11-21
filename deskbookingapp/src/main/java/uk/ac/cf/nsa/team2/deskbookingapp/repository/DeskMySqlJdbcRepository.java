@@ -65,7 +65,20 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
         final String sql = "SELECT * FROM desk WHERE room_id = ? LIMIT ? OFFSET ?;";
 
         try {
-            return Optional.of(jdbc.query(sql, new DeskRowMapper(), roomId, offset, limit));
+            return Optional.of(jdbc.query(sql, new DeskRowMapper(), roomId, limit, offset));
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Integer> findByRoomCount(int roomId) {
+        final String sql = "SELECT COUNT(*) FROM desk WHERE room_id = ?;";
+
+        try {
+            return Optional.ofNullable(jdbc.queryForObject(sql, Integer.class, roomId));
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
