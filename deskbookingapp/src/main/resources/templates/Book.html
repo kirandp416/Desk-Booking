@@ -14,10 +14,9 @@
 
             <!--<p>You are logged in as <span sec:authentication="name"></span></p>-->
 
-            <form action="/booking/add/process_form" method="post" onsubmit="return validateForm()">
+            <form action="/booking/add/process_form" method="post">
                 <label for="bookingDate">Date:</label>
                 <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
-                <input type="submit">
             </form>
 
             <br>
