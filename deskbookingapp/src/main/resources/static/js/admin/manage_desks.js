@@ -31,8 +31,11 @@ document.getElementById("tableNextBtn").addEventListener("click", function () {
     getDesks();
 });
 
-// Add click listener for view desks button.
-document.getElementById("viewDesksBtn").addEventListener("click", function () {
+// Add click listener for form submit
+document.forms["form"].addEventListener("submit", function (e) {
+    // Prevent default behaviour of form.
+    e.preventDefault();
+
     // Get desks.
     getDesks();
 });

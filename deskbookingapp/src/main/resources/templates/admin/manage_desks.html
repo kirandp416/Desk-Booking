@@ -13,15 +13,17 @@
     <main>
         <div class="container">
             <h1>Desks</h1>
-            <p>
-                <label for="room">Room: </label>
-                <select id="room" name="room" required>
-                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-                </select>
-            </p>
-            <p>
-                <button class="btn btn-primary" id="viewDesksBtn">View Desks</button>
-            </p>
+            <form id="form">
+                <p>
+                    <label for="room">Room: </label>
+                    <select id="room" name="room" required>
+                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+                </p>
+                <p>
+                    <input type="submit" class="btn btn-primary" value="View Desks">
+                </p>
+            </form>
 
             <table class="table">
                 <!-- Table header. -->
