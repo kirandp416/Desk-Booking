@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+</head>
+<body>
+<header th:replace="fragments/header.html::header"></header>
+<form>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">room</label>
+        <input class="form-control" name="room" id="exampleInputEmail1">
+    </div>
+    <div class="mb-3">
+        <label for="datepicker" class="form-label">date</label>
+        <input class="form-control" type="text" name="datedate" id="datepicker" th:onchange="test1()">
+    </div>
+    <div class="mb-3">
+        <label for="datepicker" class="form-label" style="display: block;">time</label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox1" name="08:00-09:00" value="option1"> 08:00-09:00
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox2" name="09:00-10:00" value="option2"> 09:00-10:00
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox3" name="10:00-11:00" value="option3"> 10:00-11:00
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox4" name="11:00-12:00" value="option3"> 11:00-12:00
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox5" name="12:00-13:00" value="option1"> 12:00-13:00
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox6" name="13:00-14:00" value="option2"> 13:00-14:00
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox7" name="14:00-15:00" value="option3"> 14:00-15:00
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox8" name="15:00-16:00" value="option3"> 15:00-16:00
+        </label>
+    </div>
+</form>
+<button class="btn btn-primary" style="margin-top: 10px" th:onclick="test()">Submit</button>
+</body>
+<script>
+    function test() {
+        let formData = $('form').serializeArray();
+        let obj = {}
+        $.each(formData, function (i, v) {
+            obj[v.name] = v.value;
+        })
+        console.log(obj)
+    }
+    function test1() {
+        let date = document.getElementById("datepicker").value
+        console.log(date)
+    }
+</script>
+</html>
