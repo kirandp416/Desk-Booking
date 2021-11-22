@@ -24,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/api/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/book").hasRole("USER")
+                .mvcMatchers("/booking/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
