@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Manage Desks</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/admin/manage_desks.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h1>Desks</h1>
+            <form id="form">
+                <p>
+                    <label for="room">Room: </label>
+                    <select id="room" name="room" required>
+                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+                </p>
+                <p>
+                    <input type="submit" class="btn btn-primary" value="View Desks">
+                </p>
+            </form>
+
+            <table class="table">
+                <!-- Table header. -->
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Desk Name</th>
+                    </tr>
+                </thead>
+                <!-- Table body. -->
+                <tbody>
+                </tbody>
+            </table>
+
+            <!-- Pagination controls. -->
+            <ul class="pagination justify-content-end" style="align-items: center;">
+                <li class="page-item" id="resultsText" style="margin-right: 8px;"></li>
+                <li class="page-item">
+                    <button class="page-link" id="tablePreviousBtn">Previous</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" id="tableNextBtn">Next</button>
+                </li>
+            </ul>
+        </div>
+    </main>
+</body>
+
+</html>

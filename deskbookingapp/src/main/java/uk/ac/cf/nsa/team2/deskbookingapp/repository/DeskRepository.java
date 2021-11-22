@@ -28,6 +28,23 @@ public interface DeskRepository {
      */
     Optional<Boolean> checkDeskNameExistsForRoom(int roomId, String deskName);
 
-//    List<DeskDTO> findAllDesksInARoom(int roomId);
+    /**
+     * Finds desks by room.
+     *
+     * @param roomId the ID of the room.
+     * @param offset the number of desks to offset by.
+     * @param limit  the maximum number of desks to get.
+     * @return an optional containing a list of desks if the operation was successful.
+     */
+    Optional<List<DeskDTO>> findByRoom(int roomId, int offset, int limit);
+
+    /**
+     * Counts the number of desks by room.
+     *
+     * @param roomId the ID of the room.
+     * @return An optional containing the count of desks if the operation was successful.
+     */
+    Optional<Integer> findByRoomCount(int roomId);
+
 
 }

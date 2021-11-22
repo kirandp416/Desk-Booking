@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.mapper.DeskRowMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,32 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
         try {
             List<Map<String, Object>> resultSet = jdbc.queryForList(sql, roomId, deskName);
             return Optional.of(!resultSet.isEmpty());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<DeskDTO>> findByRoom(int roomId, int offset, int limit) {
+        final String sql = "SELECT * FROM desk WHERE room_id = ? LIMIT ? OFFSET ?;";
+
+        try {
+            return Optional.of(jdbc.query(sql, new DeskRowMapper(), roomId, limit, offset));
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Integer> findByRoomCount(int roomId) {
+        final String sql = "SELECT COUNT(*) FROM desk WHERE room_id = ?;";
+
+        try {
+            return Optional.ofNullable(jdbc.queryForObject(sql, Integer.class, roomId));
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
