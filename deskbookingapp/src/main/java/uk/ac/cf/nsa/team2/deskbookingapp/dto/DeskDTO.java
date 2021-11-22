@@ -1,12 +1,19 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A data transfer object for transferring desk data.
  */
 public class DeskDTO {
 
+    @JsonProperty("id")
     private int id; // The ID of the desk.
+
+    @JsonProperty("room_id")
     private int roomId; // The ID of the room.
+
+    @JsonProperty("name")
     private String name; // The name of the desk.
 
     public DeskDTO() {
