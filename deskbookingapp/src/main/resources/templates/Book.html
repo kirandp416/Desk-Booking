@@ -3,46 +3,75 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="Book.js"></script>
+    <script type="text/javascript" src="/Book.js"></script>
     <title>Book</title>
 </head>
 <body>
+    <main>
+        <div class="container">
 
-<!--<p>You are logged in as <span sec:authentication="name"></span></p>-->
+            <!--<p>You are logged in as <span sec:authentication="name"></span></p>-->
 
-<form action="/booking/add/process_form" method="post" onsubmit="return validateForm()">
-    <label for="bookingDate">Date:</label>
-    <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
-    <input type="submit">
-</form>
+            <form action="/booking/add/process_form" method="post" onsubmit="return validateForm()">
+                <label for="bookingDate">Date:</label>
+                <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
+                <input type="submit">
+            </form>
 
-<br>
-<br>
+            <br>
+            <br>
 
-<p>
-    <label for="room">Room: </label>
-    <select id="room" name="room" required>
-        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-    </select>
-</p>
+            <form id="form">
+                <p>
+                    <label for="room">Room: </label>
+                    <select id="room" name="room" required>
+                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+                </p>
+                <p>
+                    <input type="submit" class="btn btn-primary" value="View Desks">
+                </p>
+            </form>
 
-<br>
-<br>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Desk Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
 
-<div>
-    <form action="#" th:action="@{/logout}" method="post">
-        <input type="submit" value="Logout"/>
-    </form>
-</div>
+            <ul class="pagination justify-content-end" style="align-items: center;">
+                <li class="page-item" id="resultsText" style="margin-right: 8px;"></li>
+                <li class="page-item">
+                    <button class="page-link" id="tablePreviousBtn">Previous</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" id="tableNextBtn">Next</button>
+                </li>
+            </ul>
 
-<br>
-<br>
+            <br>
+            <br>
 
-<a href="/">Home</a>
+            <div>
+                <form action="#" th:action="@{/logout}" method="post">
+                    <input type="submit" value="Logout"/>
+                </form>
+            </div>
 
+            <br>
+            <br>
+
+            <a href="/">Home</a>
+        </div>
+    </main>
 </body>
-
 
 
 <script type="text/javascript" src="/Book.js"></script>
