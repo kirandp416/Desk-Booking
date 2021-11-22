@@ -28,7 +28,6 @@ public class FileService {
 
     public FileService(@Value("D:/loadTest") String path) {
         this.fileStorageLocation = Paths.get(path).toAbsolutePath().normalize();
-        System.out.println(this.fileStorageLocation);
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (IOException e) {
