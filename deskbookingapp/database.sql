@@ -26,8 +26,14 @@ CREATE TABLE booking
     booking_date DATE
 );
 
-INSERT INTO booking (username, booking_date) VALUES ("user1", '2021-11-12');
-INSERT INTO booking (username, booking_date) VALUES ("user1", '2022-03-26');
-INSERT INTO booking (username, booking_date) VALUES ("user2", '2023-10-01');
-INSERT INTO booking (username, booking_date) VALUES ("user2", '2026-06-20');
+INSERT INTO booking (username, booking_date) VALUES ("user1", '2021-11-12'),
+                                                     ("user1", '2022-03-26'),
+                                                     ("user2", '2023-10-01'),
+                                                     ("user2", '2026-06-20');
+
+INSERT INTO room(room_name) VALUES ("Bristol Main Room"),
+                                    ("Cardiff Main Room");
+
+INSERT INTO desk(room_id, desk_name) VALUES ((SELECT room_id FROM room WHERE room_name = "Bristol Main Room"), "Main Desk"),
+                                             ((SELECT room_id FROM room WHERE room_name = "Cardiff Main Room"), "Standing Desk");
 

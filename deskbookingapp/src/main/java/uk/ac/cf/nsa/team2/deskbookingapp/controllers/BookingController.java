@@ -1,6 +1,7 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -8,15 +9,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.repository.RoomRepository;
+
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BookingController {
 
     private BookingRepository bookingRepository;
+
+    private RoomRepository roomRepository;
 
     /**
      * Constructor that will be used by Sprint to instantiate
@@ -26,19 +34,27 @@ public class BookingController {
      *              to hold our Booking objects in
      */
     @Autowired
-    public BookingController(BookingRepository bRepo) {
+    public BookingController(BookingRepository bRepo, RoomRepository rRepo) {
         bookingRepository = bRepo;
+        roomRepository = rRepo;
     }
 
-    /**
-     * Route for Book a desk page
-     *
-     * @return A string that will map to an
-     * * html file
-     */
+
+
     @RequestMapping(path = "/booking/add")
-    public String book() {
-        return "Book";
+    public ModelAndView book() {
+
+        Optional<List<RoomDTO>> rooms = roomRepository.findAll();
+
+        if (rooms.isEmpty()) {
+            return new ModelAndView("redirect:/internal_server_error");
+        }
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("rooms", rooms.get());
+        mav.setViewName("Book");
+
+        return mav;
     }
 
     /**

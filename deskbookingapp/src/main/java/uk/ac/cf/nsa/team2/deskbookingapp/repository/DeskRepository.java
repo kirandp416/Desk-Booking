@@ -2,6 +2,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,5 +27,7 @@ public interface DeskRepository {
      * specified name if the operation was successful.
      */
     Optional<Boolean> checkDeskNameExistsForRoom(int roomId, String deskName);
+
+//    List<DeskDTO> findAllDesksInARoom(int roomId);
 
 }
