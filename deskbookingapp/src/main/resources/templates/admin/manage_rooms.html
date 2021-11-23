@@ -6,10 +6,12 @@
     <meta charset="UTF-8">
     <title>Admin - Manage Rooms</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/admin/manage_desks.js" defer></script>
 </head>
 
 <body>
+<header th:replace="Fragments/adminHeader :: header">Default</header>
 <main>
     <!--    Thymeleaf for loop over all rooms, where each room
         corresponds to one row in an HTML table. At the end of
@@ -37,6 +39,10 @@
             </tbody>
         </table>
     </div>
+    <br>
+    <br>
+    <br>
+    <footer th:replace="Fragments/footer :: footer">Default</footer>
 </main>
 </body>
 
