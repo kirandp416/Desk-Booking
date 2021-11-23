@@ -1,0 +1,9 @@
+.deskTable{
+    width: 100%;
+    table-layout: fixed;
+}
+
+/*All tds that are in trs that are in tables with class="deskTable" */
+.deskTable tr td{
+    width: 33%;
+}

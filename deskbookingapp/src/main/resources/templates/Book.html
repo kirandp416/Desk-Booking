@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="/Book.js" defer></script>
+    <link th:href="@{/css/Book.css}" rel="stylesheet" />
     <title>Book</title>
 </head>
 <body>
@@ -36,7 +37,7 @@
                 </p>
             </form>
 
-            <table class="table">
+            <table class="table deskTable" id="deskTable" >
                 <thead>
                 <tr>
                     <th scope="col">ID</th>

@@ -162,7 +162,7 @@ function displayDesks(json) {
         if (desk["available"] === true) {
             let btn = document.createElement("button");
             btn.innerHTML = "Book";
-            btn.className = "btn btn-success"
+            btn.className = "btn btn-success btn-sm"
             btn.id = desk["id"];
             btn.addEventListener("click", function(){postBooking(this.id)});
             buttonCell.appendChild(btn);
@@ -191,8 +191,16 @@ function displayDesks(json) {
 
             if (xhttp.readyState == 4){
                 if (xhttp.status === 200){
-                    console.log("Booking made. Reloading DOM...")
-                    getDesks();
+
+                    console.log("1) Booking made");
+                    showLoaderById(deskId);
+                    console.log("5) loader function finished, getting desks:");
+
+                    setTimeout(function(){
+                        getDesks();
+                    }, 1000);
+
+                    console.log("6) desks reloaded into DOM.")
                 }
                 else{
                     console.error(xhttp.statusText);
@@ -200,9 +208,39 @@ function displayDesks(json) {
             }
         }
 
-
-
         xhttp.send(params);
+    }
+
+
+
+    function showLoaderById(id){
+
+        // We want to create the following piece of HTML and add it to our DOM
+
+        // <div className="spinner-border text-dark spinner-border-sm" role="status">
+        //     <span className="sr-only"></span>
+        // </div>
+
+        let loaderDiv = document.createElement("div");
+        loaderDiv.className = "spinner-border text-dark spinner-border-sm";
+        loaderDiv.role = 'status';
+        loaderDiv.id = 'loaderDiv';
+
+        let loaderSpan = document.createElement("span");
+        loaderSpan.className = "sr-only";
+        loaderDiv.appendChild(loaderSpan);
+
+        // Test to see what we created:
+        console.log("2) element with id loaderDiv is:");
+        console.log(loaderDiv);
+
+        // Remove button from DOM
+        document.getElementById(id).style.opacity="0";
+
+        // Add loader to parent of button, the cell
+        console.log("4) Adding icon to cell in DOM")
+        document.getElementById(id).parentElement.appendChild(loaderDiv);
+
     }
 
 
