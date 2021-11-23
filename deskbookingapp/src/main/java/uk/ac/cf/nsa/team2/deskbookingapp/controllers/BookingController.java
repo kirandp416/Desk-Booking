@@ -42,7 +42,7 @@ public class BookingController {
 
 
     @RequestMapping(path = "/booking/add")
-    public ModelAndView book() {
+    public ModelAndView book(Principal principal) {
 
         Optional<List<RoomDTO>> rooms = roomRepository.findAll();
 
@@ -52,6 +52,7 @@ public class BookingController {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("rooms", rooms.get());
+        mav.addObject("user", principal);
         mav.setViewName("Book");
 
         return mav;

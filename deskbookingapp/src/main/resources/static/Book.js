@@ -42,6 +42,8 @@ function pastDateWarn() {
 const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
 const dateSelect = document.getElementById("bookingDate");
+const usernameSelect = document.getElementById("username")
+
 
 // Table pagination state.
 const limit = 10;
@@ -171,9 +173,9 @@ function displayDesks(json) {
     }
 
     function postBooking(deskId){
-        console.log("Making booking for desk id " + deskId + "...");
-    }
+        console.log("Making booking for desk number " + deskId + " in room number " + roomSelect.value + " on " + dateSelect.value + " for user with username: " + usernameSelect.value);
 
+    }
 
 
 }
