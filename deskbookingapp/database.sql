@@ -36,7 +36,7 @@ CREATE TABLE booking
     booking_date DATE
 );
 
-INSERT INTO desk_type (desk_type_id desk_type_name)
+INSERT INTO desk_type (desk_type_id, desk_type_name)
 VALUES (1, 'Standard'),
        (2, 'Standing');
 
