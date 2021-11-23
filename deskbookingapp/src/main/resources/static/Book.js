@@ -31,8 +31,8 @@ function pastDateWarn() {
     let todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
 
     if (bookingDate < todayDate) {
-        setDateToToday();
         alert('You cannot choose a date in the past.');
+        setDateToToday();
     }
 }
 
@@ -41,6 +41,7 @@ function pastDateWarn() {
 // Get elements.
 const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
+const dateSelect = document.getElementById("bookingDate");
 
 // Table pagination state.
 const limit = 10;
@@ -76,7 +77,8 @@ document.forms["form"].addEventListener("submit", function (e) {
     // Prevent default behaviour of form.
     e.preventDefault();
 
-        getDesks();
+    // Get desks.
+    getDesks();
 });
 
 /**
@@ -84,8 +86,8 @@ document.forms["form"].addEventListener("submit", function (e) {
  */
 function getDesks() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/api/desks?room_id=" + roomSelect.value +
-        "&offset=" + offset + "&limit=" + limit, true);
+    xhttp.open("GET", "/api/desks_available?room_id=" + roomSelect.value +
+        "&date=" + dateSelect.value + "&offset=" + offset + "&limit=" + limit, true);
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4) {
             if (xhttp.status === 200) {
@@ -135,7 +137,10 @@ function displayDesks(json) {
         let name = document.createElement("td");
         name.innerText = desk["name"];
 
-        row.append(id, name);
+        let available = document.createElement("td");
+        available.innerText = desk["available"];
+
+        row.append(id, name, available);
 
         table.appendChild(row);
     });

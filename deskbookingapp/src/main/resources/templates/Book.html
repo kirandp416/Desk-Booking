@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/Book.js"></script>
+    <script type="text/javascript" src="/Book.js" defer></script>
     <title>Book</title>
 </head>
 <body>
@@ -19,7 +19,6 @@
                 <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
             </form>
 
-            <br>
             <br>
 
             <form id="form">
@@ -39,6 +38,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Desk Name</th>
+                    <th scope="col">Available</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -1,5 +1,6 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskAvailabilityDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
 
 import java.util.List;
@@ -45,6 +46,14 @@ public interface DeskRepository {
      * @return An optional containing the count of desks if the operation was successful.
      */
     Optional<Integer> findByRoomCount(int roomId);
+
+    /**
+     * @param roomId
+     * @param date
+     * @param offset
+     * @param limit
+     */
+    Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(int roomId, String date, int offset, int limit);
 
 
 }

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskAvailabilityDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DesksAvailabilityDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DesksDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.DeskRepository;
 
@@ -58,6 +60,26 @@ public class DeskRestController {
         }
 
         return new DesksDTO(desks.get(), desksCount.get());
+    }
+
+    @GetMapping(path = "/api/desks_available", produces = "application/json")
+    public DesksAvailabilityDTO getDesksAvailability(@RequestParam("room_id") int roomId, @RequestParam("date") String date,@RequestParam("offset") int offset,
+                             @RequestParam("limit") int limit, HttpServletResponse response) {
+        // Query for desks and count of desks.
+        Optional<List<DeskAvailabilityDTO>> desks = deskRepository.findByRoomIncludeAvailability(roomId, date, offset, limit);
+        Optional<Integer> desksCount = deskRepository.findByRoomCount(roomId);
+
+        // Return 500 status if there was an error.
+        if (desks.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        }
+        if (desksCount.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        }
+
+        return new DesksAvailabilityDTO(desks.get(), desksCount.get());
     }
 
 }
