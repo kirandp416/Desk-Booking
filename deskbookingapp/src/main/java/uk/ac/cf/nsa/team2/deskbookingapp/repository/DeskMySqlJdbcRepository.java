@@ -64,8 +64,8 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
     @Override
     public Optional<List<DeskDTO>> findByRoom(int roomId, int offset, int limit) {
         final String sql = "SELECT * FROM desk " +
-                "WHERE room_id = ? " +
                 "INNER JOIN desk_type ON desk.desk_type_id = desk_type.desk_type_id " +
+                "WHERE room_id = ? " +
                 "LIMIT ? OFFSET ?;";
 
         try {

@@ -96,7 +96,13 @@ function displayDesks(json) {
         let name = document.createElement("td");
         name.innerText = desk["name"];
 
-        row.append(id, name);
+        let type = document.createElement("td");
+        type.innerText = desk["desk_type"]["name"];
+
+        let notes = document.createElement("td");
+        notes.innerText = desk["notes"];
+
+        row.append(id, name, type, notes);
 
         table.appendChild(row);
     });
