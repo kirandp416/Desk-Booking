@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.json.AddDeskJsonRequest;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.DeskRepository;
 
@@ -53,12 +54,17 @@ public class DeskAdminRestController {
         }
 
         // Create DTO.
-        DeskDTO dto = new DeskDTO();
-        dto.setRoomId(request.getRoom());
-        dto.setName(request.getName());
+        DeskDTO deskDTO = new DeskDTO();
+        deskDTO.setRoomId(request.getRoom());
+        deskDTO.setName(request.getName());
+        deskDTO.setNotes(request.getNotes());
+
+        DeskTypeDTO deskTypeDTO = new DeskTypeDTO();
+        deskTypeDTO.setId(request.getDeskType());
+        deskDTO.setDeskType(deskTypeDTO);
 
         // Create desk.
-        boolean successful = deskRepository.add(dto);
+        boolean successful = deskRepository.add(deskDTO);
 
         // Return 500 internal status if unsuccessful.
         if (!successful) {

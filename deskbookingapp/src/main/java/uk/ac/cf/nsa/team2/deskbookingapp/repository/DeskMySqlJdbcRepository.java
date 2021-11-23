@@ -34,11 +34,12 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
 
     @Override
     public boolean add(DeskDTO desk) {
-        final String sql = "INSERT INTO desk(desk_id,room_id,desk_name) VALUES(?,?,?);";
+        final String sql = "INSERT INTO desk(desk_id,room_id,desk_type_id,desk_name,notes) VALUES(?,?,?,?,?);";
         int rowsAffected = 0;
 
         try {
-            rowsAffected = jdbc.update(sql, desk.getId(), desk.getRoomId(), desk.getName());
+            rowsAffected = jdbc.update(sql, desk.getId(), desk.getRoomId(), desk.getDeskType().getId(),
+                    desk.getName(), desk.getNotes());
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
@@ -62,7 +63,10 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
 
     @Override
     public Optional<List<DeskDTO>> findByRoom(int roomId, int offset, int limit) {
-        final String sql = "SELECT * FROM desk WHERE room_id = ? LIMIT ? OFFSET ?;";
+        final String sql = "SELECT * FROM desk " +
+                "WHERE room_id = ? " +
+                "INNER JOIN desk_type ON desk.desk_type_id = desk_type.desk_type_id " +
+                "LIMIT ? OFFSET ?;";
 
         try {
             return Optional.of(jdbc.query(sql, new DeskRowMapper(), roomId, limit, offset));
