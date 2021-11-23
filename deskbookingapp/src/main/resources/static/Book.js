@@ -173,8 +173,29 @@ function displayDesks(json) {
     }
 
     function postBooking(deskId){
-        console.log("Making booking for desk number " + deskId + " in room number " + roomSelect.value + " on " + dateSelect.value + " for user with username: " + usernameSelect.value);
 
+        let roomIdParam = roomSelect.value;
+        let dateParam = dateSelect.value;
+        let usernameParam = usernameSelect.value;
+
+        // Uncomment the following to check params
+        console.log("Making booking for desk number " + deskId + " in room number " + roomIdParam + " on " + dateParam + " for user with username: " + usernameParam);
+
+        let params = 'bookingDeskId=' + deskId + '&bookingRoomId='+ roomIdParam + '&bookingDate=' + dateParam + '&username=' + usernameParam;
+        console.log(params);
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/booking/add/process_form", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+
+
+
+
+
+
+
+
+        xhttp.send(params);
     }
 
 

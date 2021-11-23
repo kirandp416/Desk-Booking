@@ -7,21 +7,44 @@ package uk.ac.cf.nsa.team2.deskbookingapp.form;
  */
 public class BookingForm {
 
+    private int bookingDeskId;
+    private int bookingRoomId;
     private String bookingDate;
+    private String username;
 
-    public BookingForm(String bookingDate) {
+//    public BookingForm(String bookingDate) {
+//        this.bookingDate = bookingDate;
+//
+//        // Some code to check what data is coming in to the constructor
+//        // from the form for server-side debugging
+//
+////        System.out.println("BookingForm object instantiated with bookingDate:");
+////        System.out.println(this.bookingDate.length());
+////        System.out.println("The BookingForm constructor was supplied:");
+////        System.out.println(bookingDate);
+//    }
+
+
+    public BookingForm(int bookingDeskId, int bookingRoomId, String bookingDate, String username) {
+        this.bookingDeskId = bookingDeskId;
+        this.bookingRoomId = bookingRoomId;
         this.bookingDate = bookingDate;
+        this.username = username;
+    }
 
-        // Some code to check what data is coming in to the constructor
-        // from the form for server-side debugging
+    public int getBookingDeskId() {
+        return bookingDeskId;
+    }
 
-//        System.out.println("BookingForm object instantiated with bookingDate:");
-//        System.out.println(this.bookingDate.length());
-//        System.out.println("The BookingForm constructor was supplied:");
-//        System.out.println(bookingDate);
+    public int getBookingRoomId() {
+        return bookingRoomId;
     }
 
     public String getBookingDate() {
         return bookingDate;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

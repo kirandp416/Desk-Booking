@@ -38,10 +38,10 @@ public class BookingRepositoryJDBC implements BookingRepository {
         // System.out.println("addBooking supplied the following date");
         // System.out.println(bookingForm.getBookingDate());
 
-        String query = "insert into booking (username, booking_date) values(?,?)";
+        String query = "insert into booking (username, booking_date, room_id, desk_id) values(?,?,?,?)";
 
         int rows = jdbcTemplate.update(query,
-                new Object[]{bookingDTO.getUsername(), bookingDTO.getDate()}
+                new Object[]{bookingDTO.getUsername(), bookingDTO.getDate(), bookingDTO.getBookingRoomId(), bookingDTO.getBookingDeskId()}
         );
 
         if (rows > 0)

@@ -71,13 +71,19 @@ public class BookingController {
      */
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/booking/add/process_form", method = RequestMethod.POST)
-    public ModelAndView postBooking(BookingForm bookingForm, BindingResult br, Principal principal) {
+    public ModelAndView postBooking(BookingForm bookingForm, BindingResult br) {
+        System.out.println(bookingForm.getUsername());
+        System.out.println(bookingForm.getBookingDate());
+        System.out.println(bookingForm.getBookingDeskId());
+        System.out.println(bookingForm.getBookingRoomId());
 
-        BookingDTO bookingDTO = new BookingDTO(bookingForm.getBookingDate(), principal.getName());
+        BookingDTO bookingDTO = new BookingDTO(bookingForm.getUsername(), bookingForm.getBookingDate(), bookingForm.getBookingDeskId(), bookingForm.getBookingRoomId());
+
         ModelAndView mav = new ModelAndView();
 
         if (br.hasErrors()) {
             System.out.println("Binding Result Errors encountered.");
+            System.out.println(br.getAllErrors());
             mav.setViewName("BookingNotAdded");
             return mav;
         } else {
