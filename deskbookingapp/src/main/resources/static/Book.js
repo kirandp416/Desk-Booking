@@ -187,11 +187,18 @@ function displayDesks(json) {
         xhttp.open("POST", "/booking/add/process_form", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
+        xhttp.onreadystatechange = function () {
 
-
-
-
-
+            if (xhttp.readyState == 4){
+                if (xhttp.status === 200){
+                    console.log("Booking made. Reloading DOM...")
+                    getDesks();
+                }
+                else{
+                    console.error(xhttp.statusText);
+                }
+            }
+        }
 
 
 
