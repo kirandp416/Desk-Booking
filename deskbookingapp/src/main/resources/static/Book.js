@@ -10,9 +10,9 @@
 
 // Create a function that will set the date in the form to today's date
 
-function setDateToToday(){
+function setDateToToday() {
     let today = new Date();
-    let todayFormatted = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
+    let todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     console.log("Setting date to today's date...")
     document.getElementById("bookingDate").value = todayFormatted;
 }
@@ -129,6 +129,7 @@ function displayDesks(json) {
 
     // Create rows for each desk.
     json["results"].forEach(function (desk) {
+
         let row = document.createElement("tr");
 
         let id = document.createElement("td");
@@ -137,10 +138,20 @@ function displayDesks(json) {
         let name = document.createElement("td");
         name.innerText = desk["name"];
 
-        let available = document.createElement("td");
-        available.innerText = desk["available"];
+        // Create a cell in the last column in our table that
+        // can hold a button
+        let buttonCell = document.createElement("td");
 
-        row.append(id, name, available);
+        // If the desk is available on the selected date, render
+        // a button in the buttonCell
+        if (desk["available"] === true) {
+            let btn = document.createElement("button");
+            btn.innerHTML = "Book";
+            btn.className = "btn btn-success"
+            buttonCell.appendChild(btn);
+        }
+
+        row.append(id, name, available, buttonCell);
 
         table.appendChild(row);
     });
