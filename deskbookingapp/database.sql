@@ -41,10 +41,7 @@ VALUES (1, 'Standard'),
        (2, 'Standing');
 
 INSERT INTO booking (username, booking_date)
-VALUES ("user1", '2021-11-12');
-INSERT INTO booking (username, booking_date)
-VALUES ("user1", '2022-03-26');
-INSERT INTO booking (username, booking_date)
-VALUES ("user2", '2023-10-01');
-INSERT INTO booking (username, booking_date)
-VALUES ("user2", '2026-06-20');
+VALUES ('user1', '2021-11-12'),
+       ('user1', '2022-03-26'),
+       ('user2', '2023-10-01'),
+       ('user2', '2026-06-20');
