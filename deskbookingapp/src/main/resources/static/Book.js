@@ -36,7 +36,7 @@ function pastDateWarn() {
     }
 }
 
-// The following code is an adaption of code in manage_desks.js, written by Hassan
+// Start of code that was adapted from Hassan's code in manage_desks.js
 
 // Get elements.
 const resultsText = document.getElementById("resultsText");
@@ -138,6 +138,19 @@ function displayDesks(json) {
         let name = document.createElement("td");
         name.innerText = desk["name"];
 
+        let buttonCell = buttonConfigurer(desk);
+
+        row.append(id, name, buttonCell);
+
+        table.appendChild(row);
+    });
+
+    // End of code adapted from Hassan's
+
+
+
+    function buttonConfigurer(desk){
+
         // Create a cell in the last column in our table that
         // can hold a button
         let buttonCell = document.createElement("td");
@@ -148,11 +161,19 @@ function displayDesks(json) {
             let btn = document.createElement("button");
             btn.innerHTML = "Book";
             btn.className = "btn btn-success"
+            btn.id = desk["id"];
+            btn.addEventListener("click", function(){postBooking(this.id)});
             buttonCell.appendChild(btn);
         }
 
-        row.append(id, name, available, buttonCell);
+        return buttonCell;
 
-        table.appendChild(row);
-    });
+    }
+
+    function postBooking(deskId){
+        console.log("Making booking for desk id " + deskId + "...");
+    }
+
+
+
 }
