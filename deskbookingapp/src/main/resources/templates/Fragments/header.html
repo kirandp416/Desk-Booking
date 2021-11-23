@@ -42,7 +42,7 @@
             <ul class="nav justify-content-end">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/booking/all"> View your Bookings</a></li>
                 <li sec:authorize="isAnonymous()" class="nav-item"><a class="btn btn-primary" href="/login" role="button"> Login</a></li>
-                <li sec:authorize="isAuthenticated()" class="nav-item"><a class="btn btn-primary" role="button" href="/logout"> Logout </a></li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a class="btn btn-primary" role="button" href="/logout"> Logout</a></li>
                 <li class="navbar-text" sec:authorize="isAuthenticated()">  Welcome,
                     <span class="navbar-text" sec:authentication="name"></span>
                 </li>
