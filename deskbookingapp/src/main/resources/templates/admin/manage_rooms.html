@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Manage Rooms</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/admin/manage_desks.js" defer></script>
+</head>
+
+<body>
+<main>
+    <!--    Thymeleaf for loop over all rooms, where each room
+        corresponds to one row in an HTML table. At the end of
+        each row, a cell for a editing button and deleting button is also rendered.-->
+    <div class="container mt-auto">
+        <h1>Rooms</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Room ID</td>
+                <th scope="col">Room Name</td>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="room: ${rooms}">
+                <td th:text="${room.id}"/>
+                <td th:text="${room.name}"/>
+                <td><button th:id="${room.id}"  class="btn btn-secondary">Edit</button></td>
+                <td>
+                    <button th:id="${room.id}"  class="btn btn-danger">Delete</button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+
+</html>
