@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Booking Added</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-
+<header th:replace="Fragments/userHeader :: header">Default</header>
 <p>Your booking was a success!</p>
 <br>
-<a href="/">Home</a>
+<footer th:replace="Fragments/footer :: footer">Default</footer>
 
-
-<div>
-    <form action="#" th:action="@{/logout}" method="post">
-        <input type="submit" value="Logout" />
-    </form>
-</div>
 
 </body>
 </html>
