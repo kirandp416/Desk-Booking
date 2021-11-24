@@ -62,18 +62,22 @@ public class RoomAdminController {
      *
      * @return a Model and View object
      */
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/admin/rooms/all", method = RequestMethod.GET)
     public ModelAndView getAllRooms() {
             // Get rooms from repository.
+
             Optional<List<RoomDTO>> rooms = roomRepository.findAll();
             // If the optional is empty, redirect user to server error page.
+
             if (rooms.isEmpty()) {
                 return new ModelAndView("redirect:/internal_server_error");
             }
 
             // Return a model and view for the manage desks page,
             // passing the rooms into the view.
+
             return new ModelAndView("admin/manage_rooms")
                     .addObject("rooms", rooms.get());
     }
