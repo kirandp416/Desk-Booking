@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * A class adapted from DesksDTO class written by Hassan. The class allows
+ * for retrieval of portions of the total desk cohort in JSON to allow for
+ * pagination. The total_results field keeps track of the pagination.
+ */
 public class DesksAvailabilityDTO {
 
     @JsonProperty("results")

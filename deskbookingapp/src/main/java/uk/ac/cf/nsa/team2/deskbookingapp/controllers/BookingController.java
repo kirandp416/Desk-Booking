@@ -39,8 +39,15 @@ public class BookingController {
         roomRepository = rRepo;
     }
 
-
-
+    /**
+     * Create route to booking page. As page loads we load in the
+     * currently logged in user's details so that they can make
+     * a booking for their own personal account
+     * @param principal An object containing the users details
+     *
+     * @return ModelAndView object which is the booking page
+     *                      with user's details in the Model.
+     */
     @RequestMapping(path = "/booking/add")
     public ModelAndView book(Principal principal) {
 
@@ -106,7 +113,7 @@ public class BookingController {
      * that have been made by a particular user in the Model and the
      * Bookings page as the View
      *
-     * @return a Model and View object
+     * @return a Model and View object that contains all the bookings
      */
     @RequestMapping(path = "/booking/all", method = RequestMethod.GET)
     public ModelAndView getUserBookingsPage(Principal principal) {
@@ -120,7 +127,7 @@ public class BookingController {
     /**
      * Create route that will attempt to delete a booking from the booking
      * database, by booking id. If it is successful you will see a view that
-     * say successful and if it is not you will see a view that says it failed.
+     * says successful and if it is not you will see a view that says it failed.
      * We will be calling this method via AJAX so you will not see these views.
      * However, if you would like to see the views and test it, please change
      * request method below to GET and try the route with a valid id in the
@@ -149,6 +156,5 @@ public class BookingController {
         return mav;
 
         }
-
 
 }

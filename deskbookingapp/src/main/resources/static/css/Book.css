@@ -8,6 +8,7 @@
 of the space */
 .deskTable tr td{
     width: 33%;
+    text-align: center;
 }
 
 /* Fix the height so that changes to the contents of the cells (button added, loading icon
@@ -16,7 +17,10 @@ shown, loading icon removed) do not make the height of the cells jump up and dow
     height: 50px;
 }
 
-/* Give the headings of the columns the same height for consistency */
+/* Give the headings of the columns the same height for consistency. The height is chosen
+ as it is slightly bigger than the bootstrap button, so it does not jump when it appears or
+ disappears */
 .deskTable tr th{
     height: 50px;
+    text-align: center;
 }

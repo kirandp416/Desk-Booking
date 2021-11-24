@@ -8,8 +8,16 @@
 // });
 
 
-// Create a function that will set the date in the form to today's date
+/**
+ * Set the date to today's date when we first load the page
+ */
+$(document).ready(setDateToToday);
 
+
+/**
+ * Create a function that we can use when we need to set the date back to today's date
+ * e.g. if an invalid date is supplied
+ */
 function setDateToToday() {
     let today = new Date();
     let todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -17,18 +25,25 @@ function setDateToToday() {
     document.getElementById("bookingDate").value = todayFormatted;
 }
 
-// Set the date to today's date when we first load the page
 
-$(document).ready(setDateToToday);
 
-// If the user selects a date in the past, return the calendar to today's date
-// and alert them
-
+/**
+ * If the user selects a date in the past, return the calendar to today's date
+ * and alert them of their mistake.
+ */
 function pastDateWarn() {
-    // console.log("Date changed");
+
+    // If a change to the date form is heard by the event listener in the form,
+    // create a date object that is formatted in such a way that we can compare
+    // it the date they just clicked on
+
     let bookingDate = new Date(document.getElementById("bookingDate").value);
     let today = new Date();
     let todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
+
+    // Compare the date they just put in to todays' date. If the date they
+    // put in was before today, tell them and then reset the date to today's
+    // date.
 
     if (bookingDate < todayDate) {
         alert('You cannot choose a date in the past.');
@@ -43,7 +58,6 @@ const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
 const dateSelect = document.getElementById("bookingDate");
 const usernameSelect = document.getElementById("username")
-
 
 // Table pagination state.
 const limit = 10;
@@ -125,6 +139,8 @@ function getDesks() {
 function displayDesks(json) {
     // Get table body.
     let table = document.getElementsByTagName("tbody")[0];
+    console.log("tbdy [0]:")
+    console.log(table);
 
     // Remove all child elements.
     table.innerHTML = "";
@@ -147,73 +163,113 @@ function displayDesks(json) {
         table.appendChild(row);
     });
 
-    // End of code adapted from Hassan's
+}
+// End of code adapted from Hassan's
 
 
-
-    function buttonConfigurer(desk){
+/**
+ * Creates a table cell. Uf the desk that is being iterated
+ * over is available on the given day, add a booking button
+ * to that cell, otherwise just add the text "booked".
+ * @param desk A single desk object from a JSON of desks
+ * @returns {HTMLTableDataCellElement} The td to add to table
+ * row
+ */
+function buttonConfigurer(desk) {
 
         // Create a cell in the last column in our table that
         // can hold a button
+
         let buttonCell = document.createElement("td");
 
         // If the desk is available on the selected date, render
-        // a button in the buttonCell
+        // a button in the buttonCell. Otherwise, just show the
+        // word "Booked".
+
         if (desk["available"] === true) {
             let btn = document.createElement("button");
             btn.innerHTML = "Book";
             btn.className = "btn btn-success btn-sm"
             btn.id = desk["id"];
-            btn.addEventListener("click", function(){postBooking(this.id)});
+            btn.addEventListener("click", function () {
+                postBooking(this.id)
+            });
             buttonCell.appendChild(btn);
+        } else {
+            let spanText = document.createElement("span");
+            spanText.innerHTML = "Booked";
+            buttonCell.appendChild(spanText);
         }
 
         return buttonCell;
 
-    }
+}
 
-    function postBooking(deskId){
+/**
+ * A function that the book buttons will fire off
+ * if clicked, that will making a booking post
+ * request to the booking database with all of the
+ * paramters needed to do so from the DOM.
+ * @param deskId The ID of the desk in question
+ * which will be stored in the button pressed
+ * as the element id.
+ */
+function postBooking(deskId) {
 
         let roomIdParam = roomSelect.value;
         let dateParam = dateSelect.value;
         let usernameParam = usernameSelect.value;
 
         // Uncomment the following to check params
-        console.log("Making booking for desk number " + deskId + " in room number " + roomIdParam + " on " + dateParam + " for user with username: " + usernameParam);
+        // console.log("Making booking for desk number " + deskId + " in room number " + roomIdParam + " on " + dateParam + " for user with username: " + usernameParam);
 
-        let params = 'bookingDeskId=' + deskId + '&bookingRoomId='+ roomIdParam + '&bookingDate=' + dateParam + '&username=' + usernameParam;
+        let params = 'bookingDeskId=' + deskId + '&bookingRoomId=' + roomIdParam + '&bookingDate=' + dateParam + '&username=' + usernameParam;
         console.log(params);
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/booking/add/process_form", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
+        // Configure the request object to listen for changes in state and if the right
+        // state is heard then hide button, show loading icon, then display "booked".
+
         xhttp.onreadystatechange = function () {
 
-            if (xhttp.readyState == 4){
-                if (xhttp.status === 200){
+            if (xhttp.readyState == 4) {
 
-                    console.log("1) Booking made");
+                if (xhttp.status === 200) {
+
+                    // Show loading icon to user
+
                     showLoaderById(deskId);
-                    console.log("5) loader function finished, getting desks:");
 
-                    setTimeout(function(){
+                    // After short period of time, refresh desks in DOM
+
+                    setTimeout(function () {
                         getDesks();
                     }, 1000);
 
-                    console.log("6) desks reloaded into DOM.")
-                }
-                else{
+                // Otherwise, print errors to console if there were any
+
+                } else {
                     console.error(xhttp.statusText);
                 }
             }
         }
 
+        // Send the booking post request to sever
+
         xhttp.send(params);
-    }
+
+}
 
 
-
-    function showLoaderById(id){
+/**
+ * Before sending the booking post request, we show the user
+ * a loading icon for a short period of time so that they
+ * know something has happened
+ * @param id The ID of the button pressed
+ */
+function showLoaderById(id) {
 
         // We want to create the following piece of HTML and add it to our DOM
 
@@ -221,27 +277,37 @@ function displayDesks(json) {
         //     <span className="sr-only"></span>
         // </div>
 
+        // Create a div with the above attributes and its own ID
+
         let loaderDiv = document.createElement("div");
         loaderDiv.className = "spinner-border text-dark spinner-border-sm";
         loaderDiv.role = 'status';
         loaderDiv.id = 'loaderDiv';
+
+        // Create span object with above attributes and put it in the
+        // div as above.
 
         let loaderSpan = document.createElement("span");
         loaderSpan.className = "sr-only";
         loaderDiv.appendChild(loaderSpan);
 
         // Test to see what we created:
-        console.log("2) element with id loaderDiv is:");
+        console.log("Element with id loaderDiv is:");
         console.log(loaderDiv);
 
-        // Remove button from DOM
-        document.getElementById(id).style.opacity="0";
+        // Create a variable that points to cell before
+        // we remove button from DOM
 
-        // Add loader to parent of button, the cell
-        console.log("4) Adding icon to cell in DOM")
-        document.getElementById(id).parentElement.appendChild(loaderDiv);
+        let cell = document.getElementById(id).parentElement;
 
-    }
+        // Remove button from DOM (when hiding it, it still
+        // took up space in table cell so better to remove it)
 
+        document.getElementById(id).remove();
+
+        // Add loader icon to parent of button, the cell
+
+        cell.appendChild(loaderDiv);
 
 }
+

@@ -48,10 +48,15 @@ public interface DeskRepository {
     Optional<Integer> findByRoomCount(int roomId);
 
     /**
-     * @param roomId
-     * @param date
-     * @param offset
-     * @param limit
+     * Get a list of data objects that represents desks with their availability included
+     * in each of those objects. The availability of a desk object is for a particular room,
+     * on a particular date, and these are passed as arguments to the function. Offset and
+     * limit are also passed, which enables the pagination of the desk objects when they are
+     * being rendered.
+     * @param roomId The id of the room
+     * @param date The date of the availability that the function caller is interested in
+     * @param offset The number of desks to offset by
+     * @param limit The maximum number of desks that should be returned
      */
     Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(int roomId, String date, int offset, int limit);
 
