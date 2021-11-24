@@ -5,10 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin - Add Desk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/admin/add_desk.js" defer></script>
 </head>
 
 <body>
+<header th:replace="Fragments/adminHeader :: header">Default</header>
     <main>
         <section>
             <h1>Add Desk</h1>
@@ -53,16 +57,11 @@
     <br>
     <br>
 
-    <div>
-        <form action="#" th:action="@{/logout}" method="post">
-            <input type="submit" value="Logout"/>
-        </form>
-    </div>
 
     <br>
     <br>
 
-    <a href="/">Home</a>
+ <footer th:replace="Fragments/footer :: footer">Default</footer>
 
 </body>
 

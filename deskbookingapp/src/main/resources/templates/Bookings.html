@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Bookings</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/js/bootstrap.bundle.min.js"></script>
     <!--    Reference for table styling: -->
     <!--    https://www.geeksforgeeks.org/bootstrap-4-tables/-->
 </head>
 
 <body>
-
+<header th:replace="Fragments/userHeader :: header">Default</header>
 
 <div class="container">
 
@@ -45,16 +47,12 @@
 <br>
 <br>
 
-<div>
-    <form action="#" th:action="@{/logout}" method="post">
-        <input type="submit" value="Logout" />
-    </form>
-</div>
+
 
 <br>
 <br>
 
-<a href="/">Home</a>
+<footer th:replace="Fragments/footer :: footer">Default</footer>
 
 </body>
 
