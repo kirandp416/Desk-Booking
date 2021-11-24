@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DeskDTO {
 
     @JsonProperty("id")
-    private int id; // The ID of the desk.
+    protected int id; // The ID of the desk.
 
     @JsonProperty("room_id")
-    private int roomId; // The ID of the room.
+    protected int roomId; // The ID of the room.
 
     @JsonProperty("name")
-    private String name; // The name of the desk.
+    protected String name; // The name of the desk.
 
     public DeskDTO() {
 

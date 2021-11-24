@@ -2,6 +2,8 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
+import java.util.List;
+
 /**
  * A interface that will hold hold abstract versions of all the methods we
  * would like to perform on Booking objects. This allows us to abstract
@@ -12,7 +14,7 @@ public interface BookingRepository {
 
     public boolean addBooking(BookingDTO bookingDTO);
 
-    public Object findAllUsersBookings(String username);
+    public List<BookingDTO> findAllUsersBookings(String username);
 
     public boolean deleteBooking(Integer id);
 }
