@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .mvcMatchers("/").permitAll()
                 .mvcMatchers("/css/**").permitAll()
-                .mvcMatchers("/js/**").permitAll()
+                .mvcMatchers("/js/bootstrap.bundle.min.js").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/api/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/book").hasRole("USER")

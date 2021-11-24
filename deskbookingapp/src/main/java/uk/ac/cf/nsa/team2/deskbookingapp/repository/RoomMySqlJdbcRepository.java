@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.RoomRowMapper;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +50,4 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         // Return an empty optional if the query failed.
         return Optional.empty();
     }
-
 }
