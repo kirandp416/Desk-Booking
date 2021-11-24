@@ -1,5 +1,6 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskAvailabilityDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
 
 import java.util.List;
@@ -45,5 +46,19 @@ public interface DeskRepository {
      * @return An optional containing the count of desks if the operation was successful.
      */
     Optional<Integer> findByRoomCount(int roomId);
+
+    /**
+     * Get a list of data objects that represents desks with their availability included
+     * in each of those objects. The availability of a desk object is for a particular room,
+     * on a particular date, and these are passed as arguments to the function. Offset and
+     * limit are also passed, which enables the pagination of the desk objects when they are
+     * being rendered.
+     * @param roomId The id of the room
+     * @param date The date of the availability that the function caller is interested in
+     * @param offset The number of desks to offset by
+     * @param limit The maximum number of desks that should be returned
+     */
+    Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(int roomId, String date, int offset, int limit);
+
 
 }

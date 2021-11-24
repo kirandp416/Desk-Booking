@@ -3,9 +3,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
-import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
-import uk.ac.cf.nsa.team2.deskbookingapp.model.BookingMapper;
-import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
+import uk.ac.cf.nsa.team2.deskbookingapp.mapper.BookingMapper;
 
 import java.util.List;
 
@@ -40,10 +38,10 @@ public class BookingRepositoryJDBC implements BookingRepository {
         // System.out.println("addBooking supplied the following date");
         // System.out.println(bookingForm.getBookingDate());
 
-        String query = "insert into booking (username, booking_date) values(?,?)";
+        String query = "insert into booking (username, booking_date, room_id, desk_id) values(?,?,?,?)";
 
         int rows = jdbcTemplate.update(query,
-                new Object[]{bookingDTO.getUsername(), bookingDTO.getDate()}
+                new Object[]{bookingDTO.getUsername(), bookingDTO.getDate(), bookingDTO.getBookingRoomId(), bookingDTO.getBookingDeskId()}
         );
 
         if (rows > 0)

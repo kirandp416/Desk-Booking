@@ -31,17 +31,32 @@ CREATE TABLE desk
 
 CREATE TABLE booking
 (
-    booking_id   INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id   INT AUTO_INCREMENT,
     username     VARCHAR(255) NOT NULL,
-    booking_date DATE
+    booking_date DATE,
+    room_id INT,
+    desk_id INT,
+    CONSTRAINT booking_pk_index PRIMARY KEY (booking_id),
+    CONSTRAINT booking_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id),
+    CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id)
 );
 
 INSERT INTO desk_type (desk_type_id, desk_type_name)
 VALUES (1, 'Standard'),
        (2, 'Standing');
 
-INSERT INTO booking (username, booking_date)
-VALUES ('user1', '2021-11-12'),
-       ('user1', '2022-03-26'),
-       ('user2', '2023-10-01'),
-       ('user2', '2026-06-20');
+INSERT INTO room(room_name) VALUES ('Bristol Main Room');
+
+INSERT INTO desk(room_id, desk_name) VALUES ((SELECT room_id FROM room WHERE room_name = "Bristol Main Room"), "Desk 1"),
+                                            ((SELECT room_id FROM room WHERE room_name = "Bristol Main Room"), "Desk 2"),
+                                            ((SELECT room_id FROM room WHERE room_name = "Bristol Main Room"), "Desk 3");
+
+INSERT INTO booking (username, booking_date, room_id, desk_id) VALUES ("user1", '2021-11-23', (SELECT room_id FROM room WHERE room_name = "Bristol Main Room"),
+                                                                       (SELECT desk_id FROM desk WHERE desk_name = "Desk 1")
+                                                                       ),
+                                                                      ("user1", '2021-11-23', (SELECT room_id FROM room WHERE room_name = "Bristol Main Room"),
+                                                                       (SELECT desk_id FROM desk WHERE desk_name = "Desk 2")
+                                                                      ),
+                                                                      ("user2", '2021-11-23', (SELECT room_id FROM room WHERE room_name = "Bristol Main Room"),
+                                                                       (SELECT desk_id FROM desk WHERE desk_name = "Desk 3")
+                                                                      );

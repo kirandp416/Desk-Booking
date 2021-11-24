@@ -1,4 +1,4 @@
-package uk.ac.cf.nsa.team2.deskbookingapp.model;
+package uk.ac.cf.nsa.team2.deskbookingapp.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
