@@ -15,12 +15,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
 
         http
                 .authorizeRequests()
                 .mvcMatchers("/").permitAll()
+                .mvcMatchers("/img/**").permitAll()
                 .mvcMatchers("/css/**").permitAll()
                 .mvcMatchers("/js/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
