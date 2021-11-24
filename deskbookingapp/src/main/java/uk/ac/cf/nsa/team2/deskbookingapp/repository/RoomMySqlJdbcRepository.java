@@ -50,4 +50,5 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         // Return an empty optional if the query failed.
         return Optional.empty();
     }
+
 }
