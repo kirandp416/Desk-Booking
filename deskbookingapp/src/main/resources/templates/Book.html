@@ -3,13 +3,18 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="/Book.js" defer></script>
     <link th:href="@{/css/Book.css}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
     <title>Book</title>
 </head>
 <body>
+
+<header th:replace="Fragments/userHeader :: header">Default</header>
+
 <main>
     <!--    Hidden input that holds username that will be used to make a booking-->
     <input id="username" th:value="${user.getName()}" type="hidden">
@@ -67,26 +72,12 @@
             </li>
         </ul>
 
-        <br>
-        <br>
-
-
-        <!-- Logout button-->
-
-        <div>
-            <form action="#" th:action="@{/logout}" method="post">
-                <input type="submit" value="Logout"/>
-            </form>
-        </div>
-
-        <br>
-        <br>
-
-        <!-- Link back to the homepage -->
-
-        <a href="/">Home</a>
     </div>
+
 </main>
+
+<footer th:replace="Fragments/footer :: footer">Default</footer>
+
 </body>
 
 </html>

@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-
+<header th:replace="Fragments/header :: Header">Header Part</header>
 <!-- Create a temporary homepage with some links to make testing the application
      easier.-->
 
@@ -24,6 +27,8 @@
 <br>
 <br>
 <a href="/booking/all">/booking/all</a>
+<footer th:replace="Fragments/footer :: footer">Default</footer>
+</body>
 
 </body>
 </html>
