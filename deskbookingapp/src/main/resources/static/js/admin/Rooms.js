@@ -26,6 +26,7 @@ function deleteRoom(id) {
             if (xhttp.status === 200){
                 console.log("Removing deleted item from DOM...")
                 removeMyParent(id);
+                document.getElementById("result").innerText = "Successfully deleted room.";
             }
             else{
                 window.location.replace("/internal_server_error");
@@ -40,7 +41,6 @@ function deleteRoom(id) {
 
     // Return false to the form that called this function, to prevent
     // that form from forming its own HTTP request and sending it.
-
     return false;
 
 }

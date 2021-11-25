@@ -100,12 +100,12 @@ public class RoomAdminController {
         if (!id.equals("null")) {
             Integer idInt = Integer.valueOf(id);
             if (roomRepository.deleteRoom(idInt)) {
-                mav.setViewName("admin/RoomDeleteSuccess");
+                mav.setViewName("admin/manage_rooms");
             } else {
-                mav.setViewName("admin/RoomDeleteFail");
+                mav.setViewName("redirect:/internal_server_error");
             }
         } else {
-            mav.setViewName("admin/RoomDeleteFail");
+            mav.setViewName("redirect:/internal_server_error");
         }
 
         return mav;
