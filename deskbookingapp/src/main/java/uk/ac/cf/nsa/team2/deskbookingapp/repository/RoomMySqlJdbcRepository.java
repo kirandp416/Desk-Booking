@@ -50,4 +50,18 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         // Return an empty optional if the query failed.
         return Optional.empty();
     }
+    /**
+     * Implement method from RoomRepository that deals with deleting
+     * a single room from the table of bookings in the MySQL database
+     * @param id The id of the booking that a delete is being attempted on
+     * @return A boolean that will be true if 1 or more rows were affected
+     * by the update. In all other cases, it will be false.
+     */
+    @Override
+    public boolean deleteRoom(Integer id) {
+
+        String sql = "DELETE from room WHERE room_id=?";
+        int rowsAffected = jdbc.update(sql, id);
+        return rowsAffected > 0;
+    }
 }
