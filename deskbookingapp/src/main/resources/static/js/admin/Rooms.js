@@ -29,6 +29,7 @@ function deleteRoom(id) {
             }
             else{
                 window.location.replace("/internal_server_error");
+                console.log(xhttp.getAllResponseHeaders());
             }
         }
     }

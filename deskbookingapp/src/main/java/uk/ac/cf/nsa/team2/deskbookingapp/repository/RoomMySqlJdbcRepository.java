@@ -60,9 +60,8 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
     @Override
     public boolean deleteRoom(Integer id) {
 
-        String query = "DELETE from room WHERE room_id=?";
-        int rowsAffected = jdbc.update(query, id);
-
+        String sql = "DELETE from room WHERE room_id=?";
+        int rowsAffected = jdbc.update(sql, id);
         return rowsAffected > 0;
     }
 }
