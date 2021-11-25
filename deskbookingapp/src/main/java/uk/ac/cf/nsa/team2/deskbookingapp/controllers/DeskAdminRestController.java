@@ -68,6 +68,12 @@ public class DeskAdminRestController {
         response.setStatus(HttpServletResponse.SC_CREATED);
     }
 
+    /**
+     * Route to delete a desk.
+     *
+     * @param id       the ID of the desk.
+     * @param response the HTTP response.
+     */
     @DeleteMapping("/api/admin/desks/{id}")
     public void deleteDesk(@PathVariable("id") int id, HttpServletResponse response) {
         // Query to check if desk exists.
