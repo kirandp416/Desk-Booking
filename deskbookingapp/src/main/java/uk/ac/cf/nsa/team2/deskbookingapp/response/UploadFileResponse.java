@@ -13,6 +13,7 @@ public class UploadFileResponse implements Serializable {
     private final String fileType;
     private final long size;
 
+
     public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
