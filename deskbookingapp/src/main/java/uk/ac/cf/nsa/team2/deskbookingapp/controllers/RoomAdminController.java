@@ -79,15 +79,11 @@ public class RoomAdminController {
                     .addObject("rooms", rooms.get());
     }
     /**
-     * Create route that will attempt to delete a booking from the booking
-     * database, by booking id. If it is successful you will see a view that
-     * says successful and if it is not you will see a view that says it failed.
-     * We will be calling this method via AJAX so you will not see these views.
-     * However, if you would like to see the views and test it, please change
-     * request method below to GET and try the route with a valid id in the
-     * address bar of browser.
+     * Create route that will attempt to delete a room from the Rooms
+     * database, by room id. If it is successful you will see a view that
+     * says successful and if it is not you will see a internal server error.
      *
-     * @param id the Booking id
+     * @param id the room id
      * @return ModelAndView object with a view that will tell you if deletion
      * was a success.
      */
