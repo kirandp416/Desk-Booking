@@ -3,10 +3,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomForm;
@@ -80,6 +77,39 @@ public class RoomAdminController {
 
             return new ModelAndView("admin/manage_rooms")
                     .addObject("rooms", rooms.get());
+    }
+    /**
+     * Create route that will attempt to delete a booking from the booking
+     * database, by booking id. If it is successful you will see a view that
+     * says successful and if it is not you will see a view that says it failed.
+     * We will be calling this method via AJAX so you will not see these views.
+     * However, if you would like to see the views and test it, please change
+     * request method below to GET and try the route with a valid id in the
+     * address bar of browser.
+     *
+     * @param id the Booking id
+     * @return ModelAndView object with a view that will tell you if deletion
+     * was a success.
+     */
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = "/admin/room/delete", method = RequestMethod.DELETE)
+    public ModelAndView roomDelete(@RequestParam(value = "id", defaultValue = "null") String id) {
+
+        ModelAndView mav = new ModelAndView();
+
+        if (!id.equals("null")) {
+            Integer idInt = Integer.valueOf(id);
+            if (roomRepository.deleteRoom(idInt)) {
+                mav.setViewName("admin/RoomDeleteSuccess");
+            } else {
+                mav.setViewName("admin/RoomDeleteFail");
+            }
+        } else {
+            mav.setViewName("admin/RoomDeleteFail");
+        }
+
+        return mav;
+
     }
 
 }

@@ -24,5 +24,6 @@ public interface RoomRepository {
      * @return an optional containing a list of rooms if the operation was successful.
      */
     Optional<List<RoomDTO>> findAll();
+    public boolean deleteRoom(Integer id);
 
 }
