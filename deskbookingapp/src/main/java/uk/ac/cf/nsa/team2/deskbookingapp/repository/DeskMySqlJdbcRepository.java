@@ -67,7 +67,7 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
         int rowsAffected = 0;
 
         try {
-            rowsAffected = jdbc.update(sql);
+            rowsAffected = jdbc.update(sql, id);
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
