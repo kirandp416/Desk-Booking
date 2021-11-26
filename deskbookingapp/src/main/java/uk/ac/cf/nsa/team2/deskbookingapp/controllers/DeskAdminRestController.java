@@ -1,9 +1,7 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.json.AddDeskJsonRequest;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.DeskRepository;
@@ -68,6 +66,42 @@ public class DeskAdminRestController {
 
         // Set status to 201 created.
         response.setStatus(HttpServletResponse.SC_CREATED);
+    }
+
+    /**
+     * Route to delete a desk.
+     *
+     * @param id       the ID of the desk.
+     * @param response the HTTP response.
+     */
+    @DeleteMapping("/api/admin/desks/{id}")
+    public void deleteDesk(@PathVariable("id") int id, HttpServletResponse response) {
+        // Query to check if desk exists.
+        Optional<Boolean> exists = deskRepository.exists(id);
+
+        // Return 500 status if there was an error (optional is empty).
+        if (exists.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
+
+        // Return 404 status if the desk does not exist.
+        if (!exists.get()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        // Delete desk.
+        boolean deleteResult = deskRepository.delete(id);
+
+        // Return 500 if there was an error.
+        if (!deleteResult) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
+
+        // Return 204 status.
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 
 }

@@ -50,6 +50,7 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         // Return an empty optional if the query failed.
         return Optional.empty();
     }
+
     /**
      * Implement method from RoomRepository that deals with deleting
      * a single room from the table of bookings in the MySQL database
@@ -64,4 +65,5 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         int rowsAffected = jdbc.update(sql, id);
         return rowsAffected > 0;
     }
+    
 }

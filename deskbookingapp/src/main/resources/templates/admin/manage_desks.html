@@ -11,28 +11,32 @@
 </head>
 <body>
     <header th:replace="Fragments/adminHeader :: header"></header>
-
+    
     <main>
         <div class="container">
             <h1>Desks</h1>
+            <!-- Form selection form. -->
             <form id="form">
+                <!-- Room select input. -->
                 <p>
                     <label for="room">Room: </label>
                     <select id="room" name="room" required>
                         <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
                     </select>
                 </p>
+                <!-- Form submit button. -->
                 <p>
                     <input type="submit" class="btn btn-primary" value="View Desks">
                 </p>
             </form>
 
-            <table class="table">
+            <table id="desksTable" class="table">
                 <!-- Table header. -->
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Desk Name</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <!-- Table body. -->
