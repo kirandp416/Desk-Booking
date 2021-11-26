@@ -25,10 +25,22 @@ function deleteBooking(id) {
         if (xhttp.readyState == 4){
             if (xhttp.status === 200){
                 console.log("Removing deleted item from DOM...")
+
+                // Call function from Book.js that will find an element
+                // in DOM by id. It will remove that element from DOM
+                // i.e. the button and then append a bootStrap loading
+                // icon to its parent i.e. the table cell.
+
                 showLoaderById(id);
 
+                // After showing the ID for a short period of time, call
+                // removeContentsOfRow which selects the row by data-id (not id!
+                // Id and data-id will have same numerical value but they are not
+                // the same attribute). After selecting the row, the function
+                // removes the cells in it i.e. makes the row invisible.
+
                 setTimeout(function () {
-                    removeMyParent(id);
+                    removeContentsOfRow(id);
                 }, 1000);
 
 
@@ -54,9 +66,9 @@ function deleteBooking(id) {
 // function will remove the parent of that element (and therefore the
 // element itself), if that element is clicked.
 
-function removeMyParent(id) {
+function removeContentsOfRow(dataId) {
 
-    const bookingRow = document.querySelector('[data-id="' + id + '"]');
+    const bookingRow = document.querySelector('[data-id="' + dataId + '"]');
     bookingRow.parentElement.removeChild(bookingRow);
 
 }
