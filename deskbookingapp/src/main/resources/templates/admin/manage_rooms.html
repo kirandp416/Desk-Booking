@@ -7,6 +7,7 @@
     <title>Admin - Manage Rooms</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body>
@@ -29,11 +30,19 @@
             <tr th:each="room: ${rooms}" th:data-id="${room.id}">
                 <td th:text="${room.id}"/>
                 <td th:text="${room.name}"/>
-                <td><button th:id="${room.id}"  class="btn btn-secondary">Edit</button></td>
+                <td><button th:id="${room.id}" onclick="editRoom(this.id)" class="btn btn-secondary" name="edit">Edit</button></td>
                 <td>
                     <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger">Delete</button>
                 </td>
-
+                <td>
+                    <div class="collapse in" id="edit" style="display: none">
+                    <form th:object="${room}" id="editForm">
+                        <input type="text" id="roomName" th:value="${room.name}">
+                        <button th:id="${room.id}" onclick="saveEdit(this.id)" class="btn btn-primary">Save</button>
+                        <button th:id="${room.id}"  class="btn btn-danger">Cancel</button>
+                    </form>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -48,5 +57,6 @@
     <footer th:replace="Fragments/footer :: footer">Default</footer>
 </main>
 </body>
+
 <script type="text/javascript" src="/js/admin/Rooms.js"></script>
 </html>

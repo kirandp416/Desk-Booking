@@ -107,5 +107,25 @@ public class RoomAdminController {
         return mav;
 
     }
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = "/admin/room/edit", method = RequestMethod.PUT)
+    public ModelAndView roomEdit(@RequestParam(value = "name", defaultValue = "null") String name,@RequestParam(value = "id", defaultValue = "null") String id) {
+
+        ModelAndView mav = new ModelAndView();
+        if (!id.equals("null")) {
+            Integer idInt = Integer.valueOf(id);
+            String roomName = name;
+            if (roomRepository.editRoom(idInt,roomName)) {
+                mav.setViewName("admin/manage_rooms");
+            } else {
+                mav.setViewName("redirect:/internal_server_error");
+            }
+        } else {
+            mav.setViewName("redirect:/internal_server_error");
+        }
+
+        return mav;
+
+    }
 
 }

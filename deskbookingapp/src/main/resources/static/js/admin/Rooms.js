@@ -56,3 +56,38 @@ function removeMyParent(id) {
 
 }
 
+function editRoom(id){
+    let params = 'id=' + id;
+    var edit = document.getElementById("edit");
+    if(edit.style.display == "none"){
+        edit.style.display="block";
+    }
+    else{
+        edit.style.display="none";
+    }
+}
+function saveEdit(id) {
+    var name = document.getElementById("roomName").value();
+    let params = 'id=' + id + "&&" + 'name=' + name;
+    if (name.length != 0) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", "/admin/room/edit", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.onreadystatechange = function () {
+
+            if (xhttp.readyState == 4) {
+                if (xhttp.status === 200) {
+                    document.getElementById("result").innerText = "Successfully updated room name.";
+                } else {
+                    window.location.replace("/internal_server_error");
+                    console.log(xhttp.getAllResponseHeaders());
+                    document.getElementById("result").innerText = "Error in updating room name.";
+                }
+            } else {
+                window.alert("Enter name of the room");
+            }
+
+        }
+    }
+}
+

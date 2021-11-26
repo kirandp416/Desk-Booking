@@ -64,4 +64,10 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         int rowsAffected = jdbc.update(sql, id);
         return rowsAffected > 0;
     }
+    @Override
+    public boolean editRoom(Integer id,String name){
+        String sql = "UPDATE room SET room_name=? WHERE room_id=?";
+        int rowsAffected = jdbc.update(sql,name,id);
+        return rowsAffected > 0;
+    }
 }
