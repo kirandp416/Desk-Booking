@@ -109,7 +109,7 @@ public class RoomAdminController {
     }
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/admin/room/edit", method = RequestMethod.PUT)
-    public ModelAndView roomEdit(@RequestParam(value = "name", defaultValue = "null") String name,@RequestParam(value = "id", defaultValue = "null") String id) {
+    public ModelAndView roomEdit(@RequestParam(value = "id", defaultValue = "null") String id, @RequestParam(value = "name", defaultValue = "null") String name) {
 
         ModelAndView mav = new ModelAndView();
         if (!id.equals("null")) {

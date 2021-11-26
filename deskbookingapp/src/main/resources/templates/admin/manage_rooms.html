@@ -30,19 +30,29 @@
             <tr th:each="room: ${rooms}" th:data-id="${room.id}">
                 <td th:text="${room.id}"/>
                 <td th:text="${room.name}"/>
-                <td><button th:id="${room.id}" onclick="editRoom(this.id)" class="btn btn-secondary" name="edit">Edit</button></td>
+                <td><button th:id="${room.id}" onclick="editRoom()" class="btn btn-secondary">Edit</button></td>
+                <td>
+                    <div id="edit" class="collapse in" style="display: none">
+                        <form th:object="${rooms}"  id="editForm">
+                             <input type="text" name="roomName">
+                             <button type="submit" onsubmit="saveEdit(${room.id})" class="btn btn-primary">Save</button>
+                             <button class="btn btn-danger" onclick="editRoom()">Cancel</button>
+                        </form>
+                    </div>
+                </td>
                 <td>
                     <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger">Delete</button>
                 </td>
-                <td>
-                    <div class="collapse in" id="edit" style="display: none">
-                    <form th:object="${room}" id="editForm">
-                        <input type="text" id="roomName" th:value="${room.name}">
-                        <button th:id="${room.id}" onclick="saveEdit(this.id)" class="btn btn-primary">Save</button>
-                        <button th:id="${room.id}"  class="btn btn-danger">Cancel</button>
-                    </form>
-                    </div>
-                </td>
+<!--                document.getElementById('roomName').value-->
+<!--                <td>-->
+<!--                    <div class="collapse in" id="edit" style="display: none">-->
+<!--                    <form th:object="${rooms}" th:data-id="${room.id}" id="editForm">-->
+<!--                        <input type="text" id="roomName" th:value="${room.name}">-->
+<!--                        <button th:id="${room.id}" onclick="saveEdit(this.id)" class="btn btn-primary">Save</button>-->
+<!--                        <button th:id="${room.id}"  class="btn btn-danger">Cancel</button>-->
+<!--                    </form>-->
+<!--                    </div>-->
+<!--                </td>-->
             </tr>
             </tbody>
         </table>
