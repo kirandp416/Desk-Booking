@@ -1,52 +1,51 @@
 <!DOCTYPE html>
-
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin - Manage Rooms</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/admin/Rooms.js" defer></script>
 </head>
 
 <body>
-<header th:replace="Fragments/adminHeader :: header">Default</header>
-<main>
-    <!--    Thymeleaf for loop over all rooms, where each room
-        corresponds to one row in an HTML table. At the end of
-        each row, a cell for a editing button and deleting button is also rendered.-->
-    <div class="container mt-auto">
-        <h1>Rooms</h1>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Room ID</td>
-                <th scope="col">Room Name</td>
+    <header th:replace="Fragments/adminHeader :: header"></header>
+    <main>
+        <!--    Thymeleaf for loop over all rooms, where each room
+            corresponds to one row in an HTML table. At the end of
+            each row, a cell for a editing button and deleting button is also rendered.-->
+        <div class="container mt-auto">
+            <h1>Rooms</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Room ID</th>
+                        <th scope="col">Room Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="room: ${rooms}" th:data-id="${room.id}">
+                        <td th:text="${room.id}"></td>
+                        <td th:text="${room.name}"></td>
+                        <td>
+                            <button th:id="${room.id}" class="btn btn-secondary">Edit</button>
+                        </td>
+                        <td>
+                            <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger">Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--    Adding the result of the operation in the div-->
+        <div>
+            <p id="result"></p>
+        </div>
+    </main>
 
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="room: ${rooms}" th:data-id="${room.id}">
-                <td th:text="${room.id}"/>
-                <td th:text="${room.name}"/>
-                <td><button th:id="${room.id}"  class="btn btn-secondary">Edit</button></td>
-                <td>
-                    <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger">Delete</button>
-                </td>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-<!--    Adding the result of the operation in the div-->
-    <div>
-        <p id="result"></p>
-    </div>
-    <br>
-    <br>
-    <br>
-    <footer th:replace="Fragments/footer :: footer">Default</footer>
-</main>
+    <footer th:replace="Fragments/footer :: footer"></footer>
 </body>
-<script type="text/javascript" src="/js/admin/Rooms.js"></script>
 </html>
