@@ -25,8 +25,8 @@ CREATE TABLE desk
     desk_name    VARCHAR(255) NOT NULL,
     notes        VARCHAR(255),
     CONSTRAINT desk_pk_index PRIMARY KEY (desk_id),
-    CONSTRAINT desk_desk_type_id FOREIGN KEY (desk_type_id) REFERENCES desk_type (desk_type_id),
-    CONSTRAINT desk_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE
+    CONSTRAINT desk_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE,
+    CONSTRAINT desk_desk_type_id FOREIGN KEY (desk_type_id) REFERENCES desk_type (desk_type_id)
 );
 
 CREATE TABLE booking
@@ -48,10 +48,10 @@ VALUES (1, 'Standard'),
 INSERT INTO room(room_id, room_name)
 VALUES (1, 'Bristol Main Room');
 
-INSERT INTO desk(room_id, desk_name)
-VALUES (1, 'Desk 1'),
-       (2, 'Desk 2'),
-       (3, 'Desk 3');
+INSERT INTO desk(desk_id, room_id, desk_type_id, desk_name)
+VALUES (1, 1, 1, 'Desk 1'),
+       (2, 1, 1, 'Desk 2'),
+       (3, 1, 2, 'Desk 3');
 
 INSERT INTO booking (username, booking_date, room_id, desk_id)
 VALUES ('user1', '2021-11-23', 1, 1),
