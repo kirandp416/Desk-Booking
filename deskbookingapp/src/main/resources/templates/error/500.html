@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/error.css}" rel="stylesheet">
     <title>Internal Server Error</title>
 </head>
 
 <body>
-    <h1>Internal Server Error</h1>
-    <p>There was an error. Please try again later.</p>
+<div class='c'>
+    <div class='error'>Internal Server Error!</div>
+    <div class='_1'>There was an error. Please try again later.</div>
+</div>
 </body>
 
 </html>
