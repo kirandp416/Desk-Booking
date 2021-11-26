@@ -25,7 +25,13 @@ function deleteBooking(id) {
         if (xhttp.readyState == 4){
             if (xhttp.status === 200){
                 console.log("Removing deleted item from DOM...")
-                removeMyParent(id);
+                showLoaderById(id);
+
+                setTimeout(function () {
+                    removeMyParent(id);
+                }, 1000);
+
+
             }
             else{
                 console.error(xhttp.statusText);
