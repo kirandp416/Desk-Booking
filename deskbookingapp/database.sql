@@ -16,7 +16,7 @@ CREATE TABLE desk
     room_id   INT,
     desk_name VARCHAR(255) NOT NULL,
     CONSTRAINT desk_pk_index PRIMARY KEY (desk_id),
-    CONSTRAINT desk_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id)
+    CONSTRAINT desk_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE
 );
 
 CREATE TABLE booking
@@ -27,8 +27,8 @@ CREATE TABLE booking
     room_id INT,
     desk_id INT,
     CONSTRAINT booking_pk_index PRIMARY KEY (booking_id),
-    CONSTRAINT booking_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id),
-    CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE
+    CONSTRAINT booking_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE ,
+    CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCASE
 );
 
 
