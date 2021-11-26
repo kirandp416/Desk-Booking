@@ -1,84 +1,83 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/Book.js" defer></script>
-    <link th:href="@{/css/Book.css}" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/bootstrap.bundle.min.js"></script>
     <title>Book</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/Book.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/jquery.min.3.4.1.js" defer></script>
+    <script src="/Book.js" defer></script>
 </head>
 <body>
+    <header th:replace="Fragments/userHeader :: header"></header>
 
-<header th:replace="Fragments/userHeader :: header">Default</header>
+    <main>
+        <!--    Hidden input that holds username that will be used to make a booking-->
+        <input id="username" th:value="${user.getName()}" type="hidden">
 
-<main>
-    <!--    Hidden input that holds username that will be used to make a booking-->
-    <input id="username" th:value="${user.getName()}" type="hidden">
+        <div class="container">
 
-    <div class="container">
+            <!-- Display a calendar. If a valid date (today or the future) is selected this
+                date will be used to reload DOM with available/unavailable desks for that day-->
 
-        <!-- Display a calendar. If a valid date (today or the future) is selected this
-            date will be used to reload DOM with available/unavailable desks for that day-->
+            <br>
+            <form action="/booking/add/process_form" method="post">
+                <label for="bookingDate">Date:</label>
+                <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
+            </form>
 
-        <br>
-        <form action="/booking/add/process_form" method="post">
-            <label for="bookingDate">Date:</label>
-            <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
-        </form>
+            <br>
 
-        <br>
+            <!-- The other input used to reload DOM showing desks, the room for the desk.
+            We also have the view desks button here which will load the DOM with desks-->
 
-        <!-- The other input used to reload DOM showing desks, the room for the desk.
-        We also have the view desks button here which will load the DOM with desks-->
+            <form id="form">
+                <p>
+                    <label for="room">Room: </label>
+                    <select id="room" name="room" required>
+                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+                </p>
+                <p>
+                    <input type="submit" class="btn btn-primary" value="View Desks">
+                </p>
+            </form>
 
-        <form id="form">
-            <p>
-                <label for="room">Room: </label>
-                <select id="room" name="room" required>
-                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-                </select>
-            </p>
-            <p>
-                <input type="submit" class="btn btn-primary" value="View Desks">
-            </p>
-        </form>
+            <!-- The table that will be populated with desks upon submission of the above button. -->
 
-        <!-- The table that will be populated with desks upon submission of the above button. -->
+            <table class="table deskTable">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Desk Name</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
 
-        <table class="table deskTable">
-            <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Desk Name</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+            <!-- Pagination functionality as seen the manage desks page. -->
 
-        <!-- Pagination functionality as seen the manage desks page. -->
+            <ul class="pagination justify-content-end" style="align-items: center;">
+                <li class="page-item" id="resultsText" style="margin-right: 8px;"></li>
+                <li class="page-item">
+                    <button class="page-link" id="tablePreviousBtn">Previous</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" id="tableNextBtn">Next</button>
+                </li>
+            </ul>
 
-        <ul class="pagination justify-content-end" style="align-items: center;">
-            <li class="page-item" id="resultsText" style="margin-right: 8px;"></li>
-            <li class="page-item">
-                <button class="page-link" id="tablePreviousBtn">Previous</button>
-            </li>
-            <li class="page-item">
-                <button class="page-link" id="tableNextBtn">Next</button>
-            </li>
-        </ul>
+        </div>
 
-    </div>
+    </main>
 
-</main>
-
-<footer th:replace="Fragments/footer :: footer">Default</footer>
-
+    <footer th:replace="Fragments/footer :: footer"></footer>
 </body>
 
 </html>

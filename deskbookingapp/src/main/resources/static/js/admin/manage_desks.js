@@ -1,4 +1,5 @@
 // Get elements.
+const desksTableBody = document.getElementById("desksTable").getElementsByTagName("tbody")[0];
 const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
 
@@ -42,6 +43,8 @@ document.forms["form"].addEventListener("submit", function (e) {
 
 /**
  * Gets desks using AJAX.
+ * If successful, the desks are displayed in a table.
+ * Otherwise, user is redirected to 500 error page.
  */
 function getDesks() {
     let xhttp = new XMLHttpRequest();
@@ -76,15 +79,42 @@ function getDesks() {
 }
 
 /**
+ * Deletes a desk.
+ * @param id the ID of the desk.
+ */
+function deleteDesk(id) {
+    // Create AJAX request to delete desk.
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("DELETE", "/api/admin/desks/" + id, true);
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4) {
+            if (xhttp.status === 204) {
+                // If response status is 204, deletion was successful.
+                // Refresh desks table.
+                getDesks();
+            } else if (xhttp.status === 404) {
+                // If response status is 404, desk was not found.
+                // Somebody else probably deleted the desk, refresh desks table.
+                getDesks();
+            } else {
+                // All other statuses.
+                // Show an alert.
+                alert("There was an error deleting the desk.");
+            }
+        }
+    };
+
+    // Execute the AJAX request.
+    xhttp.send();
+}
+
+/**
  * Displays desks in the table.
  * @param json the JSON response.
  */
 function displayDesks(json) {
-    // Get table body.
-    let table = document.getElementsByTagName("tbody")[0];
-
-    // Remove all child elements.
-    table.innerHTML = "";
+    // Remove all child elements from table.
+    desksTableBody.innerHTML = "";
 
     // Create rows for each desk.
     json["results"].forEach(function (desk) {
@@ -102,8 +132,21 @@ function displayDesks(json) {
         let notes = document.createElement("td");
         notes.innerText = desk["notes"];
 
-        row.append(id, name, type, notes);
+        // Action buttons.
+        let actions = document.createElement("td");
 
-        table.appendChild(row);
+        // Delete button.
+        let deleteBtn = document.createElement("button");
+        deleteBtn.className = "btn btn-danger btn-sm";
+        deleteBtn.innerText = "Delete";
+        deleteBtn.dataset.id = desk["id"]; // data-id=id of desk
+        deleteBtn.addEventListener("click", function (e) {
+            deleteDesk(e.currentTarget.dataset.id);
+        });
+
+        // Append elements to parent containers.
+        actions.appendChild(deleteBtn);
+        row.append(id, name, type, notes, actions);
+        desksTableBody.appendChild(row);
     });
 }

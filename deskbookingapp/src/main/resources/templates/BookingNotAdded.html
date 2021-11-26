@@ -2,15 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Booking Not Added</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Booking Not Added</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <body>
-<header th:replace="Fragments/userHeader :: header">Default</header>
-<p>Your Booking was not added!</p>
-<footer th:replace="Fragments/footer :: footer">Default</footer>
+    <header th:replace="Fragments/userHeader :: header"></header>
 
+    <main>
+        <p>Your Booking was not added!</p>
+    </main>
+
+    <footer th:replace="Fragments/footer :: footer">Default</footer>
 </body>
 </html>
