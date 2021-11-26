@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin - Manage Desks</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
     <script src="/js/admin/manage_desks.js" defer></script>
 </head>
-
 <body>
     <header th:replace="Fragments/adminHeader :: header"></header>
+    
     <main>
         <div class="container">
             <h1>Desks</h1>
@@ -55,6 +56,7 @@
             </ul>
         </div>
     </main>
-</body>
 
+    <footer th:replace="Fragments/footer :: footer"></footer>
+</body>
 </html>

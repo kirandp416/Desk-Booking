@@ -1,0 +1,21 @@
+/* Import font. */
+@font-face {
+    font-family: "Catamaran";
+    src: url("/font/catamaran_variable.ttf") format("truetype");
+}
+
+/* Apply font to entire page. */
+* {
+    font-family: "Catamaran", "Helvetica", "sans-serif";
+}
+
+/* Make primary button colour accent colour of BJSS. */
+.btn-primary {
+    background-color: #D90699;
+    border-color: #D90699;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #FF2EC1;
+    border-color: #FF2EC1;
+}
