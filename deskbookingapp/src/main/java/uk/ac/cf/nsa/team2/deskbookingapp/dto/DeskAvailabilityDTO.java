@@ -14,11 +14,11 @@ public class DeskAvailabilityDTO extends DeskDTO {
     @JsonProperty("available")
     private boolean available; // a boolean that will be true if the desk is available
 
-    public DeskAvailabilityDTO(int id, int roomId, String name, int available) {
+    public DeskAvailabilityDTO(int id, int roomId, String name, DeskTypeDTO deskType, String notes, int available) {
 
         // Leverage constructor in parent class
 
-        super(id, roomId, name);
+        super(id, roomId, deskType, name, notes);
 
         // Since the SQL cannot store booleans, we will use 1 for true and 0
         // for false in the db and then use those to numbers to create real

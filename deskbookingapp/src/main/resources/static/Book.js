@@ -156,9 +156,15 @@ function displayDesks(json) {
         let name = document.createElement("td");
         name.innerText = desk["name"];
 
+        let type = document.createElement("td");
+        type.innerText = desk["desk_type"]["name"];
+
+        let notes = document.createElement("td");
+        notes.innerText = desk["notes"];
+
         let buttonCell = buttonConfigurer(desk);
 
-        row.append(id, name, buttonCell);
+        row.append(id, name, type, notes, buttonCell);
 
         table.appendChild(row);
     });
