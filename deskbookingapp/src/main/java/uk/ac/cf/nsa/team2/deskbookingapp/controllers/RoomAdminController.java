@@ -109,14 +109,28 @@ public class RoomAdminController {
     }
     @PreAuthorize("isAuthenticated()")
     @GetMapping(path = "/admin/room/edit/{id}")
-    public ModelAndView roomEdit(@PathVariable (value = "id") int id, RoomForm form) {
-        RoomDTO dto = new RoomDTO(id);
+    public ModelAndView roomEdit(@PathVariable (value = "id") int id) {
+        Optional<List<RoomDTO>> rooms = roomRepository.findById(id);
+        // If the optional is empty, redirect user to server error page.
+
+        if (rooms.isEmpty()) {
+            return new ModelAndView("redirect:/internal_server_error");
+        }
+        // Return a model and view, passing in the result of the operation to the view.
+        return new ModelAndView("admin/editRoom").addObject("rooms",rooms.get());
+
+    }
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/admin/room/edit/process_form")
+    public ModelAndView editRoomProcessForm(RoomForm form) {
+        // Create DTO and add room to repository store.
+        RoomDTO dto = new RoomDTO(form.getId());
         dto.setName(form.getName());
         boolean result = roomRepository.editRoom(dto);
+
         // Return a model and view, passing in the result of the operation to the view.
         return new ModelAndView("admin/manage_rooms")
                 .addObject("result", result);
-
     }
 
 }

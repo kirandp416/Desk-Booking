@@ -65,6 +65,19 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         return rowsAffected > 0;
     }
     @Override
+    public Optional<List<RoomDTO>> findById(Integer id) {
+        final String sql = "SELECT room_id, room_name FROM room WHERE room_id=?;";
+
+        try {
+            return Optional.of(jdbc.query(sql, new RoomRowMapper(),id));
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        // Return an empty optional if the query failed.
+        return Optional.empty();
+    }
+    @Override
     public boolean editRoom(RoomDTO dto){
         String sql = "UPDATE room SET room_name=? WHERE room_id=?";
         int rowsAffected = jdbc.update(sql,dto.getName(),dto.getId());

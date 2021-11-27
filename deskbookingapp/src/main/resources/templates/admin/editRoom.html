@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin - Manage Rooms</title>
+    <title>Edit Room</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.bundle.min.js"></script>
 
@@ -30,18 +28,19 @@
             <tr th:each="room: ${rooms}" th:data-id="${room.id}">
                 <td th:text="${room.id}" id="id"/>
                 <td th:text="${room.name}"/>
-                <td><a th:id="${room.id}" class="btn btn-primary" th:href="@{/admin/room/edit/{id}(id=${room.id})}">Edit</a> </td>
-
                 <td>
-                    <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger">Delete</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <form th:object="${room}" method="post" action="/admin/room/edit/process_form">
+                        <input type="hidden" id="id" name="id" th:value="${room.id}">
+                        <input type="text" id="name" name="name" th:value="${room.name}">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn btn-danger" onclick="editRoom()">Cancel</button>
+                    </form>
+                 </td>
+
+             </tr>
+    </tbody>
+    </table>
     </div>
-<!--    Adding the result of the operation in the div-->
-    <p th:if="${result}">Successfully updated room.</p>
-    <p th:if="${result != null && !result}">Failed to update room.</p>
     <br>
     <br>
     <br>
@@ -50,4 +49,10 @@
 </body>
 
 <script type="text/javascript" src="/js/admin/Rooms.js"></script>
+</html>
+</title>
+</head>
+<body>
+
+</body>
 </html>
