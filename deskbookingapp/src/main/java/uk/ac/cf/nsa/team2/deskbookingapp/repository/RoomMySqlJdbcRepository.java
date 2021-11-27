@@ -64,6 +64,12 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         int rowsAffected = jdbc.update(sql, id);
         return rowsAffected > 0;
     }
+
+    /**
+     * Implement a method to get details of room by id
+     * @param id The id of the room that needs to be fetched
+     * @return A list of data that needs to be passed to the page.
+     */
     @Override
     public Optional<List<RoomDTO>> findById(Integer id) {
         final String sql = "SELECT room_id, room_name FROM room WHERE room_id=?;";
@@ -77,6 +83,13 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         // Return an empty optional if the query failed.
         return Optional.empty();
     }
+
+    /**
+     * Implement method from RoomRepository that deals with editing
+     * a single room from the table of bookings in the MySQL database
+     * @param dto fetches the name and id of the room where we need to update
+     * @return
+     */
     @Override
     public boolean editRoom(RoomDTO dto){
         String sql = "UPDATE room SET room_name=? WHERE room_id=?";
