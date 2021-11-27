@@ -58,9 +58,8 @@
         </table>
     </div>
 <!--    Adding the result of the operation in the div-->
-    <div>
-        <p id="result"></p>
-    </div>
+    <p th:if="${result}">Successfully updated room.</p>
+    <p th:if="${result != null && !result}">Failed to update room.</p>
     <br>
     <br>
     <br>
