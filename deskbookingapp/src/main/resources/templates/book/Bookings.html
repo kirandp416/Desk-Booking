@@ -31,7 +31,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Booking ID</th>
-                        <th scope="col">Date</th>
+                        <th scope="col">Date (dd-mm-yy)</th>
                         <th scope="col">Room Name</th>
                         <th scope="col">Desk Name</th>
                         <th scope="col">Desk Type</th>
@@ -42,7 +42,7 @@
                 <tbody>
                     <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
                         <td th:text="${booking.id}"/>
-                        <td th:text="${booking.date}"/>
+                        <td th:text="${booking.dateOrderedForDisplay}"/>
                         <td th:text="${booking.roomName}"/>
                         <td th:text="${booking.deskName}"/>
                         <td th:text="${booking.deskType}"/>
