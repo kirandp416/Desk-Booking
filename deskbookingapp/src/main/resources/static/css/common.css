@@ -22,11 +22,12 @@
 
 /* Nav styles. */
 
+/* Add some space between the username text and the logout button. */
 .nav-username {
     margin-right: 8px;
 }
 
-/*  On devices < 992px screen width, make each item in the right aligned nav items on a separate line. */
+/*  On devices < 992px screen width, make each item in the right aligned nav items appear on a separate line. */
 @media screen and (max-width: 992px) {
     .nav-right ul {
         display: block;
