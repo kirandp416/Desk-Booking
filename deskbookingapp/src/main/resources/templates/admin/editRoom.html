@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Edit Room</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
     <script src="/js/bootstrap.bundle.min.js"></script>
 
 </head>
@@ -11,9 +12,9 @@
 <body>
 <header th:replace="Fragments/adminHeader :: header">Default</header>
 <main>
-    <!--    Thymeleaf for loop over all rooms, where each room
-        corresponds to one row in an HTML table. At the end of
-        each row, a cell for a editing button and deleting button is also rendered.-->
+    <!--    Added form which takes id of the room from manage_rooms
+    and appends details related to id here.
+    Update the name accordingly and save it or cancel it.-->
     <div class="container mt-auto">
         <h1>Rooms</h1>
         <table class="table">
@@ -26,13 +27,14 @@
             </thead>
             <tbody>
             <tr th:each="room: ${rooms}" th:data-id="${room.id}">
-                <td th:text="${room.id}" id="id"/>
+                <td th:text="${room.id}"/>
                 <td th:text="${room.name}"/>
                 <td>
                     <form th:object="${room}" method="post" action="/admin/room/edit/process_form">
                         <input type="hidden" id="id" name="id" th:value="${room.id}">
-                        <input type="text" id="name" name="name" th:value="${room.name}">
+                        <input type="text" id="name" name="name" th:value="${room.name}" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
                         <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="/admin/rooms/all" class="btn btn-danger">Cancel</a>
                     </form>
                  </td>
 

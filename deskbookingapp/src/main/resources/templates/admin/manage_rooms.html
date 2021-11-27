@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Admin - Manage Rooms</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
     <script src="/js/bootstrap.bundle.min.js"></script>
 
 </head>
@@ -13,9 +14,10 @@
 <body>
 <header th:replace="Fragments/adminHeader :: header">Default</header>
 <main>
-    <!--    Thymeleaf for loop over all rooms, where each room
-        corresponds to one row in an HTML table. At the end of
-        each row, a cell for a editing button and deleting button is also rendered.-->
+    <!--    code adapted from HO.
+    Updated the adapted code to match the list of rooms to be displayed.
+    added anchor tag to redirect to edit the room
+    added results div to display according to the flow-->
     <div class="container mt-auto">
         <h1>Rooms</h1>
         <table class="table">
@@ -38,10 +40,12 @@
             </tr>
             </tbody>
         </table>
+        <div>
+            <p th:if="${result}">room name saved.</p>
+            <p th:if="${result != null && !result}">Failed to update room.</p>
+            <p id="result"></p>
+        </div>
     </div>
-<!--    Adding the result of the operation in the div-->
-    <p th:if="${result}">Successfully updated room.</p>
-    <p th:if="${result != null && !result}">Failed to update room.</p>
     <br>
     <br>
     <br>
