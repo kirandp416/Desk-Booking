@@ -2,6 +2,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,12 @@ public class DeskRowMapper implements RowMapper<DeskDTO> {
         return new DeskDTO(
                 rs.getInt("desk_id"),
                 rs.getInt("room_id"),
-                rs.getString("desk_name")
+                new DeskTypeDTO(
+                        rs.getInt("desk_type_id"),
+                        rs.getString("desk_type_name")
+                ),
+                rs.getString("desk_name"),
+                rs.getString("notes")
         );
     }
 
