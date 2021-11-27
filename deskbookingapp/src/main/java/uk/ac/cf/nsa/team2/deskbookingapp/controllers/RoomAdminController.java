@@ -108,23 +108,14 @@ public class RoomAdminController {
 
     }
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/admin/room/edit", method = RequestMethod.PUT)
-    public ModelAndView roomEdit(@RequestParam(value = "id", defaultValue = "null") String id, @RequestParam(value = "name", defaultValue = "null") String name) {
-
-        ModelAndView mav = new ModelAndView();
-        if (!id.equals("null")) {
-            Integer idInt = Integer.valueOf(id);
-            String roomName = name;
-            if (roomRepository.editRoom(idInt,roomName)) {
-                mav.setViewName("admin/manage_rooms");
-            } else {
-                mav.setViewName("redirect:/internal_server_error");
-            }
-        } else {
-            mav.setViewName("redirect:/internal_server_error");
-        }
-
-        return mav;
+    @GetMapping(path = "/admin/room/edit/{id}")
+    public ModelAndView roomEdit(@PathVariable (value = "id") int id, RoomForm form) {
+        RoomDTO dto = new RoomDTO(id);
+        dto.setName(form.getName());
+        boolean result = roomRepository.editRoom(dto);
+        // Return a model and view, passing in the result of the operation to the view.
+        return new ModelAndView("admin/manage_rooms")
+                .addObject("result", result);
 
     }
 

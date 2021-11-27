@@ -65,9 +65,9 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         return rowsAffected > 0;
     }
     @Override
-    public boolean editRoom(Integer id,String name){
-        String sql = "UPDATE room SET room_name=? WHERE room_id=?";
-        int rowsAffected = jdbc.update(sql,name,id);
+    public boolean editRoom(RoomDTO dto){
+        String sql = "UPDATE room SET room_name=?";
+        int rowsAffected = jdbc.update(sql,dto.getName());
         return rowsAffected > 0;
     }
 }

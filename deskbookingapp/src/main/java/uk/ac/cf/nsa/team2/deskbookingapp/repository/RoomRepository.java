@@ -25,5 +25,5 @@ public interface RoomRepository {
      */
     Optional<List<RoomDTO>> findAll();
     public boolean deleteRoom(Integer id);
-    public boolean editRoom(Integer id,String name);
+    public boolean editRoom(RoomDTO dto);
 }

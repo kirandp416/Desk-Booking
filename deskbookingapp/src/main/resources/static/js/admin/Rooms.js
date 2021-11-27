@@ -1,4 +1,4 @@
-
+var selectedRow =null;
 // A function that takes an id (in our case this will be room
 // id which we have mapped to the id of the button) and then sends
 // a request to the database to delete the room with that id. If
@@ -56,9 +56,10 @@ function removeMyParent(id) {
 
 }
 
-function editRoom(){
+function editRoom(id){
     const edit = document.getElementById("edit");
     if(edit.style.display == "none"){
+        this.id=id;
         edit.style.display="block";
     }
     else{
@@ -66,25 +67,26 @@ function editRoom(){
     }
 }
 
-function saveEdit(id) {
-    var name = document.forms["editForm"]["roomName"].value;
-    let params = 'id=' + id + "&" + 'name=' + name;
-        let xhttp = new XMLHttpRequest();
-        xhttp.open("PUT", "/admin/room/edit", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4) {
-                if (xhttp.status === 200) {
-                    document.getElementById("result").innerText = "Successfully updated room name.";
-                    console.log("done it")
-                } else {
-                    window.location.replace("/internal_server_error");
-                    console.log(xhttp.getAllResponseHeaders());
-                    document.getElementById("result").innerText = "Error in updating room name.";
-                }
-        }
-        xhttp.send(params);
-    }
-    return false;
-}
+
+// function saveEdit(id) {
+//     let name = document.forms["editForm"]["roomName"].value;
+//     let params = 'id=' + id + "&" + 'name=' + name;
+//         let xhttp = new XMLHttpRequest();
+//         xhttp.open("POST", "/admin/room/edit", true);
+//         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//         xhttp.onreadystatechange = function () {
+//             if (xhttp.readyState == 4) {
+//                 if (xhttp.status === 200) {
+//                     document.getElementById("result").innerText = "Successfully updated room name.";
+//                     console.log("done it")
+//                 } else {
+//                     window.location.replace("/internal_server_error");
+//                     console.log(xhttp.getAllResponseHeaders());
+//                     document.getElementById("result").innerText = "Error in updating room name.";
+//                 }
+//         }
+//         xhttp.send(params);
+//     }
+//     return false;
+// }
 
