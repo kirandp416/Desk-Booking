@@ -11,9 +11,7 @@ public class RoomDTO {
     public RoomDTO() {
 
     }
-    public RoomDTO(int id){
-        this.id=id;
-    }
+
     public RoomDTO(int id, String name) {
         this.id = id;
         this.name = name;
