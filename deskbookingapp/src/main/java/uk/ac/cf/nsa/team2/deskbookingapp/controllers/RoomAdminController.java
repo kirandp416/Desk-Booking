@@ -79,6 +79,7 @@ public class RoomAdminController {
                     .addObject("rooms", rooms.get());
     }
     /**
+     * Start of adapted code from: HO file: BookingController
      * Create route that will attempt to delete a room from the Rooms
      * database, by room id. If it is successful you will see a view that
      * says successful and if it is not you will see a internal server error.
@@ -107,6 +108,9 @@ public class RoomAdminController {
         return mav;
 
     }
+    /**
+     * end of adapted code
+     */
 
     /**
      * Creating a route that will take the id from the row
