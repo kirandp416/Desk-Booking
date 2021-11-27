@@ -30,6 +30,22 @@ public interface DeskRepository {
     Optional<Boolean> checkDeskNameExistsForRoom(int roomId, String deskName);
 
     /**
+     * Deletes a desk by ID.
+     *
+     * @param id the ID of the desk.
+     * @return true if the operation succeeded, false otherwise.
+     */
+    boolean delete(int id);
+
+    /**
+     * Checks whether a desk exists by ID.
+     *
+     * @param id the ID of the desk.
+     * @return an optional containing a boolean stating whether the desk exists if the operation was successful.
+     */
+    Optional<Boolean> exists(int id);
+
+    /**
      * Finds desks by room.
      *
      * @param roomId the ID of the room.
@@ -53,12 +69,12 @@ public interface DeskRepository {
      * on a particular date, and these are passed as arguments to the function. Offset and
      * limit are also passed, which enables the pagination of the desk objects when they are
      * being rendered.
+     *
      * @param roomId The id of the room
-     * @param date The date of the availability that the function caller is interested in
+     * @param date   The date of the availability that the function caller is interested in
      * @param offset The number of desks to offset by
-     * @param limit The maximum number of desks that should be returned
+     * @param limit  The maximum number of desks that should be returned
      */
     Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(int roomId, String date, int offset, int limit);
-
 
 }
