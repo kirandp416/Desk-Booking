@@ -6,10 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
-import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomCreateForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomEditForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.RoomRepository;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +42,7 @@ public class RoomAdminController {
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/admin/room/add/process_form")
-    public ModelAndView addRoomProcessForm(RoomForm form) {
+    public ModelAndView addRoomProcessForm(RoomCreateForm form) {
         // Create DTO and add room to repository store.
         RoomDTO dto = new RoomDTO();
         dto.setName(form.getName());
@@ -140,9 +140,10 @@ public class RoomAdminController {
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/admin/room/edit/process_form")
-    public ModelAndView editRoomProcessForm(RoomForm form) {
+    public ModelAndView editRoomProcessForm(RoomEditForm form) {
         // Create DTO by id given in the form to repository store.
-        RoomDTO dto = new RoomDTO(form.getId());
+        RoomDTO dto = new RoomDTO();
+        dto.setId(form.getId());
         dto.setName(form.getName());
         //updating the data from repo with editRoom by passing the dto
         boolean result = roomRepository.editRoom(dto);
