@@ -82,9 +82,7 @@ public class BookingController {
         System.out.println(bookingForm.getBookingDate());
         System.out.println(bookingForm.getBookingDeskId());
         System.out.println(bookingForm.getBookingRoomId());
-
-        BookingDTO bookingDTO = new BookingDTO(bookingForm.getUsername(), bookingForm.getBookingDate(), bookingForm.getBookingDeskId(), bookingForm.getBookingRoomId());
-
+        
         ModelAndView mav = new ModelAndView();
 
         if (br.hasErrors()) {
@@ -93,7 +91,7 @@ public class BookingController {
             mav.setViewName("/book/BookingNotAdded");
             return mav;
         } else {
-            if (bookingRepository.addBooking(bookingDTO)) {
+            if (bookingRepository.addBooking(bookingForm)) {
                 System.out.println("You added a booking.");
                 mav.setViewName("/book/BookingAdded");
                 return mav;
