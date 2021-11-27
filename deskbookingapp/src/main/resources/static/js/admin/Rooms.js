@@ -1,4 +1,4 @@
-var selectedRow =null;
+//Start of code adapted for HO : Bookings.js
 // A function that takes an id (in our case this will be room
 // id which we have mapped to the id of the button) and then sends
 // a request to the database to delete the room with that id. If
@@ -55,3 +55,4 @@ function removeMyParent(id) {
     roomRow.parentElement.removeChild(roomRow);
 
 }
+//End of code adapted from HO
