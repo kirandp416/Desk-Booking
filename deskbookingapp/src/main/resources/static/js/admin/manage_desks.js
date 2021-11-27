@@ -126,6 +126,12 @@ function displayDesks(json) {
         let name = document.createElement("td");
         name.innerText = desk["name"];
 
+        let type = document.createElement("td");
+        type.innerText = desk["desk_type"]["name"];
+
+        let notes = document.createElement("td");
+        notes.innerText = desk["notes"];
+
         // Action buttons.
         let actions = document.createElement("td");
 
@@ -140,7 +146,7 @@ function displayDesks(json) {
 
         // Append elements to parent containers.
         actions.appendChild(deleteBtn);
-        row.append(id, name, actions);
+        row.append(id, name, type, notes, actions);
         desksTableBody.appendChild(row);
     });
 }
