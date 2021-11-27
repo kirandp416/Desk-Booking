@@ -32,10 +32,10 @@
             <tr th:each="room: ${rooms}" th:data-id="${room.id}">
                 <td th:text="${room.id}" id="id"/>
                 <td th:text="${room.name}"/>
-                <td><a th:id="${room.id}" class="btn btn-primary" th:href="@{/admin/room/edit/{id}(id=${room.id})}">Edit</a> </td>
+                <td><a th:id="${room.id}" class="btn-sm btn-primary" style="text-decoration: none" th:href="@{/admin/room/edit/{id}(id=${room.id})}">Edit</a> </td>
 
                 <td>
-                    <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger">Delete</button>
+                    <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn-sm btn-danger">Delete</button>
                 </td>
             </tr>
             </tbody>

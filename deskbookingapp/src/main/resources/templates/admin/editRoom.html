@@ -33,8 +33,8 @@
                     <form th:object="${room}" method="post" action="/admin/room/edit/process_form">
                         <input type="hidden" id="id" name="id" th:value="${room.id}">
                         <input type="text" id="name" name="name" th:value="${room.name}" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <a href="/admin/rooms/all" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn-sm btn-primary">Save</button>
+                        <a href="/admin/rooms/all" class="btn-sm btn-danger" style="text-decoration: none">Cancel</a>
                     </form>
                  </td>
 
