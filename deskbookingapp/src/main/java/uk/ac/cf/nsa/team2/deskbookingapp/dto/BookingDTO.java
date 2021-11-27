@@ -7,46 +7,42 @@ package uk.ac.cf.nsa.team2.deskbookingapp.dto;
 public class BookingDTO {
 
     private int id;
-    private String username;
     private String date;
-    private int bookingDeskId;
-    private int bookingRoomId;
+    private String roomName;
+    private String deskName;
+    private String deskType;
+    private String deskNotes;
 
-    public BookingDTO(String username, String date, int bookingDeskId, int bookingRoomId) {
-        this.username = username;
-        this.date = date;
-        this.bookingDeskId = bookingDeskId;
-        this.bookingRoomId = bookingRoomId;
-    }
-
-    public BookingDTO(String date, String username) {
-        this.date = date;
-        this.username = username;
-    }
-
-    public BookingDTO(int id, String username, String date) {
+    public BookingDTO(int id, String date, String roomName, String deskName, String deskType, String deskNotes) {
         this.id = id;
-        this.username = username;
         this.date = date;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getUsername() {
-        return username;
+        this.roomName = roomName;
+        this.deskName = deskName;
+        this.deskType = deskType;
+        this.deskNotes = deskNotes;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getBookingDeskId() {
-        return bookingDeskId;
+    public String getDate() {
+        return date;
     }
 
-    public int getBookingRoomId() {
-        return bookingRoomId;
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public String getDeskName() {
+        return deskName;
+    }
+
+    public String getDeskType() {
+        return deskType;
+    }
+
+    public String getDeskNotes() {
+        return deskNotes;
     }
 }

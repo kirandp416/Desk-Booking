@@ -61,7 +61,16 @@ public class BookingRepositoryJDBC implements BookingRepository {
      */
     @Override
     public List<BookingDTO> findAllUsersBookings(String username) {
-        return jdbcTemplate.query("select * from booking where username=?",
+        String queryString =
+                "SELECT booking_id, booking_date, room_name, desk_name, desk_type_name, notes\n" +
+                        "FROM booking bookings\n" +
+                        "LEFT OUTER JOIN room rooms\n" +
+                        "ON bookings.room_id = rooms.room_id\n" +
+                        "LEFT OUTER JOIN (SELECT desk_id, room_id, desk.desk_type_id, desk_name, notes, desk_type_name FROM desk INNER JOIN desk_type ON desk.desk_type_id = desk_type.desk_type_id) desks_with_type\n" +
+                        "ON bookings.desk_id = desks_with_type.desk_id\n" +
+                        "WHERE username = ?";
+
+        return jdbcTemplate.query(queryString,
                 new Object[]{username},
                 new BookingMapper());
 

@@ -31,16 +31,22 @@
                 <thead>
                     <tr>
                         <th scope="col">Booking ID</th>
-                        <th scope="col">Username</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Room Name</th>
+                        <th scope="col">Desk Name</th>
+                        <th scope="col">Desk Type</th>
+                        <th scope="col">Desk Notes</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
                         <td th:text="${booking.id}"/>
-                        <td th:text="${booking.username}"/>
                         <td th:text="${booking.date}"/>
+                        <td th:text="${booking.roomName}"/>
+                        <td th:text="${booking.deskName}"/>
+                        <td th:text="${booking.deskType}"/>
+                        <td th:text="${booking.deskNotes}"/>
                         <td>
                             <button th:id="${booking.id}" onclick="deleteBooking(this.id)" class="btn btn-danger btn-sm">Delete
                             </button>

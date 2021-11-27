@@ -82,7 +82,7 @@ public class BookingController {
         System.out.println(bookingForm.getBookingDate());
         System.out.println(bookingForm.getBookingDeskId());
         System.out.println(bookingForm.getBookingRoomId());
-        
+
         ModelAndView mav = new ModelAndView();
 
         if (br.hasErrors()) {
