@@ -6,8 +6,10 @@
     <title>Bookings</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/bootstrapAdjust.css">
     <script src="/js/bootstrap.bundle.min.js" defer></script>
-    <script type="text/javascript" src="/Bookings.js" defer></script>
+    <script src="/js/Book.js" defer></script>
+    <script src="/js/Bookings.js" defer></script>
     <!--    Reference for table styling: -->
     <!--    https://www.geeksforgeeks.org/bootstrap-4-tables/-->
 </head>
@@ -25,7 +27,7 @@
                     corresponds to one row in an HTML table. At the end of
                     each row, a cell for a deletion button is also rendered.-->
 
-            <table class="table">
+            <table class="table bootstrapAdjustTable">
                 <thead>
                     <tr>
                         <th scope="col">Booking ID</th>
@@ -40,7 +42,7 @@
                         <td th:text="${booking.username}"/>
                         <td th:text="${booking.date}"/>
                         <td>
-                            <button th:id="${booking.id}" onclick="deleteBooking(this.id)" class="btn btn-danger">Delete
+                            <button th:id="${booking.id}" onclick="deleteBooking(this.id)" class="btn btn-danger btn-sm">Delete
                             </button>
                         </td>
                     </tr>
