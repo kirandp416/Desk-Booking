@@ -3,6 +3,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.BookingMapper;
 
 import java.util.List;
@@ -24,13 +25,13 @@ public class BookingRepositoryJDBC implements BookingRepository {
      * Implement method from BookingRepository that deals with adding
      * a new booking to the booking table in MySQL database.
      *
-     * @param bookingDTO A DTO booking object we can use to hold the
-     *                   data associated with one booking submission.
+     * @param bookingForm An object with fields that match the booking form
+     *                   fields.
      * @return if the number of rows affected is greater than
      * zero, we return true. Otherwise, we return false.
      */
     @Override
-    public boolean addBooking(BookingDTO bookingDTO) {
+    public boolean addBooking(BookingForm bookingForm) {
 
         // Some code that can be used to check that bookingForm
         // holds the correct data:
@@ -41,7 +42,7 @@ public class BookingRepositoryJDBC implements BookingRepository {
         String query = "insert into booking (username, booking_date, room_id, desk_id) values(?,?,?,?)";
 
         int rows = jdbcTemplate.update(query,
-                new Object[]{bookingDTO.getUsername(), bookingDTO.getDate(), bookingDTO.getBookingRoomId(), bookingDTO.getBookingDeskId()}
+                new Object[]{bookingForm.getUsername(), bookingForm.getBookingDate(), bookingForm.getBookingRoomId(), bookingForm.getBookingDeskId()}
         );
 
         if (rows > 0)
@@ -60,7 +61,16 @@ public class BookingRepositoryJDBC implements BookingRepository {
      */
     @Override
     public List<BookingDTO> findAllUsersBookings(String username) {
-        return jdbcTemplate.query("select * from booking where username=?",
+        String queryString =
+                "SELECT booking_id, booking_date, room_name, desk_name, desk_type_name, notes\n" +
+                        "FROM booking bookings\n" +
+                        "LEFT OUTER JOIN room rooms\n" +
+                        "ON bookings.room_id = rooms.room_id\n" +
+                        "LEFT OUTER JOIN (SELECT desk_id, room_id, desk.desk_type_id, desk_name, notes, desk_type_name FROM desk INNER JOIN desk_type ON desk.desk_type_id = desk_type.desk_type_id) desks_with_type\n" +
+                        "ON bookings.desk_id = desks_with_type.desk_id\n" +
+                        "WHERE username = ?";
+
+        return jdbcTemplate.query(queryString,
                 new Object[]{username},
                 new BookingMapper());
 

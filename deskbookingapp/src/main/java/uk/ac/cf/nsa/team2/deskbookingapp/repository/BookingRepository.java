@@ -1,6 +1,7 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface BookingRepository {
 
-    public boolean addBooking(BookingDTO bookingDTO);
+    public boolean addBooking(BookingForm bookingForm);
 
     public List<BookingDTO> findAllUsersBookings(String username);
 

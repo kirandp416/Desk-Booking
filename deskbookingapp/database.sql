@@ -46,14 +46,20 @@ VALUES (1, 'Standard'),
        (2, 'Standing');
 
 INSERT INTO room(room_id, room_name)
-VALUES (1, 'Bristol Main Room');
+VALUES (1, 'Room 1'), (2, 'Room 2');
 
 INSERT INTO desk(desk_id, room_id, desk_type_id, desk_name)
 VALUES (1, 1, 1, 'Desk 1'),
        (2, 1, 1, 'Desk 2'),
-       (3, 1, 2, 'Desk 3');
+       (3, 1, 1, 'Desk 3'),
+       (4, 2, 1, 'Desk 1'),
+       (5, 2, 1, 'Desk 2'),
+       (6, 2, 1, 'Desk 2');
 
 INSERT INTO booking (username, booking_date, room_id, desk_id)
 VALUES ('user1', '2021-11-23', 1, 1),
        ('user1', '2021-11-23', 1, 2),
-       ('user2', '2021-11-23', 1, 3);
+       ('user1', '2021-11-23', 1, 3),
+       ('user2', '2021-11-23', 2, 1),
+       ('user2', '2021-11-23', 2, 2),
+       ('user2', '2021-11-23', 2, 3);

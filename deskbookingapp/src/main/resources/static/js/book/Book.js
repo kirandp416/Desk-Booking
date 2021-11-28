@@ -183,31 +183,31 @@ function displayDesks(json) {
  */
 function buttonConfigurer(desk) {
 
-        // Create a cell in the last column in our table that
-        // can hold a button
+    // Create a cell in the last column in our table that
+    // can hold a button
 
-        let buttonCell = document.createElement("td");
+    let buttonCell = document.createElement("td");
 
-        // If the desk is available on the selected date, render
-        // a button in the buttonCell. Otherwise, just show the
-        // word "Booked".
+    // If the desk is available on the selected date, render
+    // a button in the buttonCell. Otherwise, just show the
+    // word "Booked".
 
-        if (desk["available"] === true) {
-            let btn = document.createElement("button");
-            btn.innerHTML = "Book";
-            btn.className = "btn btn-success btn-sm"
-            btn.id = desk["id"];
-            btn.addEventListener("click", function () {
-                postBooking(this.id)
-            });
-            buttonCell.appendChild(btn);
-        } else {
-            let spanText = document.createElement("span");
-            spanText.innerHTML = "Booked";
-            buttonCell.appendChild(spanText);
-        }
+    if (desk["available"] === true) {
+        let btn = document.createElement("button");
+        btn.innerHTML = "Book";
+        btn.className = "btn btn-success btn-sm"
+        btn.id = desk["id"];
+        btn.addEventListener("click", function () {
+            postBooking(this.id)
+        });
+        buttonCell.appendChild(btn);
+    } else {
+        let spanText = document.createElement("span");
+        spanText.innerHTML = "Booked";
+        buttonCell.appendChild(spanText);
+    }
 
-        return buttonCell;
+    return buttonCell;
 
 }
 
@@ -222,49 +222,49 @@ function buttonConfigurer(desk) {
  */
 function postBooking(deskId) {
 
-        let roomIdParam = roomSelect.value;
-        let dateParam = dateSelect.value;
-        let usernameParam = usernameSelect.value;
+    let roomIdParam = roomSelect.value;
+    let dateParam = dateSelect.value;
+    let usernameParam = usernameSelect.value;
 
-        // Uncomment the following to check params
-        // console.log("Making booking for desk number " + deskId + " in room number " + roomIdParam + " on " + dateParam + " for user with username: " + usernameParam);
+    // Uncomment the following to check params
+    // console.log("Making booking for desk number " + deskId + " in room number " + roomIdParam + " on " + dateParam + " for user with username: " + usernameParam);
 
-        let params = 'bookingDeskId=' + deskId + '&bookingRoomId=' + roomIdParam + '&bookingDate=' + dateParam + '&username=' + usernameParam;
-        console.log(params);
-        let xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/booking/add/process_form", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    let params = 'bookingDeskId=' + deskId + '&bookingRoomId=' + roomIdParam + '&bookingDate=' + dateParam + '&username=' + usernameParam;
+    console.log(params);
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/booking/add/process_form", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-        // Configure the request object to listen for changes in state and if the right
-        // state is heard then hide button, show loading icon, then display "booked".
+    // Configure the request object to listen for changes in state and if the right
+    // state is heard then hide button, show loading icon, then display "booked".
 
-        xhttp.onreadystatechange = function () {
+    xhttp.onreadystatechange = function () {
 
-            if (xhttp.readyState == 4) {
+        if (xhttp.readyState == 4) {
 
-                if (xhttp.status === 200) {
+            if (xhttp.status === 200) {
 
-                    // Show loading icon to user
+                // Show loading icon to user
 
-                    showLoaderById(deskId);
+                showLoaderById(deskId);
 
-                    // After short period of time, refresh desks in DOM
+                // After short period of time, refresh desks in DOM
 
-                    setTimeout(function () {
-                        getDesks();
-                    }, 1000);
+                setTimeout(function () {
+                    getDesks();
+                }, 1000);
 
                 // Otherwise, print errors to console if there were any
 
-                } else {
-                    console.error(xhttp.statusText);
-                }
+            } else {
+                console.error(xhttp.statusText);
             }
         }
+    }
 
-        // Send the booking post request to sever
+    // Send the booking post request to sever
 
-        xhttp.send(params);
+    xhttp.send(params);
 
 }
 
@@ -277,43 +277,43 @@ function postBooking(deskId) {
  */
 function showLoaderById(id) {
 
-        // We want to create the following piece of HTML and add it to our DOM
+    // We want to create the following piece of HTML and add it to our DOM
 
-        // <div className="spinner-border text-dark spinner-border-sm" role="status">
-        //     <span className="sr-only"></span>
-        // </div>
+    // <div className="spinner-border text-dark spinner-border-sm" role="status">
+    //     <span className="sr-only"></span>
+    // </div>
 
-        // Create a div with the above attributes and its own ID
+    // Create a div with the above attributes and its own ID
 
-        let loaderDiv = document.createElement("div");
-        loaderDiv.className = "spinner-border text-dark spinner-border-sm";
-        loaderDiv.role = 'status';
-        loaderDiv.id = 'loaderDiv';
+    let loaderDiv = document.createElement("div");
+    loaderDiv.className = "spinner-border text-dark spinner-border-sm";
+    loaderDiv.role = 'status';
+    loaderDiv.id = 'loaderDiv';
 
-        // Create span object with above attributes and put it in the
-        // div as above.
+    // Create span object with above attributes and put it in the
+    // div as above.
 
-        let loaderSpan = document.createElement("span");
-        loaderSpan.className = "sr-only";
-        loaderDiv.appendChild(loaderSpan);
+    let loaderSpan = document.createElement("span");
+    loaderSpan.className = "sr-only";
+    loaderDiv.appendChild(loaderSpan);
 
-        // Test to see what we created:
-        console.log("Element with id loaderDiv is:");
-        console.log(loaderDiv);
+    // Test to see what we created:
+    console.log("Element with id loaderDiv is:");
+    console.log(loaderDiv);
 
-        // Create a variable that points to cell before
-        // we remove button from DOM
+    // Create a variable that points to cell before
+    // we remove button from DOM
 
-        let cell = document.getElementById(id).parentElement;
+    let cell = document.getElementById(id).parentElement;
 
-        // Remove button from DOM (when hiding it, it still
-        // took up space in table cell so better to remove it)
+    // Remove button from DOM (when hiding it, it still
+    // took up space in table cell so better to remove it)
 
-        document.getElementById(id).remove();
+    document.getElementById(id).remove();
 
-        // Add loader icon to parent of button, the cell
+    // Add loader icon to parent of button, the cell
 
-        cell.appendChild(loaderDiv);
+    cell.appendChild(loaderDiv);
 
 }
 
