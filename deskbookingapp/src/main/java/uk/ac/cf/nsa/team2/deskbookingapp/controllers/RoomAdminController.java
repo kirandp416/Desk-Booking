@@ -6,10 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
-import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomCreateForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomEditForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.RoomRepository;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +42,7 @@ public class RoomAdminController {
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/admin/room/add/process_form")
-    public ModelAndView addRoomProcessForm(RoomForm form) {
+    public ModelAndView addRoomProcessForm(RoomCreateForm form) {
         // Create DTO and add room to repository store.
         RoomDTO dto = new RoomDTO();
         dto.setName(form.getName());
@@ -79,10 +79,12 @@ public class RoomAdminController {
                     .addObject("rooms", rooms.get());
     }
     /**
-     * Create route that will attempt to delete a room from the Rooms
-     * database, by room id. If it is successful you will see a view that
-     * says successful and if it is not you will see a internal server error.
+     * This method was adapted from HOs method called bookingDelete in file BookingController.java,
+     * that was used to delete booking from database.
      *
+     *This method will take the id of the room which is passed through nav
+     * and will pass it to repository to deleteRoom method
+     * which will remove the id and it related items from database
      * @param id the room id
      * @return ModelAndView object with a view that will tell you if deletion
      * was a success.
@@ -106,6 +108,57 @@ public class RoomAdminController {
 
         return mav;
 
+    }
+
+    /**
+     * This method was adapted from HIs method called getAllRooms in file RoomAdminController.java,
+     * that was used to fetch all rooms from database.
+     *
+     * This method will create route that will take the id from the row
+     * and fetch room details from repo by room_id.
+     * If successful you will be redirected to editRoom.
+     * Failure will take you to internal_server_error
+     * @param id the room id
+     * @return Model and View that will redirect to edit page.
+     */
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(path = "/admin/room/edit/{id}")
+    public ModelAndView roomEdit(@PathVariable (value = "id") int id) {
+        Optional<List<RoomDTO>> rooms = roomRepository.findById(id);
+        // If the optional is empty, redirect user to server error page.
+
+        if (rooms.isEmpty()) {
+            return new ModelAndView("redirect:/internal_server_error");
+        }
+        // Return a model and view, passing in the result of the operation to the view.
+        return new ModelAndView("admin/editRoom").addObject("rooms",rooms.get());
+
+    }
+
+    /**
+     * This method was adapted from HIs method called addRoomProcessForm in file RoomAdminController.java,
+     * that was used to add new room to database.
+     *
+     * This method will create a route to take the edited form details
+     * and update the room_name of the particular room_id.
+     * Creating a new DTO by id which is already present in DB.
+     * Update the name which is already fetched from DTO with the given one in form.
+     * @param form will take the form data
+     * @return will take you to manage_rooms page with a message.
+     */
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/admin/room/edit/process_form")
+    public ModelAndView editRoomProcessForm(RoomEditForm form) {
+        // Create DTO by id given in the form to repository store.
+        RoomDTO dto = new RoomDTO();
+        dto.setId(form.getId());
+        dto.setName(form.getName());
+        //updating the data from repo with editRoom by passing the dto
+        boolean result = roomRepository.editRoom(dto);
+
+        // Return a model and view, passing in the result of the operation to the view.
+        return new ModelAndView("admin/manage_rooms")
+                .addObject("result", result);
     }
 
 }

@@ -15,6 +15,8 @@ function onSubmit(e) {
     // Get inputs.
     let room = form["room"].value;
     let name = form["name"].value;
+    let deskType = form["deskType"].value;
+    let notes = form["notes"].value;
 
     // Create AJAX request to create desk.
     let xhttp = new XMLHttpRequest();
@@ -42,6 +44,8 @@ function onSubmit(e) {
     // Execute AJAX request, sending the form inputs as JSON.
     xhttp.send(JSON.stringify({
         room: room,
-        name: name
+        name: name,
+        deskType: deskType,
+        notes: notes
     }));
 }

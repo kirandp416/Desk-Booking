@@ -30,6 +30,13 @@ public class BookingMapper implements RowMapper <BookingDTO> {
      */
     @Override
     public BookingDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new BookingDTO(rs.getInt("booking_id"), rs.getString("username"), rs.getString("booking_date"));
+        return new BookingDTO(
+                rs.getInt("booking_id"),
+                rs.getString("booking_date"),
+                rs.getString("room_name"),
+                rs.getString("desk_name"),
+                rs.getString("desk_type_name"),
+                rs.getString("notes")
+        );
     }
 }

@@ -29,6 +29,19 @@
                     <!-- Input pattern: Must start with alphanumeric and allow spaces anywhere afterwards. -->
                     <input type="text" id="name" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
                 </p>
+                <!-- Desk type input. -->
+                <p>
+                    <label for="deskType">Desk Type: </label>
+                    <select id="deskType" name="deskType" required>
+                        <option value="1">Standard</option>
+                        <option value="2">Standing</option>
+                    </select>
+                </p>
+                <!-- Notes input. -->
+                <p>
+                    <label for="notes">Notes: </label>
+                    <textarea id="notes" name="notes" rows="6" cols="40"></textarea>
+                </p>
                 <p>
                     <input class="btn btn-primary" type="submit" value="Submit">
                 </p>

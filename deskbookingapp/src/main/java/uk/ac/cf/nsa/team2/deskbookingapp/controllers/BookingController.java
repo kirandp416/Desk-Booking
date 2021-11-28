@@ -1,7 +1,6 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -60,7 +59,7 @@ public class BookingController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("rooms", rooms.get());
         mav.addObject("user", principal);
-        mav.setViewName("Book");
+        mav.setViewName("/book/Book");
 
         return mav;
     }
@@ -84,23 +83,21 @@ public class BookingController {
         System.out.println(bookingForm.getBookingDeskId());
         System.out.println(bookingForm.getBookingRoomId());
 
-        BookingDTO bookingDTO = new BookingDTO(bookingForm.getUsername(), bookingForm.getBookingDate(), bookingForm.getBookingDeskId(), bookingForm.getBookingRoomId());
-
         ModelAndView mav = new ModelAndView();
 
         if (br.hasErrors()) {
             System.out.println("Binding Result Errors encountered.");
             System.out.println(br.getAllErrors());
-            mav.setViewName("BookingNotAdded");
+            mav.setViewName("/book/BookingNotAdded");
             return mav;
         } else {
-            if (bookingRepository.addBooking(bookingDTO)) {
+            if (bookingRepository.addBooking(bookingForm)) {
                 System.out.println("You added a booking.");
-                mav.setViewName("BookingAdded");
+                mav.setViewName("/book/BookingAdded");
                 return mav;
             } else {
                 System.out.println("No binding errors encountered but addBooking() method did not return true.");
-                mav.setViewName("BookingNotAdded");
+                mav.setViewName("/book/BookingNotAdded");
                 return mav;
             }
 
@@ -120,7 +117,7 @@ public class BookingController {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("bookings", bookingRepository.findAllUsersBookings(principal.getName()));
-        mav.setViewName("Bookings");
+        mav.setViewName("/book/Bookings");
         return mav;
     }
 
@@ -145,12 +142,12 @@ public class BookingController {
         if (!id.equals("null")) {
             Integer idInt = Integer.valueOf(id);
             if (bookingRepository.deleteBooking(idInt)) {
-                mav.setViewName("BookingDeleteSuccess");
+                mav.setViewName("/book/BookingDeleteSuccess");
             } else {
-                mav.setViewName("BookingDeleteFail");
+                mav.setViewName("/book/BookingDeleteFail");
             }
         } else {
-            mav.setViewName("BookingDeleteFail");
+            mav.setViewName("/book/BookingDeleteFail");
         }
 
         return mav;
