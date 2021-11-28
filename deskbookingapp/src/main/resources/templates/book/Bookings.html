@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookings</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/bootstrapAdjust.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/book/Book.js" defer></script>
+    <script src="/js/book/Bookings.js" defer></script>
+    <!--    Reference for table styling: -->
+    <!--    https://www.geeksforgeeks.org/bootstrap-4-tables/-->
+</head>
+
+<body>
+    <header th:replace="Fragments/userHeader :: header">Default</header>
+
+    <main>
+        <div class="container">
+
+            <h1>Bookings</h1>
+
+            <!--    Thymeleaf for loop over all bookings that are associated
+                    with the currently logged-in user, where each booking
+                    corresponds to one row in an HTML table. At the end of
+                    each row, a cell for a deletion button is also rendered.-->
+
+            <table class="table bootstrapAdjustTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Booking ID</th>
+                        <th scope="col">Date (dd-mm-yy)</th>
+                        <th scope="col">Room Name</th>
+                        <th scope="col">Desk Name</th>
+                        <th scope="col">Desk Type</th>
+                        <th scope="col">Desk Notes</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
+                        <td th:text="${booking.id}"/>
+                        <td th:text="${booking.dateOrderedForDisplay}"/>
+                        <td th:text="${booking.roomName}"/>
+                        <td th:text="${booking.deskName}"/>
+                        <td th:text="${booking.deskType}"/>
+                        <td th:text="${booking.deskNotes}"/>
+                        <td>
+                            <button th:id="${booking.id}" onclick="deleteBooking(this.id)" class="btn btn-danger btn-sm">Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer th:replace="Fragments/footer :: footer">Default</footer>
+</body>
+
+</html>

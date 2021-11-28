@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin - Add Desk</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/admin/add_desk.js" defer></script>
+</head>
+<body>
+    <header th:replace="Fragments/adminHeader :: header"></header>
+
+    <main>
+        <div class="container">
+            <h1>Add Desk</h1>
+            <form id="form">
+                <!-- Room dropdown. -->
+                <p>
+                    <label for="room">Room: </label>
+                    <select id="room" name="room" required>
+                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+                </p>
+                <!-- Desk name input. -->
+                <p>
+                    <label for="name">Desk Name: </label>
+                    <!-- Input pattern: Must start with alphanumeric and allow spaces anywhere afterwards. -->
+                    <input type="text" id="name" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
+                </p>
+                <!-- Desk type input. -->
+                <p>
+                    <label for="deskType">Desk Type: </label>
+                    <select id="deskType" name="deskType" required>
+                        <option value="1">Standard</option>
+                        <option value="2">Standing</option>
+                    </select>
+                </p>
+                <!-- Notes input. -->
+                <p>
+                    <label for="notes">Notes: </label>
+                    <textarea id="notes" name="notes" rows="6" cols="40"></textarea>
+                </p>
+                <p>
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </p>
+            </form>
+
+            <div>
+                <p id="result"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="Fragments/footer :: footer"></footer>
+</body>
+</html>

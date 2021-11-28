@@ -1,0 +1,35 @@
+/* Import font. */
+@font-face {
+    font-family: "Catamaran";
+    src: url("/font/catamaran_variable.ttf") format("truetype");
+}
+
+/* Apply font to entire page. */
+* {
+    font-family: "Catamaran", "Helvetica", "sans-serif";
+}
+
+/* Make primary button colour accent colour of BJSS. */
+.btn-primary {
+    background-color: #D90699;
+    border-color: #D90699;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #FF2EC1;
+    border-color: #FF2EC1;
+}
+
+/* Nav styles. */
+
+/* Add some space between the username text and the logout button. */
+.nav-username {
+    margin-right: 8px;
+}
+
+/*  On devices < 992px screen width, make each item in the right aligned nav items appear on a separate line. */
+@media screen and (max-width: 992px) {
+    .nav-right ul {
+        display: block;
+    }
+}
