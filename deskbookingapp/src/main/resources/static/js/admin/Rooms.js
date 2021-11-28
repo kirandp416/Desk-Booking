@@ -1,5 +1,5 @@
 //Start of code adapted from: HO file: Bookings.js
-// Updated the adapted code to delete a room
+// Updated the adapted code to delete a room using ajax
 //by taking the id of the row and passing it through
 //delete request
 
