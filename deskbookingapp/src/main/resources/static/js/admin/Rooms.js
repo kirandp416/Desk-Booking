@@ -1,6 +1,7 @@
-//Start of code adapted from: HO file: Bookings.js
-// Updated the adapted code to delete a room using ajax
-//by taking the id of the row and passing it through
+// This code was adapted from HOs method called deleteBooking in file Booking.js,
+// that was used to delete booking from database using ajax.
+//
+//This method will delete a room by taking the id of the row and passing it through
 //delete request
 
 function deleteRoom(id) {

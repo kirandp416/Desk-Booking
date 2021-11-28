@@ -79,12 +79,12 @@ public class RoomAdminController {
                     .addObject("rooms", rooms.get());
     }
     /**
-     * Start of adapted code from: HO, file: BookingController.java, method name:bookingDelete
-     * Method is used to delete booking from database.
-     * Create route that will attempt to delete a room from the Rooms
-     * database, by room id. If it is successful you will see a view that
-     * says successful and if it is not you will see a internal server error.
+     * This method was adapted from HOs method called bookingDelete in file BookingController.java,
+     * that was used to delete booking from database.
      *
+     *This method will take the id of the room which is passed through nav
+     * and will pass it to repository to deleteRoom method
+     * which will remove the id and it related items from database
      * @param id the room id
      * @return ModelAndView object with a view that will tell you if deletion
      * was a success.
@@ -109,12 +109,12 @@ public class RoomAdminController {
         return mav;
 
     }
-    /**
-     * end of adapted code
-     */
 
     /**
-     * Creating a route that will take the id from the row
+     * This method was adapted from HIs method called getAllRooms in file RoomAdminController.java,
+     * that was used to fetch all rooms from database.
+     *
+     * This method will create route that will take the id from the row
      * and fetch room details from repo by room_id.
      * If successful you will be redirected to editRoom.
      * Failure will take you to internal_server_error
@@ -136,7 +136,10 @@ public class RoomAdminController {
     }
 
     /**
-     * Created a route to take the edited form details
+     * This method was adapted from HIs method called addRoomProcessForm in file RoomAdminController.java,
+     * that was used to add new room to database.
+     *
+     * This method will create a route to take the edited form details
      * and update the room_name of the particular room_id.
      * Creating a new DTO by id which is already present in DB.
      * Update the name which is already fetched from DTO with the given one in form.
