@@ -14,68 +14,79 @@
     <header th:fragment="header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <!-- Navbar brand. -->
-                <a class="navbar-brand" href="/">
-                    <img src="/img/logo.svg" width="75" alt="Logo">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                <!-- Mobile navigation button. -->
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <i class="fas fa-bars"></i>
                 </button>
+                <!-- Collapsable nav content. -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Navbar brand. -->
+                    <a class="navbar-brand mt-2 mt-lg-0" href="/">
+                        <img src="/img/logo.svg" width="75" alt="Logo">
+                    </a>
+                    <!-- Left side content. -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Admin
+                        <!-- Admin links. -->
+                        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                            <a class="nav-link dropdown-toggle" href="#" id="adminDesksDropdown"
+                               role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Desks
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                <li><a class="dropdown-item" href="/admin/room/add">Add a Room</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="adminDesksDropdown">
                                 <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/admin/add_desk">Add a Desk</a></li>
+                                    <a class="dropdown-item" href="/admin/add_desk">Add a Desk</a>
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" href="/admin/manage_desks">Manage Desks</a>
                                 </li>
-                                <li><a class="dropdown-item" href="/admin/manage_desks">Manage Desks</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/admin/rooms/all">Manage Rooms</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="employeeDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Employee
+                        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                            <a class="nav-link dropdown-toggle" href="#" id="adminRoomsDropdown"
+                               role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Rooms
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="employeeDropdown">
-                                <li><a class="dropdown-item" href="/booking/add">Book a Desk</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="adminRoomsDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="/admin/room/add">Add a Room</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/admin/rooms/all">Manage Rooms</a>
+                                </li>
                             </ul>
+                        </li>
+                        <!-- Employee links. -->
+                        <li class="nav-item" sec:authorize="hasRole('USER')">
+                            <a class="nav-link" href="/booking/add">Book</a>
                         </li>
                     </ul>
-                    <div class="d-flex nav-right">
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a class="nav-link link-light" href="/booking/all">View your Bookings</a>
-                            </li>
-                            <li sec:authorize="isAnonymous()" class="nav-item">
-                                <a class="btn btn-primary" href="/login" role="button">
-                                    Login
-                                </a>
-                            </li>
-                            <li class="navbar-text nav-username" sec:authorize="isAuthenticated()">
-                                Welcome, <span sec:authentication="name"></span>
-                            </li>
-                            <li sec:authorize="isAuthenticated()" class="nav-item">
-                                <a class="btn btn-primary" role="button" href="/logout">
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+                <!-- Right side content. -->
+                <div class="d-flex align-items-center">
+                    <!-- My bookings (employee). -->
+                    <a class="text-reset me-3" href="/booking/all" title="My Bookings" sec:authorize="hasRole('USER')">
+                        <i class="fas fa-calendar-day"></i>
+                    </a>
+
+                    <!-- User profile. -->
+                    <a class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="userProfile"
+                       role="button" data-mdb-toggle="dropdown" aria-expanded="false" title="My Profile">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+                        <li>
+                            <span class="dropdown-item nav-username" sec:authorize="isAuthenticated()">
+                                Welcome <span sec:authentication="name"></span>
+                            </span>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/logout" sec:authorize="isAuthenticated()">Sign out</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/login" sec:authorize="isAnonymous()">Sign in</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
