@@ -20,4 +20,9 @@ public class BookingDTOTest {
     public void whenGettingDeskIdThenReturnCorrectId(){
         assertEquals(1, bookingDTO.getId());
     }
+
+    @Test
+    public void whenGettingReOrderedDateThenReturnsDesiredFormatOfDate(){
+        assertEquals("15-12-00", bookingDTO.dateReOrderer("2000-12-15"));
+    }
 }
