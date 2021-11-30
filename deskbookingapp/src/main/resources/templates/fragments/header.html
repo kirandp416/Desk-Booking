@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Header</title>
-    <th:block th:insert="fragments/theme :: theme"/>
-</head>
 <body>
-    <!-- Created a new fragment Header for Home page which contains links to both Admin and User -->
+    <!-- Header fragment containing links for both admin and employee based on authentication state. -->
     <header th:fragment="header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
