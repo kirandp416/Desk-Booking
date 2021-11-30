@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--Added Thymeleaf dependencies for header-->
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
@@ -7,12 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Header</title>
-    <th:block th:insert="Fragments/theme :: theme"/>
+    <title>Header</title>
+    <th:block th:insert="fragments/theme :: theme"/>
 </head>
 <body>
-    <!--Created a new fragment
-    This header fragment is only visible for admin pages-->
+    <!-- Created a new fragment Header for Home page which contains links to both Admin and User -->
     <header th:fragment="header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
@@ -46,6 +44,15 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" href="/admin/rooms/all">Manage Rooms</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="employeeDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Employee
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="employeeDropdown">
+                                <li><a class="dropdown-item" href="/booking/add">Book a Desk</a></li>
                             </ul>
                         </li>
                     </ul>

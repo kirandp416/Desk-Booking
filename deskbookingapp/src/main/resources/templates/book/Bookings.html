@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bookings</title>
-    <th:block th:insert="Fragments/theme :: theme"/>
+    <th:block th:insert="fragments/theme :: theme"/>
     <link rel="stylesheet" href="/css/bootstrapAdjust.css">
     <script src="/js/book/Book.js" defer></script>
     <script src="/js/book/Bookings.js" defer></script>
@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <header th:replace="Fragments/userHeader :: header">Default</header>
+    <header th:replace="fragments/userHeader :: header">Default</header>
 
     <main>
         <div class="container">
@@ -55,7 +55,7 @@
         </div>
     </main>
 
-    <footer th:replace="Fragments/footer :: footer">Default</footer>
+    <footer th:replace="fragments/footer :: footer">Default</footer>
 </body>
 
 </html>
