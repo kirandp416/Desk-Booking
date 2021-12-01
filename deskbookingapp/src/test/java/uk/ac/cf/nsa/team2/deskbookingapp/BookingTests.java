@@ -1,4 +1,4 @@
-package uk.ac.cf.nsa.team2.deskbookingapp.dto;
+package uk.ac.cf.nsa.team2.deskbookingapp;
 
 
 import org.junit.jupiter.api.BeforeAll;
@@ -7,7 +7,7 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BookingDTOTest {
+public class BookingTests {
 
     private static BookingDTO bookingDTO;
 
