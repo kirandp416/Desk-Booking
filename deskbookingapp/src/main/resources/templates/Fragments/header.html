@@ -60,6 +60,9 @@
                     </ul>
                     <div class="d-flex nav-right">
                         <ul class="nav">
+                            <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                                <a class="nav-link link-light" href="/admin/manage/booking">Manage Bookings</a>
+                            </li>
                             <li sec:authorize="isAnonymous()" class="nav-item">
                                 <a class="btn btn-primary" href="/login" role="button">
                                     Login
