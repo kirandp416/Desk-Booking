@@ -26,7 +26,7 @@ public class BookingTests {
 
     // BookingDTO Tests
 
-    // Test BookingDTO Getters to see that they return the expected data
+    // Test BookingDTO's getters to see that they return the expected data
 
     @Test
     public void whenGettingDeskIdThenReturnCorrectId(){
@@ -63,7 +63,6 @@ public class BookingTests {
         assertEquals("01-01-00", bookingDTO.getDateOrderedForDisplay());
     }
 
-
     // Test dateReOrderer() method with some valid dummy data to test that it
     // performs intended reformatting of a valid date.
 
@@ -73,7 +72,7 @@ public class BookingTests {
     }
 
     // Test dateReOrderer() method with some invalid dummy data to test that it
-    // does not throw any exceptions for invalid string as the argument.
+    // does not throw any exceptions when passed an invalid string as the argument.
 
     @Test
     public void whenPassingNonDateStringThenDoesNotThrowException(){
