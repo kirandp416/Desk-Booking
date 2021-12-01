@@ -1,9 +1,11 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.AdminBookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A interface that will hold hold abstract versions of all the methods we
@@ -18,4 +20,6 @@ public interface BookingRepository {
     public List<BookingDTO> findAllUsersBookings(String username);
 
     public boolean deleteBooking(Integer id);
+
+    public Optional<List<AdminBookingDTO>> findAllBookingsAdmin();
 }

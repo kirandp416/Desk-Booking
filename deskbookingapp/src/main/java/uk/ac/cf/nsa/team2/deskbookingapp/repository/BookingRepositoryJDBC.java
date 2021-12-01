@@ -1,12 +1,16 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.AdminBookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
+import uk.ac.cf.nsa.team2.deskbookingapp.mapper.BookingAdminMapper;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.BookingMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A MYSQL JDBC implementation of the BookingRepository interface
@@ -90,6 +94,32 @@ public class BookingRepositoryJDBC implements BookingRepository {
         int rowsAffected = jdbcTemplate.update(query, id);
 
         return rowsAffected > 0;
+    }
+
+    /**
+     * Implements a method from booking repository that fetches all available bookings
+     * and displays in the page.
+     *
+     * @return a BookingAdminMapper and passes it to the controller
+     */
+    @Override
+    public Optional<List<AdminBookingDTO>> findAllBookingsAdmin(){
+        final String sql = "SELECT username, booking_id, booking_date, room_name, desk_name, desk_type_name, notes\n" +
+                "FROM booking\n" +
+                "INNER JOIN room\n" +
+                "\tON booking.room_id = room.room_id\n" +
+                "INNER JOIN desk\n" +
+                "\tON booking.desk_id = desk.desk_id\n" +
+                "INNER JOIN desk_type\n" +
+                "\tON desk.desk_type_id = desk_type.desk_type_id\n";
+        try {
+            return Optional.of(jdbcTemplate.query(sql, new BookingAdminMapper()));
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        // Return an empty optional if the query failed.
+        return Optional.empty();
     }
 
 

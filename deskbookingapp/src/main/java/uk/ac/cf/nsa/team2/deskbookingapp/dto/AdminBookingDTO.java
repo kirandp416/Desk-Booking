@@ -4,13 +4,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * A class that will be used to instantiate Objects
- * that each represent one booking made in our system.
- */
-public class BookingDTO {
 
+/**
+ * Adapted class from HO's class called BookingDTO in file dto
+ * that was used to instantiate Objects
+ * that each represent booking made in our system.
+ *
+ * I have updated the class to display all the booking data without any id input.
+ * and send the details requested to controller.
+ * */
+public class AdminBookingDTO {
     private int id;
+    private String username;
     private String date;
     private String dateOrderedForDisplay;
     private String roomName;
@@ -19,8 +24,9 @@ public class BookingDTO {
     private String deskNotes;
 
 
-    public BookingDTO(int id, String date, String roomName, String deskName, String deskType, String deskNotes) {
-        this.id = id;
+    public AdminBookingDTO(int id,String username, String date, String roomName, String deskName, String deskType, String deskNotes) {
+        this.id=id;
+        this.username = username;
         this.date = date;
         this.roomName = roomName;
         this.deskName = deskName;
@@ -31,6 +37,10 @@ public class BookingDTO {
 
     public int getId() {
         return id;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getDate() {
@@ -56,13 +66,6 @@ public class BookingDTO {
     public String getDateOrderedForDisplay() {
         return dateOrderedForDisplay;
     }
-
-    // Create a method that takes the date of the booking on the database (which
-    // is in the form yyyy-mm-dd) and reformats it to a more user-friendly format.
-    // At the time of writing this comment, the method converts the date to the
-    // form dd-mm-yy. However, developers can change this to other formats by giving
-    // the constructor for the object named dateFormatRequired, other arguments. For
-    // example, you could switch it to American dates by passing it "MM-dd-YY".
 
     public String dateReOrderer(String dateString){
 

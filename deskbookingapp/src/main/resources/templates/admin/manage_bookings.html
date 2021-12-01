@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/admin/manage_bookings.js" defer></script>
+    <title>Manage Bookings</title>
+</head>
+<body>
+<header th:replace="Fragments/adminHeader :: header"></header>
+
+<div class="container">
+
+    <h1>Bookings</h1>
+
+    <table class="table bootstrapAdjustTable">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date (dd-mm-yy)</th>
+            <th scope="col">Room Name</th>
+            <th scope="col">Desk Name</th>
+            <th scope="col">Desk Type</th>
+            <th scope="col">Desk Notes</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="booking: ${bookings}" th:data-id="booking.id">
+            <td th:text="${booking.username}"/>
+            <td th:text="${booking.dateOrderedForDisplay}"/>
+            <td th:text="${booking.roomName}"/>
+            <td th:text="${booking.deskName}"/>
+            <td th:text="${booking.deskType}"/>
+            <td th:text="${booking.deskNotes}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

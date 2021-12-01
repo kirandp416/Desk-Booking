@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.AdminBookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
@@ -152,6 +154,30 @@ public class BookingController {
 
         return mav;
 
+        }
+
+    /**
+     * Create a route that will fetch list of all bookings
+     * made from the database and show it in the manage_bookings page.
+     * @return ModelandView that will display list of all bookings.
+     */
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/admin/manage/booking")
+    public ModelAndView manageBooking(){
+
+        Optional<List<AdminBookingDTO>> bookings = bookingRepository.findAllBookingsAdmin();
+        // If the optional is empty, redirect user to server error page.
+
+        if (bookings.isEmpty()) {
+            return new ModelAndView("redirect:/internal_server_error");
+        }
+
+        // Return a model and view for the manage desks page,
+        // passing the rooms into the view.
+
+        return new ModelAndView("admin/manage_bookings")
+                .addObject("bookings", bookings.get());
         }
 
 }
