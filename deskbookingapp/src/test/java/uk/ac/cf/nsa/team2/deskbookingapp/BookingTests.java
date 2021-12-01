@@ -7,6 +7,10 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * A class to test all Java classes, interfaces and their methods that
+ * are directly related to the booking table in the database.
+ */
 public class BookingTests {
 
     // Create fields for items we would like to test
