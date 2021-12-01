@@ -1,15 +1,11 @@
 package uk.ac.cf.nsa.team2.deskbookingapp;
 
-
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
-import java.text.ParseException;
-
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * A class to test all Java classes, interfaces and their methods that
@@ -30,7 +26,7 @@ public class BookingTests {
 
     // BookingDTO Tests
 
-    // Test BookingDTO Getters
+    // Test BookingDTO Getters to see that they return the expected data
 
     @Test
     public void whenGettingDeskIdThenReturnCorrectId(){
@@ -68,18 +64,20 @@ public class BookingTests {
     }
 
 
-    // Test dateReOrderer() method with some dummy data to make it clearer to developers
-    // what it is doing
+    // Test dateReOrderer() method with some valid dummy data to test that it
+    // performs intended reformatting of a valid date.
 
     @Test
     public void whenGettingReOrderedDateThenReturnsDesiredFormatOfDate(){
         assertEquals("15-12-00", bookingDTO.dateReOrderer("2000-12-15"));
     }
 
-    //
+    // Test dateReOrderer() method with some invalid dummy data to test that it
+    // does not throw any exceptions for invalid string as the argument.
 
     @Test
-    public void whenPassingNonDateStringThenThrowsException(){
-        assertThrows(Exception.class, ()-> bookingDTO.dateReOrderer("hello"));
+    public void whenPassingNonDateStringThenDoesNotThrowException(){
+        assertDoesNotThrow(()-> bookingDTO.dateReOrderer("hello"));
     }
+
 }
