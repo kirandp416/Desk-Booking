@@ -180,4 +180,34 @@ public class BookingController {
                 .addObject("bookings", bookings.get());
         }
 
+    /**
+     * This method was adapted from HOs method called bookingDelete in file BookingController.java,
+     * that was used to delete booking from database.
+     *
+     *This method will take the id of the booking which is passed through nav
+     * and will pass it to the existing method to delete the booking
+     * @param id the booking id
+     * @return ModelAndView object with a view that will tell you if deletion
+     * was a success.
+     */
+    @RequestMapping(path = "/admin/booking/delete", method = RequestMethod.DELETE)
+    public ModelAndView adminBookingDelete(@RequestParam(value = "id", defaultValue = "null") String id) {
+
+        ModelAndView mav = new ModelAndView();
+
+        if (!id.equals("null")) {
+            Integer idInt = Integer.valueOf(id);
+            if (bookingRepository.deleteBooking(idInt)) {
+                mav.setViewName("/admin/manage_bookings");
+            } else {
+                mav.setViewName("redirect:/internal_server_error");
+            }
+        } else {
+            mav.setViewName("redirect:/internal_server_error");
+        }
+
+        return mav;
+
+    }
+
 }

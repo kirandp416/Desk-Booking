@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <th:block th:insert="fragments/theme :: theme"/>
+    <script type="text/javascript" src="/js/admin/manage_bookings.js" defer></script>
     <title>Manage Bookings</title>
 </head>
 <body>
@@ -29,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="booking: ${bookings}" th:data-id="booking.id">
+        <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
             <td th:text="${booking.username}"/>
             <td th:text="${booking.dateOrderedForDisplay}"/>
             <td th:text="${booking.roomName}"/>
@@ -37,11 +38,14 @@
             <td th:text="${booking.deskType}"/>
             <td th:text="${booking.deskNotes}"/>
             <td>
-                <button th:id="${booking.id}" class="btn btn-danger btn-sm">Delete</button>
+                <button th:id="${booking.id}" onclick="deleteBooking(this.id)" class="btn btn-danger btn-sm">Delete</button>
             </td>
         </tr>
         </tbody>
     </table>
+    <div>
+        <p id="result"></p>
+    </div>
 </div>
 </body>
 </html>
