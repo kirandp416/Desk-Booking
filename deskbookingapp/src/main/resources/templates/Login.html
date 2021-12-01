@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Login page</title>
+    <style type="text/css">
+        body{
+           /*background-image: linear-gradient(to left, #ffeac0, rgb(235, 214, 29));*/
+
+            background: url("[[@{/}]]img/officedesk.jpg");
+            /*background: url(${img/officedesk.jpg}) no-repeat;*/
+            background-size: cover;
+
+        }
+        .A{
+            width: 100%;
+            height: 97vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box{
+            width: 400px;
+            height: 600px;
+            background-image: linear-gradient(to left, rgb(255, 252, 192), rgba(255, 213, 0, 0.35));
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.267);
+        }
+        .t1{
+            font-size: 50px;
+        }
+        .t2{
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+        p{
+            color: #ee400b;
+        }
+        input.user,input.pass{
+            width: 360px;
+            height: 37px;
+            border: none;
+            outline: none;
+            margin-top: 35px;
+            border-radius: 20px;
+        }
+        .text{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #t3{
+            color:#5c636a;
+            font-size: 20px;
+            margin-top: 30px;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+<form action="/login" method="post" th:method="post">
+    <div class="A">
+        <div class="box">
+            <div class="text">
+                <p class="t1">Bjss</p>
+                <p class="t2">Welcome to Login</p>
+                <input type="text" placeholder="username" name="username"  autocomplete="on" class="user">
+                <input type="password" name="password" placeholder="password" class="pass">
+<!--                <button type="submit"style="width: 120px; height: 40px; border:2px #e6dbb9 double>登录</button>-->
+
+                <input type="submit"   value="Login"   style="color: #ece1be;width: 120px;height: 40px;border:2px ;background: #ee400b;margin-top: 60px;  font-weight: bolder;">
+                <a href="/"> <input type="button"  value="Return"  href="/"   style="color: #ece1be;width: 120px;height: 40px;border:2px ;background: #ee400b;margin-top: 20px;  font-weight: bolder;"></a>
+
+                <p id="t3">Bjss</p>
+            </div>
+        </div>
+    </div>
+
+</form>
+</body>
+</html>
