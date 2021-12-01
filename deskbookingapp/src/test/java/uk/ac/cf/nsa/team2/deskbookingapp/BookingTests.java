@@ -1,11 +1,15 @@
 package uk.ac.cf.nsa.team2.deskbookingapp;
 
 
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
+import java.text.ParseException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * A class to test all Java classes, interfaces and their methods that
@@ -70,5 +74,12 @@ public class BookingTests {
     @Test
     public void whenGettingReOrderedDateThenReturnsDesiredFormatOfDate(){
         assertEquals("15-12-00", bookingDTO.dateReOrderer("2000-12-15"));
+    }
+
+    //
+
+    @Test
+    public void whenPassingNonDateStringThenThrowsException(){
+        assertThrows(Exception.class, ()-> bookingDTO.dateReOrderer("hello"));
     }
 }

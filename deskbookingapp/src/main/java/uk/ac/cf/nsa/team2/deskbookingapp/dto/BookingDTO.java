@@ -71,7 +71,9 @@ public class BookingDTO {
         try {
             date = dateFormatDB.parse(dateString);
         } catch (ParseException e) {
+            System.out.println("Parse Exception thrown. Variable date currently points to: " + date);
             e.printStackTrace();
+            return "null";
         }
 
         SimpleDateFormat dateFormatRequired = new SimpleDateFormat("dd-MM-yy");
