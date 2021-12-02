@@ -111,55 +111,13 @@ public class RoomAdminController {
     }
 
     /**
-     * This method was adapted from HIs method called getAllRooms in file RoomAdminController.java,
-     * that was used to fetch all rooms from database.
-     *
-     * This method will create route that will take the id from the row
-     * and fetch room details from repo by room_id.
-     * If successful you will be redirected to editRoom.
-     * Failure will take you to internal_server_error
-     * @param id the room id
-     * @return Model and View that will redirect to edit page.
+     *This method will take id and name passed from URL parameters
+     * and add them to DTO
+     * Then pass them to room repository method which updates the values.
+     * @param id is Room_id
+     * @param name room_name
+     * @return ModelandView of manage_rooms
      */
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping(path = "/admin/room/edit/{id}")
-    public ModelAndView roomEdit(@PathVariable (value = "id") int id) {
-        Optional<List<RoomDTO>> rooms = roomRepository.findById(id);
-        // If the optional is empty, redirect user to server error page.
-
-        if (rooms.isEmpty()) {
-            return new ModelAndView("redirect:/internal_server_error");
-        }
-        // Return a model and view, passing in the result of the operation to the view.
-        return new ModelAndView("admin/editRoom").addObject("rooms",rooms.get());
-
-    }
-
-    /**
-     * This method was adapted from HIs method called addRoomProcessForm in file RoomAdminController.java,
-     * that was used to add new room to database.
-     *
-     * This method will create a route to take the edited form details
-     * and update the room_name of the particular room_id.
-     * Creating a new DTO by id which is already present in DB.
-     * Update the name which is already fetched from DTO with the given one in form.
-     * @param form will take the form data
-     * @return will take you to manage_rooms page with a message.
-     */
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/admin/room/edit/process_form")
-    public ModelAndView editRoomProcessForm(RoomEditForm form) {
-        // Create DTO by id given in the form to repository store.
-        RoomDTO dto = new RoomDTO();
-        dto.setId(form.getId());
-        dto.setName(form.getName());
-        //updating the data from repo with editRoom by passing the dto
-        boolean result = roomRepository.editRoom(dto);
-
-        // Return a model and view, passing in the result of the operation to the view.
-        return new ModelAndView("admin/manage_rooms")
-                .addObject("result", result);
-    }
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/admin/room/edit")
     public ModelAndView editRoom(@RequestParam(value = "id",defaultValue = "0")int id,@RequestParam(value = "name",defaultValue = "null")String name){

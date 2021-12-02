@@ -85,17 +85,12 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
     }
 
     /**
-     * Implement method from RoomRepository that deals with editing
-     * a single room from the table of bookings in the MySQL database
-     * @param dto fetches the name and id of the room where we need to update
+     *This method will pick up the DTO passed from controller
+     * and sets the room_name and room_id by calling dto getter methods
+     * and updates the database by injecting the sql.
+     * @param dto data transfer object which contains name and id
      * @return
      */
-    @Override
-    public boolean editRoom(RoomDTO dto){
-        String sql = "UPDATE room SET room_name=? WHERE room_id=?";
-        int rowsAffected = jdbc.update(sql,dto.getName(),dto.getId());
-        return rowsAffected > 0;
-    }
     @Override
     public boolean editRoomAjax(RoomDTO dto){
         String sql = "UPDATE room SET room_name=? WHERE room_id=?";

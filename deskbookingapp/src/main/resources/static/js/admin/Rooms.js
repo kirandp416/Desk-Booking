@@ -48,6 +48,10 @@ function removeMyParent(id) {
 }
 //End of code adapted from HO
 
+//This function is called when user clicks on update.
+//This changes the style.display of buttons div and hide it
+//Also this changes style.display of edit Form and show it.
+
 function editRoom(id){
     console.log(id);
     var edit = document.getElementById("edit"+id);
@@ -62,6 +66,11 @@ function editRoom(id){
         console.log("went to else");
     }
 }
+
+//This Function is called on submit button of the form
+//This will take id and name from form and pass it to controller as PUT method.
+//Added a event listener to prevent default method as the function is not working when launched for the first time.
+//Added a reload method to reload the page if request was successful.
 function saveEdit(id) {
     var name = document.forms["editForm" + id]["name"].value;
     let params = 'id=' + id + "&" + 'name=' + name;
@@ -85,9 +94,4 @@ function saveEdit(id) {
     }
     xhttp.send(params);
     return false;
-}
-function closeEditRoom(id){
-    console.log(id);
-    editRoom(id);
-
 }

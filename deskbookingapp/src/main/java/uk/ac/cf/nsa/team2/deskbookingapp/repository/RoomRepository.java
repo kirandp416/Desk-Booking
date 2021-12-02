@@ -26,6 +26,5 @@ public interface RoomRepository {
     Optional<List<RoomDTO>> findAll();
     public boolean deleteRoom(Integer id);
     public Optional<List<RoomDTO>> findById(Integer id);
-    public boolean editRoom(RoomDTO dto);
     public boolean editRoomAjax(RoomDTO dto);
 }
