@@ -7,6 +7,18 @@
 //     console.log($(this).closest('form').serialize());
 // });
 
+/**
+ * Create a method that returns a date string that is formatted in such
+ * a way that it can be passed to the html date input and it will load
+ * a date into that. In other words, the string can be used to reset
+ * the html calendar interface that comes as part of inputs of type
+ * date.
+ * @returns {string}
+ */
+function todaysDateReturner(){
+    let today = new Date();
+    return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + String(today.getDate()).padStart(2, '0');
+}
 
 /**
  * Set the date to today's date when we first load the page
@@ -19,17 +31,33 @@ $(document).ready(setDateToToday);
  * e.g. if an invalid date is supplied
  */
 function setDateToToday() {
-    let today = new Date();
-    let todayFormatted = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    let todayFormattedString = todaysDateReturner();
     console.log("Setting date to today's date...")
-    document.getElementById("bookingDate").value = todayFormatted;
+    document.getElementById("bookingDate").value = todayFormattedString;
+}
+
+/**
+ * Create a function that will clears the current date if and when
+ * we call it.
+ */
+function reset_date_native() {
+    let date_input = document.getElementById("bookingDate");
+
+    //erase the input value
+    date_input.value = '';
+
+    //prevent error on older browsers (aka IE8)
+    if (date_input.type === 'date') {
+        //update the input content (visually)
+        date_input.type = 'text';
+        date_input.type = 'date';
+    }
 }
 
 
 
 /**
- * If the user selects a date in the past, return the calendar to today's date
- * and alert them of their mistake.
+ * If the user selects a date in the past, clear the calendar
  */
 function pastDateWarn() {
 
@@ -47,9 +75,21 @@ function pastDateWarn() {
 
     if (bookingDate < todayDate) {
         alert('You cannot choose a date in the past.');
-        setDateToToday();
+        reset_date_native();
     }
 }
+
+function viewDesksButtonDataValidator(){
+
+    if (document.getElementById("bookingDate").value.length == 0){
+        console.log("You pressed view desks but there is no date");
+        return false;
+    }
+    else
+        return true;
+}
+
+
 
 // Start of code that was adapted from Hassan's code in manage_desks.js
 
@@ -93,8 +133,20 @@ document.forms["form"].addEventListener("submit", function (e) {
     // Prevent default behaviour of form.
     e.preventDefault();
 
-    // Get desks.
-    getDesks();
+
+    // If the form is validated, load DOM with desks. Otherwise,
+    // let them know the error. Since there is only one place the
+    // form can currently go wrong and that is for an empty date
+    // input, we alert them to an empty date.
+    if (viewDesksButtonDataValidator() == true){
+        // Get desks.
+        getDesks();
+    }
+    else{
+        alert('You must select a date!');
+    }
+
+
 });
 
 /**
