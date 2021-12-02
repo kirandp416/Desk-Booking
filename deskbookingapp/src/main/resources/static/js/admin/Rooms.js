@@ -49,7 +49,6 @@ function removeMyParent(id) {
 //End of code adapted from HO
 
 function editRoom(id){
-    let params = 'id=' + id;
     console.log(id);
     var edit = document.getElementById("edit"+id);
     var buttons = document.getElementById("buttons"+id);
@@ -85,4 +84,8 @@ function saveEdit(id) {
     }
     xhttp.send(params);
     return false;
+}
+function closeEditRoom(id){
+    console.log(id);
+
 }
