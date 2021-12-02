@@ -28,22 +28,26 @@
                 </thead>
                 <tbody>
                     <tr th:each="room: ${rooms}" th:data-id="${room.id}">
-                        <td th:text="${room.id}" id="id"></td>
+                        <td th:text="${room.id}"></td>
                         <td th:text="${room.name}"></td>
                         <td>
                             <div class="col-md" th:id="buttons+${room.id}" style="display: inline">
-                            <a th:id="${room.id}" class="btn btn-secondary btn-sm" style="text-decoration: none"
-                               th:href="@{/admin/room/edit/{id}(id=${room.id})}">Edit</a>
                             <button th:id="${room.id}" onclick="editRoom(this.id)" class="btn btn-secondary btn-sm"> Update </button>
                             <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger btn-sm">
                                 Delete
                             </button>
                             </div>
                             <div class="col-md" th:id="edit+${room.id}" style="display: none">
-                                <form th:object="${room}" id="editForm">
-                                    <input type="text" id="roomName" class="form-control w-25" th:value="${room.name}">
-                                    <button th:id="${room.id}" onclick="saveEdit(this.id)" class="btn btn-primary">Save</button>
-                                    <button th:id="${room.id}"  class="btn btn-danger">Cancel</button>
+<!--                                <form th:object="${room}" id="editForm">-->
+<!--                                    <input type="text" id="roomName" class="form-control w-25" th:value="${room.name}">-->
+<!--                                    <button th:id="${room.id}" onclick="saveEdit(this.id)" class="btn btn-primary">Save</button>-->
+<!--                                    <button th:id="${room.id}"  class="btn btn-danger">Cancel</button>-->
+<!--                                </form>-->
+                                <form th:object="${room}" method="post" action="/admin/room/edit/process_form">
+                                    <input type="hidden" id="id" name="id" th:value="${room.id}">
+                                    <input type="text" id="name" name="name" th:value="${room.name}" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
+                                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                    <button th:id="${room.id}" class="btn btn-danger btn-sm">Cancel</button>
                                 </form>
                             </div>
                         </td>
