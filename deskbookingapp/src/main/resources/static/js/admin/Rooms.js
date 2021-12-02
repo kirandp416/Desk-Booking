@@ -52,10 +52,13 @@ function editRoom(id){
     let params = 'id=' + id;
     console.log(id);
     var edit = document.getElementById("edit");
+    var buttons = document.getElementById("buttons");
     if(edit.style.display == "none"){
-        edit.style.display="block";
+        edit.style.display="inline";
+        buttons.style.display="none";
     }
     else{
         edit.style.display="none";
+        edit.style.display="inline";
     }
 }
