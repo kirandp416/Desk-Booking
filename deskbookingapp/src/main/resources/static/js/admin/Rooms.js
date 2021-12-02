@@ -47,3 +47,15 @@ function removeMyParent(id) {
 
 }
 //End of code adapted from HO
+
+function editRoom(id){
+    let params = 'id=' + id;
+    console.log(id);
+    var edit = document.getElementById("edit");
+    if(edit.style.display == "none"){
+        edit.style.display="block";
+    }
+    else{
+        edit.style.display="none";
+    }
+}

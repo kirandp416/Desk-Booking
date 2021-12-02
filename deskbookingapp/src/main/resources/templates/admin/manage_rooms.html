@@ -23,7 +23,7 @@
                     <tr>
                         <th scope="col">Room ID</th>
                         <th scope="col">Room Name</th>
-                        <th scope="col">Actions</th>
+                        <th scope="colgroup" colspan="2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,11 +31,21 @@
                         <td th:text="${room.id}" id="id"></td>
                         <td th:text="${room.name}"></td>
                         <td>
-                            <a th:id="${room.id}" class="btn btn-secondary btn-sm" style="text-decoration: none"
-                               th:href="@{/admin/room/edit/{id}(id=${room.id})}">Edit</a>
+<!--                            <a th:id="${room.id}" class="btn btn-secondary btn-sm" style="text-decoration: none"-->
+<!--                               th:href="@{/admin/room/edit/{id}(id=${room.id})}">Edit</a>-->
+                            <button th:id="${room.id}" onclick="editRoom(this.id)" class="btn btn-secondary btn-sm"> Update </button>
                             <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger btn-sm">
                                 Delete
                             </button>
+                        </td>
+                        <td>
+                            <div class="collapse in" id="edit" style="display: none">
+                                <form th:object="${room}" id="editForm">
+                                    <input type="text" id="roomName" th:value="${room.name}">
+                                    <button th:id="${room.id}" onclick="saveEdit(this.id)" class="btn btn-primary">Save</button>
+                                    <button th:id="${room.id}"  class="btn btn-danger">Cancel</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
