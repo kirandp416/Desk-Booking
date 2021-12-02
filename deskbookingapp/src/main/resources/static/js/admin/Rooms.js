@@ -51,8 +51,8 @@ function removeMyParent(id) {
 function editRoom(id){
     let params = 'id=' + id;
     console.log(id);
-    var edit = document.getElementById("edit");
-    var buttons = document.getElementById("buttons");
+    var edit = document.getElementById("edit"+id);
+    var buttons = document.getElementById("buttons"+id);
     if(edit.style.display == "none"){
         edit.style.display="inline";
         buttons.style.display="none";
