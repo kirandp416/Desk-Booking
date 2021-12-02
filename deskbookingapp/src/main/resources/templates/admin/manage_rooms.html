@@ -41,7 +41,7 @@
                                 <form th:id="editForm+${room.id}">
                                     <input type="hidden" id="id" name="id" th:value="${room.id}">
                                     <input type="text" id="name" name="name" th:value="${room.name}" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
-                                    <button type="submit" th:id="${room.id}" class="btn btn-primary btn-sm" onclick="saveEdit(this.id)">Save</button>
+                                    <button type="submit" th:id="${room.id}" class="btn btn-primary btn-sm" onclick="return saveEdit(this.id)" >Save</button>
                                     <a href="/admin/rooms/all" class="btn btn-danger btn-sm" style="text-decoration: none">Cancel</a>
                                 </form>
                             </div>

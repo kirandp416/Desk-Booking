@@ -63,8 +63,7 @@ function editRoom(id){
     }
 }
 function saveEdit(id) {
-    var name = document.forms["editForm"+id]["name"].value;
-    // var id = document.forms["editForm"]["id"].value;
+    var name = document.forms["editForm" + id]["name"].value;
     let params = 'id=' + id + "&" + 'name=' + name;
     console.log(params);
     let xhttp = new XMLHttpRequest();
@@ -75,7 +74,8 @@ function saveEdit(id) {
         if (xhttp.readyState == 4) {
             if (xhttp.status === 200) {
                 document.getElementById("result").innerText = "Successfully updated room name.";
-                console.log("done it")
+                console.log("done it");
+                editRoom(id);
             } else {
                 window.location.replace("/internal_server_error");
                 console.log(xhttp.getAllResponseHeaders());
