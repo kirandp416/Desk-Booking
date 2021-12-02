@@ -81,7 +81,7 @@ function saveEdit() {
                 document.getElementById("result").innerText = "Error in updating room name.";
             }
         }
-        xhttp.send(params);
     }
+    xhttp.send(params);
     return false;
 }
