@@ -218,12 +218,11 @@ function displayDesks(json) {
         let notes = document.createElement("td");
         notes.innerText = desk["notes"];
 
-        let doesUserHaveBookingOnThatDay = document.createElement("td");
-        doesUserHaveBookingOnThatDay.innerText = desk["does_user_have_booking_on_that_day"]
+        let availabilityCell = availabilityCellConfigurer(desk);
 
         let buttonCell = buttonConfigurer(desk);
 
-        row.append(id, name, type, notes, doesUserHaveBookingOnThatDay, buttonCell);
+        row.append(id, name, type, notes, availabilityCell, buttonCell);
 
         table.appendChild(row);
     });
@@ -242,8 +241,7 @@ function displayDesks(json) {
  */
 function buttonConfigurer(desk) {
 
-    // Create a cell in the last column in our table that
-    // can hold a button
+    // Create a cell that will be placed in last column in our table
 
     let buttonCell = document.createElement("td");
 
@@ -267,6 +265,45 @@ function buttonConfigurer(desk) {
     }
 
     return buttonCell;
+
+}
+
+/**
+ * Create function that will take a desk object in (as we are iterating over
+ * all desks) and populate the column titled "Available" with either a check
+ * (if it is available) and a cross (if it is not available).
+ * @param desk
+ * @returns {HTMLTableDataCellElement}
+ */
+function availabilityCellConfigurer(desk){
+
+    // Create a cell for our availability icon
+
+    let availabilityCell = document.createElement("td");
+    let spanText = document.createElement("i");
+
+    // If the desk is available on that day, show a check in the
+    // available column, else show a cross
+
+    if (desk["available"] === true){
+
+        spanText.innerHTML = "✓";
+        // add bootstrap styling for check marks
+        spanText.className = "bi bi-check";
+        availabilityCell.appendChild(spanText);
+
+    } else{
+
+        spanText.innerHTML = "✕";
+        // add bootstrap styling for cross marks
+        spanText.className = "bi bi-x";
+        availabilityCell.appendChild(spanText);
+
+    }
+
+    return availabilityCell;
+
+
 
 }
 
