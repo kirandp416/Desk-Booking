@@ -36,6 +36,7 @@ CREATE TABLE booking
     booking_date DATE,
     room_id      INT,
     desk_id      INT,
+    book_timestamp DATETIME NOT NULL,
     CONSTRAINT booking_pk_index PRIMARY KEY (booking_id),
     CONSTRAINT booking_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE,
     CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE
@@ -56,10 +57,10 @@ VALUES (1, 1, 1, 'Desk 1'),
        (5, 2, 1, 'Desk 2'),
        (6, 2, 1, 'Desk 2');
 
-INSERT INTO booking (username, booking_date, room_id, desk_id)
-VALUES ('user1', '2021-11-23', 1, 1),
-       ('user1', '2021-11-23', 1, 2),
-       ('user1', '2021-11-23', 1, 3),
-       ('user2', '2021-11-23', 2, 1),
-       ('user2', '2021-11-23', 2, 2),
-       ('user2', '2021-11-23', 2, 3);
+INSERT INTO booking (username, booking_date, room_id, desk_id, book_timestamp)
+VALUES ('user1', '2021-11-23', 1, 1, '2021-11-22 12:15:00'),
+       ('user1', '2021-11-24', 1, 2, '2021-11-22 12:21:00'),
+       ('user1', '2021-11-25', 1, 3, '2021-11-22 12:23:00'),
+       ('user2', '2021-11-23', 2, 1, '2021-11-22 16:03:00'),
+       ('user2', '2021-11-24', 2, 2, '2021-11-22 16:03:29'),
+       ('user2', '2021-11-25', 2, 3, '2021-11-22 16:03:46');
