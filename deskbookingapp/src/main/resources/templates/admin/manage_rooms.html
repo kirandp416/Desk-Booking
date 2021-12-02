@@ -37,17 +37,11 @@
                                 Delete
                             </button>
                             </div>
-                            <div class="col-md" th:id="edit+${room.id}" style="display: none">
-<!--                                <form th:object="${room}" id="editForm">-->
-<!--                                    <input type="text" id="roomName" class="form-control w-25" th:value="${room.name}">-->
-<!--                                    <button th:id="${room.id}" onclick="saveEdit(this.id)" class="btn btn-primary">Save</button>-->
-<!--                                    <button th:id="${room.id}"  class="btn btn-danger">Cancel</button>-->
-<!--                                </form>-->
-<!--                                <form th:object="${room}" method="post" action="/admin/room/edit/process_form">-->
-                                <form id="editForm" th:object="${room}" onsubmit="saveEdit()">
+                            <div class="col-md" th:id="edit+${room.id}" th:object="${room}" style="display: none">
+                                <form th:id="editForm+${room.id}">
                                     <input type="hidden" id="id" name="id" th:value="${room.id}">
                                     <input type="text" id="name" name="name" th:value="${room.name}" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
-                                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                    <button type="submit" th:id="${room.id}" class="btn btn-primary btn-sm" onclick="saveEdit(this.id)">Save</button>
                                     <a href="/admin/rooms/all" class="btn btn-danger btn-sm" style="text-decoration: none">Cancel</a>
                                 </form>
                             </div>
@@ -56,8 +50,6 @@
                 </tbody>
             </table>
             <div>
-                <p th:if="${result}">Room name Saved.</p>
-                <p th:if="${result != null && !result}">Failed to update room.</p>
                 <p id="result"></p>
             </div>
         </div>

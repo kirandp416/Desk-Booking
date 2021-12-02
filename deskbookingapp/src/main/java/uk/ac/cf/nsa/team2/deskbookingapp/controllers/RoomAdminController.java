@@ -161,7 +161,7 @@ public class RoomAdminController {
                 .addObject("result", result);
     }
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/admin/room/edit")
+    @PutMapping("/admin/room/edit")
     public ModelAndView editRoom(@RequestParam(value = "id",defaultValue = "0")int id,@RequestParam(value = "name",defaultValue = "null")String name){
         ModelAndView mav = new ModelAndView();
             RoomDTO dto = new RoomDTO();
