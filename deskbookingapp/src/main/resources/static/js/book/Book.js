@@ -150,12 +150,16 @@ document.forms["form"].addEventListener("submit", function (e) {
 });
 
 /**
- * Gets desks using AJAX.
+ * Gets desks (with their availability) using AJAX.
  */
 function getDesks() {
+
     let xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/api/desks_available?room_id=" + roomSelect.value +
-        "&date=" + dateSelect.value + "&offset=" + offset + "&limit=" + limit, true);
+    xhttp.open("GET", "/api/desks_available?" + "username="+ usernameSelect.value+
+            "&room_id=" + roomSelect.value +
+        "&date=" + dateSelect.value +
+        "&offset=" + offset +
+        "&limit=" + limit, true);
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4) {
             if (xhttp.status === 200) {
@@ -214,9 +218,12 @@ function displayDesks(json) {
         let notes = document.createElement("td");
         notes.innerText = desk["notes"];
 
+        let doesUserHaveBookingOnThatDay = document.createElement("td");
+        doesUserHaveBookingOnThatDay.innerText = desk["does_user_have_booking_on_that_day"]
+
         let buttonCell = buttonConfigurer(desk);
 
-        row.append(id, name, type, notes, buttonCell);
+        row.append(id, name, type, notes, doesUserHaveBookingOnThatDay, buttonCell);
 
         table.appendChild(row);
     });

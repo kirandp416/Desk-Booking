@@ -9,6 +9,9 @@ import java.sql.SQLException;
 
 public class DeskAvailabilityRowMapper implements RowMapper<DeskAvailabilityDTO> {
 
+    // Create a method that can translate a row coming back from
+    // the database that corresponds to a desk and then instantiate
+    // a DeskAvailabilityDTO object from that row
     @Override
     public DeskAvailabilityDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new DeskAvailabilityDTO(
@@ -20,7 +23,8 @@ public class DeskAvailabilityRowMapper implements RowMapper<DeskAvailabilityDTO>
                         rs.getString("desk_type_name")
                 ),
                 rs.getString("notes"),
-                rs.getInt("available")
+                rs.getInt("available"),
+                rs.getInt("does_user_have_booking_on_that_day")
         );
     }
 }
