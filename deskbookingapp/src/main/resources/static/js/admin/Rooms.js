@@ -62,3 +62,26 @@ function editRoom(id){
         edit.style.display="inline";
     }
 }
+function saveEdit() {
+    var name = document.forms["editForm"]["name"].value;
+    var id = document.forms["editForm"]["id"].value;
+    let params = 'id=' + id + "&" + 'name=' + name;
+    console.log(params);
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/admin/room/edit", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4) {
+            if (xhttp.status === 200) {
+                document.getElementById("result").innerText = "Successfully updated room name.";
+                console.log("done it")
+            } else {
+                window.location.replace("/internal_server_error");
+                console.log(xhttp.getAllResponseHeaders());
+                document.getElementById("result").innerText = "Error in updating room name.";
+            }
+        }
+        xhttp.send(params);
+    }
+    return false;
+}

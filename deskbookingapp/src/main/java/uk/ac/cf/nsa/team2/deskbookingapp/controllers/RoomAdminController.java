@@ -160,5 +160,19 @@ public class RoomAdminController {
         return new ModelAndView("admin/manage_rooms")
                 .addObject("result", result);
     }
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/admin/room/edit")
+    public ModelAndView editRoom(@RequestParam(value = "id",defaultValue = "0")int id,@RequestParam(value = "name",defaultValue = "null")String name){
+        ModelAndView mav = new ModelAndView();
+            RoomDTO dto = new RoomDTO();
+            dto.setId(id);
+            dto.setName(name);
+            if (roomRepository.editRoomAjax(dto)) {
+                mav.setViewName("/admin/manage_rooms");
+            } else {
+                mav.setViewName("redirect:/internal_server_error");
+            }
+        return mav;
+    }
 
 }

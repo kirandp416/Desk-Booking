@@ -96,4 +96,10 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         int rowsAffected = jdbc.update(sql,dto.getName(),dto.getId());
         return rowsAffected > 0;
     }
+    @Override
+    public boolean editRoomAjax(RoomDTO dto){
+        String sql = "UPDATE room SET room_name=? WHERE room_id=?";
+        int rowsAffected = jdbc.update(sql, dto.getName(), dto.getId());
+        return rowsAffected > 0;
+    }
 }
