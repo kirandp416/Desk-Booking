@@ -59,6 +59,7 @@ function editRoom(id){
     else{
         edit.style.display="none";
         edit.style.display="inline";
+        console.log("went to else");
     }
 }
 function saveEdit(id) {
@@ -68,13 +69,13 @@ function saveEdit(id) {
     let xhttp = new XMLHttpRequest();
     xhttp.open("PUT", "/admin/room/edit", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    document.forms["editForm"+ id].addEventListener("submit",function (e){e.preventDefault();});
     xhttp.onreadystatechange = function () {
         console.log("start");
         if (xhttp.readyState == 4) {
             if (xhttp.status === 200) {
-                document.getElementById("result").innerText = "Successfully updated room name.";
                 console.log("done it");
-                editRoom(id);
+                location.reload();
             } else {
                 window.location.replace("/internal_server_error");
                 console.log(xhttp.getAllResponseHeaders());
@@ -87,5 +88,6 @@ function saveEdit(id) {
 }
 function closeEditRoom(id){
     console.log(id);
+    editRoom(id);
 
 }
