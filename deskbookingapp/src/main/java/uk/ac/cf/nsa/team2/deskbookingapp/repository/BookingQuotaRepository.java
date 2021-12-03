@@ -16,11 +16,12 @@ public interface BookingQuotaRepository {
     Optional<Integer> findQuotaByRoom(int roomId);
 
     /**
-     * Finds the booking quota used by an employee for the current month.
+     * Finds the booking quota used by an employee for the current month for the specified room..
      *
+     * @param roomId   the ID of the room.
      * @param username the employee's username.
      * @return an optional containing the quota used for the month by the employee if the operation was successful.
      */
-    Optional<Integer> findUsedQuotaByEmployee(String username);
+    Optional<Integer> findUsedQuotaByEmployeeAndRoom(int roomId, String username);
 
 }

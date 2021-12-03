@@ -37,8 +37,8 @@ public class BookingQuotaMySqlJdbcRepository implements BookingQuotaRepository {
 
         // SQL to get number of employees who booked in the past 30 days.
         final String sql2 = "SELECT COUNT(DISTINCT username) FROM booking " +
-                "WHERE book_timestamp BETWEEN CAST(? AS DATETIME) - INTERVAL 30 DAY " +
-                "AND CAST(? AS DATETIME);";
+                "WHERE room_id = ? " +
+                "AND book_timestamp BETWEEN CAST(? AS DATETIME) - INTERVAL 30 DAY AND CAST(? AS DATETIME);";
 
         // Store current date/time.
         OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
@@ -46,7 +46,7 @@ public class BookingQuotaMySqlJdbcRepository implements BookingQuotaRepository {
         try {
             // Execute queries.
             Integer desksCount = jdbc.queryForObject(sql1, Integer.class, roomId);
-            Integer employeeCount = jdbc.queryForObject(sql2, Integer.class, now, now);
+            Integer employeeCount = jdbc.queryForObject(sql2, Integer.class, roomId, now, now);
 
             // Ensure results are not null.
             // Return empty optional if so.
@@ -68,14 +68,15 @@ public class BookingQuotaMySqlJdbcRepository implements BookingQuotaRepository {
     }
 
     @Override
-    public Optional<Integer> findUsedQuotaByEmployee(String username) {
+    public Optional<Integer> findUsedQuotaByEmployeeAndRoom(int roomId, String username) {
         final String sql = "SELECT COUNT(1) FROM booking " +
                 "WHERE MONTH(book_timestamp) = MONTH(?) " +
+                "AND room_id = ? " +
                 "AND username = ?;";
 
         try {
-            return Optional.ofNullable(jdbc.queryForObject(sql, Integer.class, OffsetDateTime.now(ZoneOffset.UTC),
-                    username));
+            return Optional.ofNullable(jdbc.queryForObject(sql, Integer.class, roomId, OffsetDateTime.now(ZoneOffset.UTC),
+                    roomId, username));
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
