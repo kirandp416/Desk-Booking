@@ -74,8 +74,8 @@ public class BookingQuotaMySqlJdbcRepository implements BookingQuotaRepository {
                 "AND username = ?;";
 
         try {
-            return Optional.ofNullable(jdbc.queryForObject(sql, Integer.class,
-                    OffsetDateTime.now(ZoneOffset.UTC).getMonth().getValue(), username));
+            return Optional.ofNullable(jdbc.queryForObject(sql, Integer.class, OffsetDateTime.now(ZoneOffset.UTC),
+                    username));
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
