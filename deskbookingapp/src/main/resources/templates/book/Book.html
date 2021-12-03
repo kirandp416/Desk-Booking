@@ -11,74 +11,118 @@
     <script src="/js/book/Book.js" defer></script>
 </head>
 <body>
-    <header th:replace="fragments/header :: header"></header>
+<header th:replace="fragments/header :: header"></header>
 
-    <main>
-        <!--    Hidden input that holds username that will be used to make a booking-->
-        <input id="username" th:value="${user.getName()}" type="hidden">
+<main>
+    <!--    Hidden input that holds username that will be used to make a booking-->
+    <input id="username" th:value="${user.getName()}" type="hidden">
 
-        <div class="container">
+    <div class="container">
 
-            <!-- Display a calendar. If a valid date (today or the future) is selected this
-                date will be used to reload DOM with available/unavailable desks for that day-->
+        <!-- Display a calendar. If a valid date (today or the future) is selected this
+            date will be used to reload DOM with available/unavailable desks for that day-->
 
-            <br>
-            <form action="/booking/add/process_form" method="post">
-                <label for="bookingDate">Date:</label>
-                <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
-            </form>
+        <br>
+        <form action="/booking/add/process_form" method="post">
+            <label for="bookingDate">Date:</label>
+            <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
+        </form>
 
-            <br>
+        <br>
 
-            <!-- The other input used to reload DOM showing desks, the room for the desk.
-            We also have the view desks button here which will load the DOM with desks-->
+        <!-- The other input used to reload DOM showing desks, the room for the desk.
+        We also have the view desks button here which will load the DOM with desks-->
 
-            <form id="form">
-                <p>
-                    <label for="room">Room: </label>
-                    <select id="room" name="room" required>
-                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-                    </select>
-                </p>
-                <p>
-                    <input type="submit" class="btn btn-primary" value="View Desks">
-                </p>
-            </form>
+        <form id="form">
+            <p>
+                <label for="room">Room: </label>
+                <select id="room" name="room" required>
+                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                </select>
+            </p>
+            <p>
+                <input type="submit" class="btn btn-primary" value="View Desks">
+            </p>
+        </form>
 
-            <!-- The table that will be populated with desks upon submission of the above button. -->
+        <!-- The table that will be populated with desks upon submission of the above button. -->
 
-            <table class="table bootstrapAdjustTable">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Desk Name</th>
-                        <th scope="col">Desk Type</th>
-                        <th scope="col">Notes</th>
-                        <th scope="col">Available</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+        <table class="table bootstrapAdjustTable">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Desk Name</th>
+                <th scope="col">Desk Type</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Available</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
 
-            <!-- Pagination functionality as seen the manage desks page. -->
+        <!-- Pagination functionality as seen the manage desks page. -->
 
-            <ul class="pagination justify-content-end" style="align-items: center;">
-                <li class="page-item" id="resultsText" style="margin-right: 8px;"></li>
-                <li class="page-item">
-                    <button class="page-link" id="tablePreviousBtn">Previous</button>
-                </li>
-                <li class="page-item">
-                    <button class="page-link" id="tableNextBtn">Next</button>
-                </li>
-            </ul>
+        <ul class="pagination justify-content-end" style="align-items: center;">
+            <li class="page-item" id="resultsText" style="margin-right: 8px;"></li>
+            <li class="page-item">
+                <button class="page-link" id="tablePreviousBtn">Previous</button>
+            </li>
+            <li class="page-item">
+                <button class="page-link" id="tableNextBtn">Next</button>
+            </li>
+        </ul>
 
+    </div>
+
+</main>
+
+<!-- To trigger the Bootstrap Modal below, just add the following attributes to a button:
+data-mdb-toggle="modal" data-mdb-target="#oneBookingPerDay"-->
+
+<!-- Modal -->
+<div class="modal top fade" id="oneBookingPerDay" tabindex="-1" aria-labelledby="oneBookingPerDayLabel" aria-hidden="true"
+     data-mdb-backdrop="true" data-mdb-keyboard="true">
+    <div class="modal-dialog  ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="oneBookingPerDayLabel">Woops!</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">You may only book one desk per day unfortunately.</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
+                    Close
+                </button>
+            </div>
         </div>
+    </div>
+</div>
 
-    </main>
+<!-- To trigger the Bootstrap Modal below, just add the following attributes to a button:
+data-mdb-toggle="modal" data-mdb-target="#bookedOut"-->
 
-    <footer th:replace="fragments/footer :: footer"></footer>
+<!-- Modal -->
+<div class="modal top fade" id="bookedOut" tabindex="-1" aria-labelledby="bookedOutLabel" aria-hidden="true"
+     data-mdb-backdrop="true" data-mdb-keyboard="true">
+    <div class="modal-dialog  ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookedOutLabel">Woops!</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Somebody else has booked that desk unfortunately.</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 
 </html>

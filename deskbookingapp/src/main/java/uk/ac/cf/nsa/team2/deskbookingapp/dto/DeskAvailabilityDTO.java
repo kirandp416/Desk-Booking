@@ -20,7 +20,13 @@ public class DeskAvailabilityDTO extends DeskDTO {
     @JsonProperty("does_user_have_booking_on_that_day")
     private boolean doesUserHaveBookingOnThatDay; // a boolean that will be true if the user has any bookings on the date selected on client
 
-    public DeskAvailabilityDTO(int id, int roomId, String name, DeskTypeDTO deskType, String notes, int available, int doesUserHaveBookingOnThatDay) {
+    @JsonProperty("does_user_have_that_desk_booked_on_that_day")
+    private boolean doesUserHaveThatDeskBookedOnThatDay; // a boolean that will be true if the user who is logged in, is the user who booked the desk on the date chosen on the client
+
+    @JsonProperty("booking_id")
+    private int bookingId;
+
+    public DeskAvailabilityDTO(int id, int roomId, String name, DeskTypeDTO deskType, String notes, int available, int doesUserHaveBookingOnThatDay, int doesUserHaveThatDeskBookedOnThatDay, int bookingId) {
 
         // Leverage constructor in parent class
 
@@ -30,17 +36,22 @@ public class DeskAvailabilityDTO extends DeskDTO {
         // for false in the db and then use those to numbers to create real
         // booleans on the server side.
 
-        if (available == 1) {
+        if (available == 1)
             this.available = true;
-        } else {
+        else
             this.available = false;
-        }
 
-        if (doesUserHaveBookingOnThatDay == 1){
+        if (doesUserHaveBookingOnThatDay == 1)
             this.doesUserHaveBookingOnThatDay = true;
-        }
         else
             this.doesUserHaveBookingOnThatDay = false;
+
+        if (doesUserHaveThatDeskBookedOnThatDay == 1)
+            this.doesUserHaveThatDeskBookedOnThatDay = true;
+        else
+            this.doesUserHaveThatDeskBookedOnThatDay = false;
+
+        this.bookingId = bookingId;
 
     }
 }

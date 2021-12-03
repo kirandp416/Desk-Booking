@@ -15,7 +15,7 @@ public class DeskAvailabilityRowMapper implements RowMapper<DeskAvailabilityDTO>
     @Override
     public DeskAvailabilityDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new DeskAvailabilityDTO(
-                rs.getInt("desk_id"),
+                rs.getInt("current_desk_id"),
                 rs.getInt("room_id"),
                 rs.getString("desk_name"),
                 new DeskTypeDTO(
@@ -24,7 +24,9 @@ public class DeskAvailabilityRowMapper implements RowMapper<DeskAvailabilityDTO>
                 ),
                 rs.getString("notes"),
                 rs.getInt("available"),
-                rs.getInt("does_user_have_booking_on_that_day")
+                rs.getInt("does_user_have_booking_on_that_day"),
+                rs.getInt("does_user_have_that_desk_booked_on_that_day"),
+                rs.getInt("booking_id")
         );
     }
 }
