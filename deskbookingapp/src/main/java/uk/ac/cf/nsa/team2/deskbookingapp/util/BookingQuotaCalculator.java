@@ -31,11 +31,11 @@ public class BookingQuotaCalculator {
          * e = number of employees who booked past 30 days.
          */
 
-        int quotaRaw = (desks * totalDays) / (employees + ((RESERVE / totalDays) * remainingDays));
+        float quotaRaw = (desks * totalDays) / (float)(employees + ((RESERVE / totalDays) * remainingDays));
 
         // Return the minimum value between raw quota value and number of desks.
         // This is equivalent to return a if Q(raw) > a, otherwise Q(raw).
-        return Math.min(quotaRaw, desks);
+        return (int) Math.min(quotaRaw, desks);
     }
 
 }
