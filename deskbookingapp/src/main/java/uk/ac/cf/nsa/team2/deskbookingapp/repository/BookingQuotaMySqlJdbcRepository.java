@@ -6,13 +6,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.util.BookingQuotaCalculator;
 
-import java.time.Month;
 import java.time.OffsetDateTime;
 import java.time.YearMonth;
 import java.time.ZoneOffset;
-import java.util.Calendar;
 import java.util.Optional;
 
+/**
+ * Implementation of the {@link BookingQuotaRepository} which uses
+ * a MySQL database as the underlying store via JDBC.
+ */
 @Repository
 public class BookingQuotaMySqlJdbcRepository implements BookingQuotaRepository {
 

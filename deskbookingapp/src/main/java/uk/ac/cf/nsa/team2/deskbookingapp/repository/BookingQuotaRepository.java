@@ -2,6 +2,9 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import java.util.Optional;
 
+/**
+ * Repository which manages the data for booking quota in the underlying store.
+ */
 public interface BookingQuotaRepository {
 
     /**
