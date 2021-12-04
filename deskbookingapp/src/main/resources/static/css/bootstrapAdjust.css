@@ -18,13 +18,13 @@ of the space */
 /* Fix the height so that changes to the contents of the cells (button added, loading icon
 shown, loading icon removed) do not make the height of the cells jump up and down */
 .bootstrapAdjustTable tr {
-    height: 50px;
+    height: 65px;
 }
 
 /* Give the headings of the columns the same height for consistency. The height is chosen
  as it is slightly bigger than the bootstrap button, so it does not jump when it appears or
  disappears */
 .bootstrapAdjustTable tr th{
-    height: 50px;
+    height: 65px;
     /*text-align: center;*/
 }

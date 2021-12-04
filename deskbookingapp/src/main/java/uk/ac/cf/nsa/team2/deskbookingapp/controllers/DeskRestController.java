@@ -64,10 +64,12 @@ public class DeskRestController {
 
 
     /**
-     * Route that takes roomId and date and gets a collection of desk-like-objects (with their
-     * availability on that date stored in these objects. If more than one desk is retrieved
-     * from get then the desk-like-objects are passed to DesksAvailability constructor that
-     * will produce a JSONified version of the desk collection. That object is returned.
+     * Route that takes username, roomId and date and gets a collection of desk-like-objects.
+     * The desk like objects also store whether they are available on that day and whether
+     * the currently logged-in user has any desk bookings on that day (in any room). If one
+     * or more desks are retrieved from the get then the desk-like-objects are passed to
+     * DesksAvailability constructor. This will produce a JSONified version of the desk
+     * collection. That object is returned.
      * @param roomId The room for the desks
      * @param date The date the user is interested in booking a desk
      * @param offset A parameter to allow for pagination
@@ -76,10 +78,11 @@ public class DeskRestController {
      * @return
      */
     @GetMapping(path = "/api/desks_available", produces = "application/json")
-    public DesksAvailabilityDTO getDesksAvailability(@RequestParam("room_id") int roomId, @RequestParam("date") String date,@RequestParam("offset") int offset,
+    public DesksAvailabilityDTO getDesksAvailability(@RequestParam("username") String username, @RequestParam("room_id") int roomId, @RequestParam("date") String date,@RequestParam("offset") int offset,
                              @RequestParam("limit") int limit, HttpServletResponse response) {
+
         // Query for desks and count of desks.
-        Optional<List<DeskAvailabilityDTO>> desks = deskRepository.findByRoomIncludeAvailability(roomId, date, offset, limit);
+        Optional<List<DeskAvailabilityDTO>> desks = deskRepository.findByRoomIncludeAvailability(username, roomId, date, offset, limit);
         Optional<Integer> desksCount = deskRepository.findByRoomCount(roomId);
 
         // Return 500 status if there was an error.
