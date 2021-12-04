@@ -39,7 +39,7 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
         int rowsAffected = 0;
 
         try {
-            rowsAffected = jdbc.update(sql, desk.getId(), desk.getRoomId(), desk.getDeskType().getId(),
+            rowsAffected = jdbc.update(sql, desk.getId(), desk.getRoomId(), desk.getDeskType().getDeskTypeId(),
                     desk.getName(), desk.getNotes());
         } catch (DataAccessException e) {
             e.printStackTrace();

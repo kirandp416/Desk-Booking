@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin - desk type</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/jquery.min.3.4.1.js"></script>
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+<header th:replace="Fragments/adminHeader :: header"></header>
+
+<main>
+    <div class="container">
+        <h1> Desk Type</h1>
+        <!-- Room dropdown. -->
+        <p>
+            <label for="name">Desk Type: </label>
+            <!-- Input pattern: Must start with alphanumeric and allow spaces anywhere afterwards. -->
+            <input type="text" id="name" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
+        </p>
+
+        <p>
+            <label for="name"> photo</label>
+            <input type="text" id="photo" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
+            <button onclick="uploadimg()">Upload</button>
+        </p>
+
+        <p>
+            <label for="name"> Desk Type Introduce</label>
+            <input type="text" id="Introduce" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
+        </p>
+
+
+        <!-- Desk name input. -->
+
+
+        <button onclick="submit()">submit</button>
+        <table id="desksTable" class="table align-middle">
+
+            <!-- Table header. -->
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">desk type</th>
+                <th scope="col">Desk type Introduce</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Action</th>
+
+            </tr>
+
+            </thead>
+
+        </table>
+
+        <div>
+            <p id="result"></p>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="Fragments/footer :: footer"></footer>
+</body>
+<script>
+    console.log("shabiguangtou")
+    this.createTable()
+
+    function createTable() {
+        $.ajax({
+            url: "desk_type/list",
+            success(data) {
+                $("#desksTable tbody").html("");
+                let tbody = document.createElement("tbody")
+                for (let i = 0; i < data.length; i++) {
+                    let tr = document.createElement("tr")
+                    for (let key in data[i]) {
+                        let td = document.createElement("td")
+                        td.innerHTML = data[i][key]
+                        tr.appendChild(td)
+                    }
+                    /**/
+                    let td = document.createElement("td")
+                    let input2 = document.createElement("input")
+                    input2.type = "button"
+                    input2.value = "update"
+                    input2.setAttribute("class", "btn btn-update btn-sm")
+                    input2.onclick = function () {
+                        updatedata(data[i])
+                    }
+                    td.appendChild(input2)
+                    tr.appendChild(td)
+                    tbody.appendChild(tr)
+
+                    let input = document.createElement("input")
+                    input.type = "button"
+                    input.value = "delete"
+                    input.setAttribute("class", "btn btn-delete btn-sm")
+                    input.onclick = function () {
+                        deleteData(data[i].deskTypeId)
+                    }
+                    td.appendChild(input)
+                    tr.appendChild(td)
+                    tbody.appendChild(tr)
+
+
+                }
+                document.getElementsByTagName("table")[0].appendChild(tbody)
+            }
+        })
+    }
+
+    function submit() {
+        let data = {
+            deskTypeName: document.getElementById("name").value,
+            deskTypeIntroduce: document.getElementById("Introduce").value,
+            photo: document.getElementById("photo").value
+        }
+        if (data.deskTypeName) {
+            $.ajax({
+                url: "/admin/desk_type/add",
+                contentType: "application/json;charsetset=UTF-8",
+                method: "POST",
+                data: JSON.stringify(data),
+                success(data) {
+                    location.reload()
+                }
+            })
+        }
+        console.log(data)
+    }
+
+    function uploadimg() {
+
+    }
+
+    function updatedata(data) {
+        let tr = document.getElementsByClassName("table")[0].getElementsByTagName("tbody")[0].getElementsByTagName("tr")
+        for (let i = 0; i < tr.length; i++) {
+            let td = tr[i].getElementsByTagName("td")
+            if (td[0].innerHTML == data.deskTypeId) {
+                for (let j = 1; j < td.length; j++) {
+                    if (j < td.length - 1) {
+                        let input = document.createElement("input")
+                        input.setAttribute("value", td[j].innerHTML)
+                        td[j].innerHTML = ""
+                        td[j].appendChild(input)
+                    } else {
+                        let input3 = document.createElement("input")
+                        input3.type = "button"
+                        input3.value = "confirm"
+                        input3.setAttribute("class", "btn btn-confirm btn-sm")
+                        input3.onclick = function () {
+                            confirm(data[i])
+                        }
+                        td[j].innerHTML = ""
+                        td[j].appendChild(input3)
+
+                        let input4 = document.createElement("input")
+                        input4.type = "button"
+                        input4.value = "cancel"
+                        input4.setAttribute("class", "btn btn-confirm btn-sm")
+                        input4.onclick = function () {
+                            cancel(data[i])
+                        }
+                        td[j].appendChild(input4)
+                    }
+                }
+            }
+        }
+        // console.log(data)
+    }
+
+    function confirm() {
+        let tr = document.getElementsByClassName("table")[0].getElementsByTagName("tbody")[0].getElementsByTagName("tr")
+        let list = []
+        for (let i = 0; i < tr.length; i++) {
+            let td = tr[i].getElementsByTagName("td")
+            if (td[1].innerHTML[0] === "<") {
+                for (let i = 0; i < td.length - 1; i++) {
+                    if(i === 0) {
+                        list.push(td[i].innerHTML - 0)
+                    } else {
+                        list.push(td[i].children[0].value)
+                    }
+                }
+            }
+        }
+        let data = {
+            deskTypeId: list[0],
+            deskTypeName: list[1],
+            deskTypeIntroduce: list[2],
+            photo: list[3]
+        }
+        console.log(data)
+        $.ajax({
+            url: "/admin/desk_type/edit",
+            contentType: "application/json;charsetset=UTF-8",
+            method: "PUT",
+            data: JSON.stringify(data),
+            success(data) {
+                location.reload()
+            }
+        })
+    }
+
+    function cancel() {
+        location.reload()
+    }
+
+    function deleteData(id) {
+        $.ajax({
+            url: "/admin/desk_type/" + id,
+            contentType: "application/json;charsetset=UTF-8",
+            method: "DELETE",
+            success(data) {
+                location.reload()
+            }
+        })
+    }
+
+
+</script>
+</html>

@@ -24,6 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/css/**").permitAll()
                 .mvcMatchers("/font/**").permitAll()
                 .mvcMatchers("/img/**").permitAll()
+                .mvcMatchers("/booking/**").permitAll()
+                //.mvcMatchers("/admin/**").permitAll()
                 .mvcMatchers("/js/bootstrap.bundle.min.js").permitAll()
                 .mvcMatchers("/js/jquery.min.3.4.1.js").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
