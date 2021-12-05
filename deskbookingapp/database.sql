@@ -1,8 +1,11 @@
-DROP DATABASE IF EXISTS deskbooking;
+DROP
+DATABASE IF EXISTS deskbooking;
 
-CREATE DATABASE deskbooking;
+CREATE
+DATABASE deskbooking;
 
-USE deskbooking;
+USE
+deskbooking;
 
 CREATE TABLE room
 (
@@ -31,12 +34,12 @@ CREATE TABLE desk
 
 CREATE TABLE booking
 (
-    booking_id   INT AUTO_INCREMENT,
-    username     VARCHAR(255) NOT NULL,
-    booking_date DATE,
-    room_id      INT,
-    desk_id      INT,
-    book_timestamp DATETIME NOT NULL,
+    booking_id     INT AUTO_INCREMENT,
+    username       VARCHAR(255) NOT NULL,
+    booking_date   DATE,
+    room_id        INT,
+    desk_id        INT,
+    book_timestamp DATETIME     NOT NULL,
     CONSTRAINT booking_pk_index PRIMARY KEY (booking_id),
     CONSTRAINT booking_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE,
     CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE
@@ -47,7 +50,8 @@ VALUES (1, 'Standard'),
        (2, 'Standing');
 
 INSERT INTO room(room_id, room_name)
-VALUES (1, 'Room 1');
+VALUES (1, 'Room 1'),
+       (2, 'Room 2');
 
 INSERT INTO desk(desk_id, room_id, desk_type_id, desk_name)
 VALUES (1, 1, 1, 'Desk 1'),
