@@ -46,7 +46,6 @@ public class BookingQuotaDTO {
     }
 
     public void setRemaining(int remaining) {
-
         this.remaining = remaining;
     }
 
