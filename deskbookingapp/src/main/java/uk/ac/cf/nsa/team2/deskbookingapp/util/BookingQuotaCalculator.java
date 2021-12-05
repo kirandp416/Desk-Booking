@@ -22,7 +22,7 @@ public class BookingQuotaCalculator {
          * Booking fairness algorithm.
          *
          * Q(raw) = (a * b) / (e + ((c / b) * d))
-         * Q = Qr > a ? a : Qr
+         * Q = Qr >= b ? b : Qr
          *
          * a = number of desks.
          * b = number of days in current month.
@@ -30,12 +30,9 @@ public class BookingQuotaCalculator {
          * d = number of days remaining in current month.
          * e = number of employees who booked past 30 days.
          */
+        float quotaRaw = (desks * totalDays) / (employees + (((float) RESERVE / totalDays) * remainingDays));
 
-        float quotaRaw = (desks * totalDays) / (float)(employees + ((RESERVE / totalDays) * remainingDays));
-
-        // Return the minimum value between raw quota value and number of desks.
-        // This is equivalent to return a if Q(raw) > a, otherwise Q(raw).
-        return (int) Math.min(quotaRaw, desks);
+        return quotaRaw >= totalDays ? totalDays : (int) quotaRaw;
     }
 
 }
