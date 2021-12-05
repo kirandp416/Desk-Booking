@@ -23,26 +23,33 @@
                     <tr>
                         <th scope="col">Room ID</th>
                         <th scope="col">Room Name</th>
-                        <th scope="col">Actions</th>
+                        <th scope="colgroup" colspan="2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="room: ${rooms}" th:data-id="${room.id}">
-                        <td th:text="${room.id}" id="id"></td>
+                        <td th:text="${room.id}"></td>
                         <td th:text="${room.name}"></td>
                         <td>
-                            <a th:id="${room.id}" class="btn btn-secondary btn-sm" style="text-decoration: none"
-                               th:href="@{/admin/room/edit/{id}(id=${room.id})}">Edit</a>
+                            <div class="col-md" th:id="buttons+${room.id}" style="display: inline">
+                            <button th:id="${room.id}" onclick="editRoom(this.id)" class="btn btn-secondary btn-sm"> Update </button>
                             <button th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger btn-sm">
                                 Delete
                             </button>
+                            </div>
+                            <div class="col-md" th:id="edit+${room.id}" th:object="${room}" style="display: none">
+                                <form th:id="editForm+${room.id}">
+                                    <input type="hidden" id="id" name="id" th:value="${room.id}">
+                                    <input type="text" id="name" name="name" th:value="${room.name}" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
+                                    <button type="submit" th:id="${room.id}" class="btn btn-primary btn-sm" onclick="saveEdit(this.id)" >Save</button>
+                                    <a href="/admin/rooms/all" class="btn btn-danger btn-sm" style="text-decoration: none">Cancel</a>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div>
-                <p th:if="${result}">Room name Saved.</p>
-                <p th:if="${result != null && !result}">Failed to update room.</p>
                 <p id="result"></p>
             </div>
         </div>

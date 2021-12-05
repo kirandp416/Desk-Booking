@@ -68,13 +68,14 @@ public interface DeskRepository {
      * in each of those objects. The availability of a desk object is for a particular room,
      * on a particular date, and these are passed as arguments to the function. Offset and
      * limit are also passed, which enables the pagination of the desk objects when they are
-     * being rendered.
+     * being rendered. The username is also passed so that we can that users booking on the
+     * date selected on the client side.
      *
      * @param roomId The id of the room
      * @param date   The date of the availability that the function caller is interested in
      * @param offset The number of desks to offset by
      * @param limit  The maximum number of desks that should be returned
      */
-    Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(int roomId, String date, int offset, int limit);
+    Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(String username, int roomId, String date, int offset, int limit);
 
 }
