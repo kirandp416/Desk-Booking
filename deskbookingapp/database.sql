@@ -1,11 +1,8 @@
-DROP
-DATABASE IF EXISTS deskbooking;
+DROP DATABASE IF EXISTS deskbooking;
 
-CREATE
-DATABASE deskbooking;
+CREATE DATABASE deskbooking;
 
-USE
-deskbooking;
+USE deskbooking;
 
 CREATE TABLE room
 (
