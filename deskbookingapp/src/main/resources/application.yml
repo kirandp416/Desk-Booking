@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: comsc
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/deskbooking?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
@@ -13,3 +13,7 @@ spring:
       max-file-size: 200MB
       max-request-size: 215MB
       file-size-threshold: 2KB
+  main:
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    cache: false

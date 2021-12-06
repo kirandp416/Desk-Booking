@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>comment</title>
+    <link rel="stylesheet" href=" /css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/dialog.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/icon/close/iconfont.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/jquery.min.3.4.1.js"></script>
+    <script src="/js/dialog.js"></script>
+
+</head>
+<body>
+
+</body>
+<header th:replace="Fragments/adminHeader :: header"></header>
+<main>
+    <div id="showPicture" onclick="closeImg()"></div>
+    <dialog th:replace="Components/dialog :: dialog"></dialog>
+    <y_loading th:replace="Components/loading :: loading"></y_loading>
+    <div class="container">
+        <div class="scrollbox">
+            <div id="table">
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script type="application/javascript">
+    // global variable
+    let deleteId = null
+
+    // getTable
+    this.getTable()
+
+    // set dialog_body
+    let span = document.createElement("span")
+    span.innerHTML = "Are you sure you want to delete?"
+    document.getElementById("dialog_body").appendChild(span)
+    document.getElementsByClassName("dialog_title")[0].append("tips")
+
+    function getTable() {
+        showLoading()
+        // ajax
+        $.ajax({
+            url: "/comment/fetchAll",
+            success(res) {
+                let h1 = document.createElement("h1")
+                h1.innerHTML = "Comment"
+                document.getElementById("table").appendChild(h1);
+
+                let data = res.records
+
+                let table = document.createElement("table");
+                // set table id
+                table.id = "desksTable"
+                // set table class1
+                table.setAttribute("class", "table align-middle")
+
+                let thead = document.createElement("thead");
+                table.appendChild(thead);
+                let tr = document.createElement("tr");
+                thead.appendChild(tr);
+                // set th
+                for (let key in data[0]) {
+                    let th = document.createElement("th");
+                    if (key !== "deleted" && key !== "roomId") {
+                        th.innerHTML = key;
+                        tr.appendChild(th);
+                    }
+                }
+                if (data.length != 0) {
+
+                    let th = document.createElement("th");
+                    th.innerHTML = "download"
+                    tr.appendChild(th)
+
+                    let th1 = document.createElement("th");
+                    th1.innerHTML = "action"
+                    tr.appendChild(th1)
+                }
+
+                let tbody = document.createElement("tbody");
+                table.appendChild(tbody);
+                // set tr
+                for (let i = 0; i < data.length; i++) {
+                    let tr = document.createElement("tr");
+                    for (let key in data[i]) {
+                        let td = document.createElement("td");
+                        if (key === "img" && data[i][key]) {
+                            let img = document.createElement("img")
+                            img.src = data[i][key]
+                            img.onclick = function () {
+                                openImg(data[i][key])
+                            }
+                            td.appendChild(img)
+                        } else if (key === "deleted" || key === "roomId") {
+                            continue
+                        } else {
+                            td.innerHTML = data[i][key];
+                        }
+                        tr.appendChild(td);
+                    }
+
+                    let td = document.createElement("td")
+                    let a = document.createElement("a")
+                    let img = data[i].img.split("/")
+                    let imgUrl = img.pop()
+                    a.innerHTML = "download"
+                    a.href = "/file/download/" + imgUrl
+                    a.target = "_blank"
+                    td.appendChild(a)
+                    tr.appendChild(td)
+                    tbody.appendChild(tr);
+
+                    let td1 = document.createElement("td");
+                    let input = document.createElement("input")
+                    input.type = "button"
+                    input.value = "delete"
+                    input.setAttribute("class", "btn btn-danger btn-sm")
+                    input.onclick = function () {
+                        deleteComment(data[i].id)
+                    }
+                    td1.appendChild(input)
+                    tr.appendChild(td1)
+                    tbody.appendChild(tr);
+                }
+                document.getElementById("table").appendChild(table);
+            },
+            error(res) {
+                alert("Internal Server Error")
+            },
+            complete() {
+                closeLoading()
+            }
+        })
+    }
+
+    // openImg
+    function openImg(url) {
+        $('#showPicture').css("display", "block")
+        $('#showPicture').html("<img src =" + url + '/>')
+    }
+
+    function closeImg() {
+        $('#showPicture').css("display", "none")
+    }
+
+    function deleteComment(a) {
+        $('#showDialog').show();  //show dialog
+        $('#cover').css('display', 'block'); //show cover
+        // save delete id in global variable
+        deleteId = a
+    }
+
+    function showLoading() {
+        document.getElementById("loadingDiv").style.display = "block";
+    }
+
+    function closeLoading() {
+        document.getElementById("loadingDiv").style.display = "none";
+    }
+
+    function submit() {
+        $.ajax({
+            url: "/comment/delete/" + deleteId,
+            type: "delete",
+            success(res) {
+                document.getElementById("table").innerHTML = "";
+                showLoading()
+                getTable()
+            },
+        })
+        closeWindow()
+    }
+
+</script>
+</html>
+<style>
+    #table {
+        margin-top: 10px;
+    }
+
+    img {
+        width: 100px;
+    }
+
+    #showPicture {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        background: rgba(0, 0, 0, .3);
+        top: 0;
+        display: none;
+    }
+
+    #showPicture img {
+        width: 70%;
+        margin: auto;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 80px;
+        cursor: pointer;
+    }
+</style>

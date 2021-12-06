@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="dialog">
+    <div id="cover" class="cover"
+         style=" display: none; z-index: 2 ">
+    </div>
+    <div id="showDialog" class="my_dialog" style="display: none">
+        <!-- title -->
+        <div class="dialog_header">
+            <span class="dialog_title"></span>
+            <div onclick="closeWindow()" class="dialog_close"><i class="iconfont icon-guanbi"></i></div>
+        </div>
+        <!-- body -->
+        <div class="dialog_body" id="dialog_body">
+        </div>
+        <!-- button -->
+        <div class="dialog_footer">
+            <button class="btn btn-submit btn-m" onclick="submit()">submit</button>
+            <button class="btn btn_cancel btn-m" onclick="closeWindow()">cancel</button>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

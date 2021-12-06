@@ -1,11 +1,16 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.utils;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @description:
  * @author: yiting zheng
  * @time: 2021/11/28
  */
+
+@Component
 public class Snowflake {
+
     /**
      * timestamp
      */

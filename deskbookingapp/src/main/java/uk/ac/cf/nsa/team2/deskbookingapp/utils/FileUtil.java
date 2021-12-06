@@ -1,23 +1,16 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.utils;
 
-import com.fasterxml.jackson.databind.util.ClassUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 import uk.ac.cf.nsa.team2.deskbookingapp.Application;
 import uk.ac.cf.nsa.team2.deskbookingapp.exception.FileException;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
 
 /**
  * @description:
@@ -27,10 +20,9 @@ import java.util.Properties;
 public class FileUtil {
 
     private static String BASE_PATH;
-
     static {
         String[] builds = Application.class.getResource("").getPath().split("build");
-        BASE_PATH = builds[0] + "build/resources/main/templates/upload";
+        BASE_PATH = builds[0] + "build/resources/main/static/upload";
         BASE_PATH = BASE_PATH.substring(1);
     }
 
@@ -57,6 +49,7 @@ public class FileUtil {
 
             Files.createFile(p);
             file.transferTo(p);
+            System.out.println(p);
         } catch (IOException e) {
             throw new FileException(e.getMessage());
         }
@@ -64,7 +57,6 @@ public class FileUtil {
     }
 
     public static Resource getResource(String filename) {
-        System.out.println("BASE_PATH = " + BASE_PATH);
         filename = "/" + filename;
         Path path = Paths.get(BASE_PATH.concat(filename));
         try {

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import uk.ac.cf.nsa.team2.deskbookingapp.response.UploadFileResponse;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.UploadFileDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.utils.FileUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +28,14 @@ public class FileController {
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public UploadFileDTO uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String fileName = FileUtil.upload(file);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/file/download/")
                 .path(fileName)
                 .toUriString();
-        return new UploadFileResponse(fileName,fileDownloadUri,file.getContentType(),file.getSize()).toString();
+        String dbSave = "/upload/" + FileUtil.upload(file);
+        return new UploadFileDTO(fileName,dbSave,fileDownloadUri,file.getContentType(),file.getSize());
     }
 
     @GetMapping("/download/{fileName:.*}")
