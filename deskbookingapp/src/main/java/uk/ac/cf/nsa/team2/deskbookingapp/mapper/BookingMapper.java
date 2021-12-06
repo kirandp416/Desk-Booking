@@ -5,6 +5,7 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneOffset;
 
 
 /**
@@ -36,7 +37,8 @@ public class BookingMapper implements RowMapper <BookingDTO> {
                 rs.getString("room_name"),
                 rs.getString("desk_name"),
                 rs.getString("desk_type_name"),
-                rs.getString("notes")
+                rs.getString("notes"),
+                rs.getTimestamp("book_timestamp").toInstant().atOffset(ZoneOffset.UTC)
         );
     }
 }

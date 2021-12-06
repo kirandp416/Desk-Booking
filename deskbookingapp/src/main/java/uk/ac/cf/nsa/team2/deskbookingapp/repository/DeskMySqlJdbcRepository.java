@@ -3,11 +3,13 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskAvailabilityDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.DeskAvailabilityRowMapper;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.DeskRowMapper;
+
 
 import java.util.List;
 import java.util.Map;
@@ -147,21 +149,34 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
      * constraints of the pagination
      */
     @Override
-    public Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(int roomId, String date, int offset, int limit) {
-        String queryString = "SELECT desks.desk_id, desks.room_id, desks.desk_type_id, desk_type.desk_type_name, desks.desk_name, desks.notes, " +
-                "CASE WHEN booking_date IS NOT NULL THEN FALSE ELSE TRUE END AS available " +
-                "FROM (SELECT * FROM desk WHERE room_id = ? LIMIT ? OFFSET ?) as desks " +
-                "LEFT JOIN (SELECT * FROM booking WHERE booking_date = ?) as bookings ON desks.desk_id = bookings.desk_id AND desks.room_id = bookings.room_id " +
-                "LEFT JOIN desk_type ON desks.desk_type_id = desk_type.desk_type_id " +
-                "ORDER BY desks.desk_id";
+    public Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(String username, int roomId, String date, int offset, int limit) {
+
+        // The queryString below will be passed the following parameters:
+
+        // parameter 1 is String username
+        // parameter 2 is String date
+        // parameter 3 is String username
+        // parameter 4 is String date
+        // parameter 5 is String username
+        // parameter 6 is String date
+        // parameter 7 is int roomId
+        // parameter 8 is int limit
+        // parameter 9 is int offset
+        // parameter 10 is String date
+
+        String queryString = "SELECT desks.desk_id as current_desk_id, desks.room_id, desks.desk_type_id, desk_type.desk_type_name, desks.desk_name, desks.notes, CASE WHEN booking_date IS NOT NULL THEN FALSE ELSE TRUE END AS available, CASE WHEN (SELECT COUNT(*) FROM booking where username = ? and booking_date = ?) > 0 THEN 1 ELSE 0 END AS does_user_have_booking_on_that_day, CASE WHEN (SELECT COUNT(*) FROM booking where username = ? and booking_date = ? and desk_id = current_desk_id) > 0 THEN 1 ELSE 0 END AS does_user_have_that_desk_booked_on_that_day, (SELECT booking_id FROM booking WHERE username = ? AND booking_date = ? AND desk_id=current_desk_id) as booking_id FROM (SELECT * FROM desk WHERE room_id = ? LIMIT ? OFFSET ?) as desks LEFT JOIN (SELECT * FROM booking WHERE booking_date = ?) as bookings ON desks.desk_id = bookings.desk_id AND desks.room_id = bookings.room_id LEFT JOIN desk_type ON desks.desk_type_id = desk_type.desk_type_id ORDER BY desks.desk_id;";
 
         try {
-            return Optional.of(jdbc.query(queryString, new DeskAvailabilityRowMapper(), roomId, limit, offset, date));
+            return Optional.of(jdbc.query(queryString, new DeskAvailabilityRowMapper(), username, date, username, date, username, date, roomId, limit, offset, date));
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
 
         return Optional.empty();
+
+
     }
+
+
 
 }

@@ -2,6 +2,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp.dto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 /**
@@ -17,14 +18,17 @@ public class BookingDTO {
     private String deskName;
     private String deskType;
     private String deskNotes;
+    private OffsetDateTime timestamp; // UTC offset timestamp of booking.
 
-    public BookingDTO(int id, String date, String roomName, String deskName, String deskType, String deskNotes) {
+    public BookingDTO(int id, String date, String roomName, String deskName, String deskType, String deskNotes,
+                      OffsetDateTime timestamp) {
         this.id = id;
         this.date = date;
         this.roomName = roomName;
         this.deskName = deskName;
         this.deskType = deskType;
         this.deskNotes = deskNotes;
+        this.timestamp = timestamp;
         this.dateOrderedForDisplay = dateReOrderer(date);
     }
 
@@ -52,6 +56,10 @@ public class BookingDTO {
         return deskNotes;
     }
 
+    public OffsetDateTime getTimestamp() {
+        return timestamp;
+    }
+
     public String getDateOrderedForDisplay() {
         return dateOrderedForDisplay;
     }
@@ -63,7 +71,7 @@ public class BookingDTO {
     // the constructor for the object named dateFormatRequired, other arguments. For
     // example, you could switch it to American dates by passing it "MM-dd-YY".
 
-    public String dateReOrderer(String dateString){
+    public String dateReOrderer(String dateString) {
 
         SimpleDateFormat dateFormatDB = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
