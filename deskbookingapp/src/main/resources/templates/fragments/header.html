@@ -36,16 +36,27 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminRoomsDropdown"
+                        <a class="nav-link dropdown-toggle" href="#" id="adminCommentDropdown"
                            role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                             Rooms
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="adminRoomsDropdown">
+                        <ul class="dropdown-menu" aria-labelledby="adminCommentDropdown">
                             <li>
                                 <a class="dropdown-item" href="/admin/room/add">Add a Room</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/admin/rooms/all">Manage Rooms</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminRoomsDropdown"
+                           role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Comment
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminRoomsDropdown">
+                            <li>
+                                <a class="dropdown-item" href="/admin/comment/all">Comment</a>
                             </li>
                         </ul>
                     </li>
