@@ -58,7 +58,7 @@ public class DeskAdminRestController {
         deskDTO.setNotes(request.getNotes());
 
         DeskTypeDTO deskTypeDTO = new DeskTypeDTO();
-        deskTypeDTO.setId(request.getDeskType());
+        deskTypeDTO.setDeskTypeId(request.getDeskType());
         deskDTO.setDeskType(deskTypeDTO);
 
         // Create desk.

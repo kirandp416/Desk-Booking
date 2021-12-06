@@ -25,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/font/**").permitAll()
                 .mvcMatchers("/img/**").permitAll()
                 .mvcMatchers("/js/mdb.min.js").permitAll()
+                .mvcMatchers("/booking/**").permitAll()
+                //.mvcMatchers("/admin/**").permitAll()
+                .mvcMatchers("/js/bootstrap.bundle.min.js").permitAll()
                 .mvcMatchers("/js/jquery.min.3.4.1.js").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/api/admin/**").hasRole("ADMIN")
@@ -32,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/booking/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();
         http.cors().and().csrf().disable();

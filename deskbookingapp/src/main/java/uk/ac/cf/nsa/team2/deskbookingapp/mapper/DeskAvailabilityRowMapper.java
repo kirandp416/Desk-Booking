@@ -20,7 +20,9 @@ public class DeskAvailabilityRowMapper implements RowMapper<DeskAvailabilityDTO>
                 rs.getString("desk_name"),
                 new DeskTypeDTO(
                         rs.getInt("desk_type_id"),
-                        rs.getString("desk_type_name")
+                        rs.getString("desk_type_name"),
+                        rs.getString("photo"),
+                        rs.getString("desk_type_introduce")
                 ),
                 rs.getString("notes"),
                 rs.getInt("available"),

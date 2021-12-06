@@ -70,4 +70,8 @@ public class DeskAdminController {
                 .addObject("rooms", rooms.get());
     }
 
+    @GetMapping("/admin/desk_type")
+    public String deskType(){
+        return "admin/desk_type";
+    }
 }
