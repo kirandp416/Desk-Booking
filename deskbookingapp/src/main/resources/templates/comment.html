@@ -6,19 +6,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User Comment</title>
-    <link rel="stylesheet" href=" /css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href=" /css/bootstrap.min.css">-->
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/dialog.css">
     <link rel="stylesheet" href="/css/loading.css">
     <link rel="stylesheet" href="/icon/close/iconfont.css">
-    <script src="/js/bootstrap.bundle.min.js" defer></script>
+<!--    <script src="/js/bootstrap.bundle.min.js" defer></script>-->
     <script src="/js/jquery.min.3.4.1.js"></script>
     <script src="/js/dialog.js"></script>
+    <th:block th:insert="fragments/theme :: theme"/>
     <!--upload-->
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
 <body>
-<header th:replace="Fragments/userHeader :: header"></header>
+
+</body>
+<header th:replace="fragments/header :: header"></header>
 <main>
     <div class="container">
         <div class="scrollbox">
@@ -28,15 +31,13 @@
         </div>
 
     </div>
-    <y_dialog th:replace="Components/dialog :: dialog"></y_dialog>
-    <y_loading th:replace="Components/loading :: loading"></y_loading>
+    <y_dialog th:replace="components/dialog :: dialog"></y_dialog>
+    <y_loading th:replace="components/loading :: loading"></y_loading>
 </main>
-</body>
 <script>
 
     // obtain username
-    let username = document.getElementsByClassName("navbar-text nav-username")[0].children[0].innerHTML
-
+    let username = document.getElementsByClassName("dropdown-item nav-username")[0].children[0].innerHTML
     // global variable
     let JSONData = {
         deskId: null,
@@ -95,7 +96,7 @@
                     }
                 }
 
-                if (data.length != 0) {
+                if (data.length !== 0) {
                     let th = document.createElement("th");
                     th.innerHTML = "Action"
                     tr.appendChild(th)
@@ -116,7 +117,7 @@
                     let input = document.createElement("input")
                     input.type = "button"
                     input.value = "comment"
-                    input.setAttribute("class", "btn btn-submit btn-sm")
+                    input.setAttribute("class", "btn-info btn btn-sm")
                     input.onclick = function () {
                         addComment(data[i].roomId, data[i].deskId)
                     }

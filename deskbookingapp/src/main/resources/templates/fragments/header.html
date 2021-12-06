@@ -49,9 +49,23 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminCommentDropdown"
+                           role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Comment
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminCommentDropdown">
+                            <li>
+                                <a class="dropdown-item" href="/admin/comment/all">Manage Rooms</a>
+                            </li>
+                        </ul>
+                    </li>
                     <!-- Employee links. -->
                     <li class="nav-item" sec:authorize="hasRole('USER')">
                         <a class="nav-link" href="/booking/add">Book</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('USER')">
+                        <a class="nav-link" href="/user/comment">Comment</a>
                     </li>
                 </ul>
             </div>
