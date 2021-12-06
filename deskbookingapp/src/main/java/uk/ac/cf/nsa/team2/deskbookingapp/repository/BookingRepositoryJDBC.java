@@ -6,6 +6,8 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.BookingMapper;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -39,10 +41,11 @@ public class BookingRepositoryJDBC implements BookingRepository {
         // System.out.println("addBooking supplied the following date");
         // System.out.println(bookingForm.getBookingDate());
 
-        String query = "insert into booking (username, booking_date, room_id, desk_id) values(?,?,?,?)";
+        String query = "insert into booking (username, booking_date, room_id, desk_id, book_timestamp) values(?,?,?,?,?)";
 
         int rows = jdbcTemplate.update(query,
-                new Object[]{bookingForm.getUsername(), bookingForm.getBookingDate(), bookingForm.getBookingRoomId(), bookingForm.getBookingDeskId()}
+                new Object[]{bookingForm.getUsername(), bookingForm.getBookingDate(), bookingForm.getBookingRoomId(), bookingForm.getBookingDeskId(),
+                        OffsetDateTime.now(ZoneOffset.UTC)}
         );
 
         if (rows > 0)
@@ -62,7 +65,7 @@ public class BookingRepositoryJDBC implements BookingRepository {
     @Override
     public List<BookingDTO> findAllUsersBookings(String username) {
         String queryString =
-                "SELECT booking_id, booking_date, room_name, desk_name, desk_type_name, notes\n" +
+                "SELECT booking_id, booking_date, book_timestamp, room_name, desk_name, desk_type_name, notes\n" +
                         "FROM booking bookings\n" +
                         "LEFT OUTER JOIN room rooms\n" +
                         "ON bookings.room_id = rooms.room_id\n" +

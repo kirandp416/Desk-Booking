@@ -15,7 +15,7 @@
  * date.
  * @returns {string}
  */
-function todaysDateReturner(){
+function todaysDateReturner() {
     let today = new Date();
     return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + String(today.getDate()).padStart(2, '0');
 }
@@ -76,28 +76,31 @@ function pastDateWarn() {
     }
 }
 
-function viewDesksButtonDataValidator(){
+function viewDesksButtonDataValidator() {
 
-    if (document.getElementById("bookingDate").value.length == 0){
+    if (document.getElementById("bookingDate").value.length == 0) {
         console.log("You pressed view desks but there is no date");
         return false;
-    }
-    else
+    } else
         return true;
 }
 
 // Start of code that was adapted from Hassan's code in manage_desks.js
 
 // Get elements.
+const quotaText = document.getElementById("quotaText");
 const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
 const dateSelect = document.getElementById("bookingDate");
-const usernameSelect = document.getElementById("username")
+const usernameSelect = document.getElementById("username");
 
 // Table pagination state.
 const limit = 10;
 let offset = 0;
 let totalResults = 0;
+
+// Quota state.
+let quota = null;
 
 // Add event listener to table previous button.
 document.getElementById("tablePreviousBtn").addEventListener("click", function () {
@@ -108,7 +111,7 @@ document.getElementById("tablePreviousBtn").addEventListener("click", function (
 
     // Update offset and get desks.
     offset -= limit;
-    getDesks();
+    fetchData();
 });
 
 // Add event listener to table next button.
@@ -120,7 +123,7 @@ document.getElementById("tableNextBtn").addEventListener("click", function () {
 
     // Update offset and get desks.
     offset += limit;
-    getDesks();
+    fetchData();
 });
 
 // Add click listener for form submit
@@ -133,58 +136,61 @@ document.forms["form"].addEventListener("submit", function (e) {
     // let them know the error. Since there is only one place the
     // form can currently go wrong and that is for an empty date
     // input, we alert them to an empty date.
-    if (viewDesksButtonDataValidator() == true){
-        // Get desks.
-        getDesks();
-    }
-    else{
+    if (viewDesksButtonDataValidator() == true) {
+        // Fetch data.
+        fetchData();
+    } else {
         alert('You must select a date!');
     }
 
 
 });
 
+// End of code adapted from Hassan's
+
 /**
- * Gets desks (with their availability) using AJAX.
+ * Fetches booking quota and desk data via the API and renders the page.
  */
-function getDesks() {
+async function fetchData() {
+    // Use Fetch API to get booking quota and desks.
+    const quotaResponse = await fetch("/api/booking_quota/rooms/" + roomSelect.value +
+        "/users/" + usernameSelect.value);
+    const desksResponse = await fetch("/api/desks_available?" + "username=" + usernameSelect.value +
+        "&room_id=" + roomSelect.value + "&date=" + dateSelect.value + "&offset=" + offset + "&limit=" + limit);
 
-    let xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/api/desks_available?" + "username="+ usernameSelect.value+
-            "&room_id=" + roomSelect.value +
-        "&date=" + dateSelect.value +
-        "&offset=" + offset +
-        "&limit=" + limit, true);
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4) {
-            if (xhttp.status === 200) {
-                // Parse JSON.
-                const json = JSON.parse(xhttp.responseText);
-
-                // Store total results count.
-                totalResults = json["total_results"];
-
-                // Display desks.
-                displayDesks(json);
-
-                // Update results text in table.
-                if (limit + offset > totalResults) {
-                    resultsText.innerText = "Displaying " + totalResults + " of " + totalResults + " results";
-                } else {
-                    resultsText.innerText = "Displaying " + (limit + offset) + " of " + totalResults + " results";
-                }
-
-
-
-            } else {
-                // Redirect to error page.
-                window.location.replace("/internal_server_error");
-            }
-        }
+    // If there was an error, redirect to 500 page.
+    if (!quotaResponse.ok || !desksResponse.ok) {
+        window.location.replace("/internal_server_error");
+        return;
     }
 
-    xhttp.send();
+    // Parse responses.
+    const quotaJson = await quotaResponse.json();
+    const desksJson = await desksResponse.json();
+
+    // Process.
+
+    // Store quota.
+    quota = quotaJson;
+
+    // Display remaining quota.
+    quotaText.innerText = "Remaining quota: " + quota["remaining"];
+
+    // Store desks total results count.
+    totalResults = desksJson["total_results"];
+
+    // Display desks.
+    displayDesks(desksJson);
+
+    // Update results text in table.
+    if (limit + offset > totalResults) {
+        resultsText.innerText = "Displaying " + totalResults + " of " + totalResults + " results";
+    } else {
+        resultsText.innerText = "Displaying " + (limit + offset) + " of " + totalResults + " results";
+    }
 }
+
+// Start of code that was adapted from Hassan's code in manage_desks.js
 
 /**
  * Displays desks in the table.
@@ -251,7 +257,7 @@ function buttonCellConfigurer(desk) {
     // 3) Faded book button = You cannot book this button (either because
     // other user has booked it or you already have a booking that day)
 
-    if (desk["does_user_have_that_desk_booked_on_that_day"] == true){
+    if (desk["does_user_have_that_desk_booked_on_that_day"] == true) {
         let btn = document.createElement("button");
         btn.innerHTML = "Delete";
         btn.className = "btn btn-danger btn-sm"
@@ -260,8 +266,17 @@ function buttonCellConfigurer(desk) {
             deleteBookingViaBookPage(this.id);
         });
         buttonCell.appendChild(btn);
-    }
-    else if (desk["available"] === true && desk["does_user_have_booking_on_that_day"] == false) {
+    } else if (quota["remaining"] === 0 && !desk["does_user_have_booking_on_that_day"]) {
+        let btn = document.createElement("button");
+        btn.innerHTML = "Book";
+        btn.className = "btn btn-success btn-sm"
+        btn.id = desk["id"];
+        btn.style.opacity = "0.6";
+        btn.setAttribute("data-mdb-toggle", "modal");
+        btn.setAttribute("data-mdb-target", "#noQuotaRemaining");
+        btn.setAttribute('title', 'You have no quota remaining.');
+        buttonCell.appendChild(btn);
+    } else if (desk["available"] === true && desk["does_user_have_booking_on_that_day"] == false) {
         let btn = document.createElement("button");
         btn.innerHTML = "Book";
         btn.className = "btn btn-success btn-sm"
@@ -270,28 +285,26 @@ function buttonCellConfigurer(desk) {
             postBooking(this.id);
         });
         buttonCell.appendChild(btn);
-    }
-    else if  (desk["available"] === false && desk["does_user_have_that_desk_booked_on_that_day"] == false){
+    } else if (desk["available"] === false && desk["does_user_have_that_desk_booked_on_that_day"] == false) {
         let btn = document.createElement("button");
         btn.innerHTML = "Book";
         btn.className = "btn btn-success btn-sm"
         btn.id = desk["id"];
         // Attributes needed for modal:
         // data-mdb-toggle="modal" data-mdb-target="#bookedOut"
-        btn.style.opacity="0.6";
+        btn.style.opacity = "0.6";
         btn.setAttribute("data-mdb-toggle", "modal");
         btn.setAttribute("data-mdb-target", "#bookedOut");
         btn.setAttribute('title', 'Someone else has booked this desk out.');
         buttonCell.appendChild(btn);
-    }
-    else{
+    } else {
         let btn = document.createElement("button");
         btn.innerHTML = "Book";
         btn.className = "btn btn-success btn-sm"
         btn.id = desk["id"];
         // Attributes needed for modal:
         // data-mdb-toggle="modal" data-mdb-target="#oneBookingPerDay"
-        btn.style.opacity="0.6";
+        btn.style.opacity = "0.6";
         btn.setAttribute("data-mdb-toggle", "modal");
         btn.setAttribute("data-mdb-target", "#oneBookingPerDay");
         btn.setAttribute('title', 'You may only book one desk per day.');
@@ -309,7 +322,7 @@ function buttonCellConfigurer(desk) {
  * @param desk
  * @returns {HTMLTableDataCellElement}
  */
-function availabilityCellConfigurer(desk){
+function availabilityCellConfigurer(desk) {
 
     // Create a cell for our availability icon
 
@@ -319,14 +332,14 @@ function availabilityCellConfigurer(desk){
     // If the desk is available on that day, show a check in the
     // available column, else show a cross
 
-    if (desk["available"] === true){
+    if (desk["available"] === true) {
 
         spanText.innerHTML = "✓";
         // add bootstrap styling for check marks
         spanText.className = "bi bi-check";
         availabilityCell.appendChild(spanText);
 
-    } else{
+    } else {
 
         spanText.innerHTML = "✕";
         // add bootstrap styling for cross marks
@@ -336,7 +349,6 @@ function availabilityCellConfigurer(desk){
     }
 
     return availabilityCell;
-
 
 
 }
@@ -381,7 +393,7 @@ function postBooking(deskId) {
                 // After short period of time, refresh desks in DOM
 
                 setTimeout(function () {
-                    getDesks();
+                    fetchData();
                 }, 1000);
 
                 // Otherwise, print errors to console if there were any
@@ -466,8 +478,8 @@ function deleteBookingViaBookPage(id) {
 
     xhttp.onreadystatechange = function () {
 
-        if (xhttp.readyState == 4){
-            if (xhttp.status === 200){
+        if (xhttp.readyState == 4) {
+            if (xhttp.status === 200) {
 
                 showLoaderById(id);
 
@@ -476,11 +488,10 @@ function deleteBookingViaBookPage(id) {
                 // reload the desks (this will remove the delete
                 // button too)
                 setTimeout(function () {
-                    getDesks();
+                    fetchData();
                 }, 1000);
 
-            }
-            else{
+            } else {
                 console.error(xhttp.statusText);
             }
         }
@@ -496,4 +507,3 @@ function deleteBookingViaBookPage(id) {
     return false;
 
 }
-
