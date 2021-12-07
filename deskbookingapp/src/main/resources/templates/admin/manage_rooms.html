@@ -55,10 +55,10 @@
                                         </div>
                                         <div class="modal-body"> Are you sure want to delete : <div style="font-weight: bold" th:text="${room.name}"></div></div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                                            <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">
                                                 Cancel
                                             </button>
-                                            <button type="button" th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger" data-mdb-dismiss="modal">Confirm</button>
+                                            <button type="button" th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-success" data-mdb-dismiss="modal">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
