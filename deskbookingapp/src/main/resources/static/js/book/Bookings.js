@@ -5,7 +5,7 @@
 // the request comes back and was successful, it will also call a
 // function that removes that booking from the DOM
 
-function deleteBooking(id) {
+function deleteBookingViaManageBookingsPage(id) {
 
     // Set up HTTP request
 

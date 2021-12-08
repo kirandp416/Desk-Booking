@@ -93,9 +93,11 @@
             font-style: italic;
         }
     </style>
+
+    <th:block th:insert="fragments/theme :: theme"/>
 </head>
 <body th:src="@{'/img/desk1.jpg'}">
-    <header th:replace="Fragments/header :: Header"></header>
+    <header th:replace="Fragments/header :: header"></header>
 
     <main>
         <div class="container-fluid">

@@ -6,12 +6,13 @@
     <title>Admin - desk type</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/common.css">
+    <th:block th:insert="fragments/theme :: theme"/>
     <script src="/js/jquery.min.3.4.1.js"></script>
     <script src="/js/bootstrap.bundle.min.js" defer></script>
 </head>
 
 <body>
-<header th:replace="Fragments/adminHeader :: header"></header>
+<header th:replace="fragments/header :: header"></header>
 
 <main>
     <div class="container">
@@ -24,13 +25,13 @@
         </p>
 
         <p>
-            <label for="name"> photo</label>
+            <label for="name">Photo:</label>
             <input type="text" id="photo" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
             <button onclick="uploadimg()">Upload</button>
         </p>
 
         <p>
-            <label for="name"> Desk Type Introduce</label>
+            <label for="name">Desk Type Introduce:</label>
             <input type="text" id="Introduce" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
         </p>
 
@@ -65,7 +66,7 @@
 <footer th:replace="Fragments/footer :: footer"></footer>
 </body>
 <script>
-    console.log("shabiguangtou")
+
     this.createTable()
 
     function createTable() {

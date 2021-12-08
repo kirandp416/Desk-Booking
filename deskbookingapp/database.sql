@@ -49,20 +49,22 @@ VALUES (1, 'Standard','URL','A standard office desk,meet daily meeting requireme
        (3,'Computer','URL','A desk with a computer, which can be used for presentations in a computer team meeting');
 
 INSERT INTO room(room_id, room_name)
-VALUES (1, 'Room 1'), (2, 'Room 2');
+VALUES (1, 'Room 1');
 
 INSERT INTO desk(desk_id, room_id, desk_type_id, desk_name)
 VALUES (1, 1, 1, 'Desk 1'),
        (2, 1, 1, 'Desk 2'),
-       (3, 1, 1, 'Desk 3'),
-       (4, 2, 1, 'Desk 1'),
-       (5, 2, 1, 'Desk 2'),
-       (6, 2, 1, 'Desk 2');
+       (3, 1, 2, 'Desk 3'),
+       (4, 1, 1, 'Desk 4'),
+       (5, 1, 1, 'Desk 5'),
+       (6, 1, 2, 'Desk 6'),
+       (7, 1, 1, 'Desk 7'),
+       (8, 1, 1, 'Desk 8'),
+       (9, 1, 2, 'Desk 9'),
+       (10, 1, 1, 'Desk 10'),
+       (11, 1, 1, 'Desk 11');
+
 
 INSERT INTO booking (username, booking_date, room_id, desk_id)
-VALUES ('user1', '2021-11-23', 1, 1),
-       ('user1', '2021-11-23', 1, 2),
-       ('user1', '2021-11-23', 1, 3),
-       ('user2', '2021-11-23', 2, 1),
-       ('user2', '2021-11-23', 2, 2),
-       ('user2', '2021-11-23', 2, 3);
+VALUES ('user1', '2021-12-03', 1, 1),
+       ('user2', '2021-12-03', 1, 2);
