@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book a Desk</title>
+    <th:block th:insert="fragments/theme :: theme"/>
+    <link rel="stylesheet" href="/css/bootstrapAdjust.css">
+    <script src="/js/jquery.min.3.4.1.js" defer></script>
+    <script src="/js/book/BookAdmin.js" defer></script>
+</head>
+<body>
+
+<header th:replace="fragments/header :: header"></header>
+
+<main>
+    <form id="form">
+        <p>
+            <label for="room">Room: </label>
+            <select id="room" name="room" required>
+                <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+            </select>
+        </p>
+        <p>
+            <label for="user">Book for User: </label>
+            <select id="user" name="user" required>
+                <option th:each="user : ${users}" th:value="${user.username}" th:text="${user.username}"></option>
+            </select>
+        </p>
+        <p>
+            <input type="submit" class="btn btn-primary" value="View Desks">
+        </p>
+    </form>
+</main>
+
+
+
+</body>
+</html>
