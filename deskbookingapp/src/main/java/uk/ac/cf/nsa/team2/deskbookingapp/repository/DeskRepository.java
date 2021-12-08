@@ -1,5 +1,6 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskAvailabilityAdminDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskAvailabilityDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
 
@@ -77,5 +78,8 @@ public interface DeskRepository {
      * @param limit  The maximum number of desks that should be returned
      */
     Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(String username, int roomId, String date, int offset, int limit);
+
+
+    Optional<List<DeskAvailabilityAdminDTO>> findByRoomIncludeAvailabilityForAdmin(int roomId, String date, int offset, int limit);
 
 }

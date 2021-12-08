@@ -39,7 +39,7 @@ function setDateToToday() {
  * Create a function that will clears the current date if and when
  * we call it.
  */
-function reset_date_native() {
+function dateClearer() {
     let date_input = document.getElementById("bookingDate");
 
     //erase the input value
@@ -72,10 +72,14 @@ function pastDateWarn() {
 
     if (bookingDate < todayDate) {
         alert('You cannot choose a date in the past.');
-        reset_date_native();
+        dateClearer();
     }
 }
 
+/**
+ * Create function that checks that the user has selected a date.
+ * @returns {boolean}
+ */
 function viewDesksButtonDataValidator() {
 
     if (document.getElementById("bookingDate").value.length == 0) {

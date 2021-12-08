@@ -1,6 +1,7 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.incrementer.SybaseAnywhereMaxValueIncrementer;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -169,9 +170,13 @@ public class BookingController {
 
         Optional<List<EmployeeDTO>> employees = employeeRepository.findAll();
 
-        System.out.println("Printing employees from controller:");
+        // Print all employee usernames to check that variable employees
+        // points to the right object
+        System.out.println("Printing all employees from controller:");
 
-        System.out.println(employees);
+        for (EmployeeDTO employee : employees.get()){
+            System.out.println(employee.getUsername());
+        }
 
         if (rooms.isEmpty()) {
             return new ModelAndView("redirect:/internal_server_error");

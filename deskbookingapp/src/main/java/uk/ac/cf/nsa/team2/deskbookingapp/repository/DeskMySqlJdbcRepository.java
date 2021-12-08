@@ -3,10 +3,11 @@ package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskAvailabilityAdminDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskAvailabilityDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.mapper.DeskAvailabilityAdminRowMapper;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.DeskAvailabilityRowMapper;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.DeskRowMapper;
 
@@ -177,6 +178,24 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
 
     }
 
+    @Override
+    public Optional<List<DeskAvailabilityAdminDTO>> findByRoomIncludeAvailabilityForAdmin(int roomId, String date, int offset, int limit) {
+
+        // The queryString below will be passed the following parameters:
+
+        // parameter 1 is int roomId
+        // parameter 2 is String date
+
+        String queryString = "SELECT desk_with_type.desk_id, desk_with_type.room_id, desk_with_type.desk_name, desk_with_type.desk_type_id, desk_with_type.desk_type_name, desk_with_type.notes, CASE WHEN booking_id IS NULL THEN 1 ELSE 0 END AS available, booking.username as booked_by, booking.booking_id FROM (SELECT desk.desk_id, desk.room_id, desk.desk_name, desk.notes, desk_type.desk_type_id, desk_type.desk_type_name FROM desk INNER JOIN desk_type ON desk.desk_type_id = desk_type.desk_type_id WHERE desk.room_id = ? LIMIT ? OFFSET ?) AS desk_with_type LEFT JOIN (SELECT * FROM booking WHERE booking_date = ?) as booking ON desk_with_type.desk_id = booking.desk_id ORDER BY desk_id";
+
+        try {
+            return Optional.of(jdbc.query(queryString, new DeskAvailabilityAdminRowMapper(), roomId, limit, offset, date));
+        }catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
 
 
 }
