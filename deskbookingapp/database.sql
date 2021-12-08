@@ -29,11 +29,10 @@ CREATE TABLE desk
     CONSTRAINT desk_desk_type_id FOREIGN KEY (desk_type_id) REFERENCES desk_type (desk_type_id)
 );
 
-CREATE TABLE user
+CREATE TABLE employee
 (
     username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    CONSTRAINT user_pk_index PRIMARY KEY (username)
+    CONSTRAINT employee_pk_index PRIMARY KEY (username)
 
 );
 
@@ -48,7 +47,7 @@ CREATE TABLE booking
     CONSTRAINT booking_pk_index PRIMARY KEY (booking_id),
     CONSTRAINT booking_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE,
     CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE,
-    CONSTRAINT booking_user_fk_index FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE
+    CONSTRAINT booking_user_fk_index FOREIGN KEY (username) REFERENCES employee (username) ON DELETE CASCADE
 );
 
 
@@ -73,7 +72,7 @@ VALUES (1, 1, 1, 'Desk 1'),
        (10, 1, 1, 'Desk 10'),
        (11, 1, 1, 'Desk 11');
 
-INSERT INTO user (username, password) VALUES ('user1', 'user1'), ('user2', 'user2');
+INSERT INTO employee (username) VALUES ('user1'), ('user2');
 
 INSERT INTO booking (username, booking_date, room_id, desk_id, book_timestamp)
 VALUES ('user1', '2021-12-01', 1, 1, '2021-11-22 12:15:00'),

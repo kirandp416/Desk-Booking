@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
-import uk.ac.cf.nsa.team2.deskbookingapp.dto.UserDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.EmployeeDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
-import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.RoomRepository;
-import uk.ac.cf.nsa.team2.deskbookingapp.repository.UserRepository;
+import uk.ac.cf.nsa.team2.deskbookingapp.repository.EmployeeRepository;
 
 import java.security.Principal;
 import java.util.List;
@@ -27,20 +26,20 @@ public class BookingController {
 
     private RoomRepository roomRepository;
 
-    private UserRepository userRepository;
+    private EmployeeRepository employeeRepository;
 
     /**
-     * Constructor that will be used by Sprint to instantiate
+     * Constructor that will be used by Spring to instantiate
      * a BookingRepository object automatically
      *
      * @param bRepo A BookingRepository object that we can use
      *              to hold our Booking objects in
      */
     @Autowired
-    public BookingController(BookingRepository bRepo, RoomRepository rRepo, UserRepository uRepo) {
+    public BookingController(BookingRepository bRepo, RoomRepository rRepo, EmployeeRepository eRepo) {
         bookingRepository = bRepo;
         roomRepository = rRepo;
-        userRepository = uRepo;
+        employeeRepository = eRepo;
     }
 
     /**
@@ -168,21 +167,23 @@ public class BookingController {
 
         Optional<List<RoomDTO>> rooms = roomRepository.findAll();
 
-        Optional<List<UserDTO>> users = userRepository.findAll();
+        Optional<List<EmployeeDTO>> employees = employeeRepository.findAll();
 
-        System.out.println(users);
+        System.out.println("Printing employees from controller:");
+
+        System.out.println(employees);
 
         if (rooms.isEmpty()) {
             return new ModelAndView("redirect:/internal_server_error");
         }
 
-        if (users.isEmpty()){
+        if (employees.isEmpty()){
             return new ModelAndView("redirect:/internal_server_error");
         }
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("rooms", rooms.get());
-        mav.addObject("users", users.get());
+        mav.addObject("employees", employees.get());
         mav.setViewName("/book/BookAdmin");
 
         return mav;

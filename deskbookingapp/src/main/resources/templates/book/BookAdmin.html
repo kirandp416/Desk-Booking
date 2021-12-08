@@ -22,9 +22,9 @@
             </select>
         </p>
         <p>
-            <label for="user">Book for User: </label>
-            <select id="user" name="user" required>
-                <option th:each="user : ${users}" th:value="${user.username}" th:text="${user.username}"></option>
+            <label for="employee">Book for Employee: </label>
+            <select id="employee" name="employee" required>
+                <option th:each="employee : ${employees}" th:value="${employee.username}" th:text="${employee.username}"></option>
             </select>
         </p>
         <p>
