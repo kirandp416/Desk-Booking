@@ -35,7 +35,7 @@ public class CommentRestController {
      */
     @GetMapping(value = "/fetchBooking")
     public R<List<BookingCommentDTO>> getOwnBooking(String username, Integer current, Integer size) {
-        // Pagination
+        // Pagination in order to improve page performance. However, front end page not use this function
         if (current == null) {
             current = 0;
         }
