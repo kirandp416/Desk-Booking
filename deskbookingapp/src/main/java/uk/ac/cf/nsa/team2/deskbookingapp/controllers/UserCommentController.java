@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @time: 2021/12/3
  */
 
+/**
+ * The front and rear ends are not separated
+ * Page mapping (/user//comment)
+ */
 @Controller
 @RequestMapping("/user")
 public class UserCommentController {

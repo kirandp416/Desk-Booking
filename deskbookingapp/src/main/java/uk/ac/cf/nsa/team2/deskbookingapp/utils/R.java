@@ -6,8 +6,15 @@ package uk.ac.cf.nsa.team2.deskbookingapp.utils;
  * @author: yiting zheng
  * @time: 2021/12/1
  */
+
+/**
+ * because I return JSON to the front end, encapsulates the return format of JSON
+ * @param <T>
+ */
 public class R<T> {
+    // success code
     private final static String SUCCESS_CODE = "000000";
+    // success msg
     private final static String SUCCESS_MSG = "success";
 
     private String code;
@@ -20,10 +27,11 @@ public class R<T> {
         this.records = records;
     }
 
+    // success
     public static R success(Object data) {
         return new R(SUCCESS_CODE, SUCCESS_MSG, data);
     }
-
+    // fail
     public R fail(String code, String message, Object records) {
         return new R(code, message, records);
     }

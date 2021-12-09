@@ -10,15 +10,20 @@ import java.util.Date;
  * @author: yiting zheng
  * @time: 2021/12/2
  */
+
+/**
+ * date formal
+ */
 @Component
 public class DateUtil {
-
+    // format date (yyyy-MM-dd HH:mm:ss)
     public String Time(Date date) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = df.format(date);
         return time;
     }
 
+    // format date (yyyy-MM-dd)
     public String Date(Date date) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String time = df.format(date);

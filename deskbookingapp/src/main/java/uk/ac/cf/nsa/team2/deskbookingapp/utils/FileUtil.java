@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 public class FileUtil {
 
     private static String BASE_PATH;
+    // save path
     static {
         String[] builds = Application.class.getResource("").getPath().split("build");
         BASE_PATH = builds[0] + "build/resources/main/static/upload";
@@ -27,6 +28,8 @@ public class FileUtil {
     }
 
     public static String upload(MultipartFile file) {
+        // solve the problem if the file has same names
+        // eg : if file.doc exist , it will create file(0).file
         ClassLoader classLoader = Application.class.getClassLoader();
         String filename = file.getOriginalFilename();
         Path path = Paths.get(BASE_PATH, filename);
@@ -49,7 +52,6 @@ public class FileUtil {
 
             Files.createFile(p);
             file.transferTo(p);
-            System.out.println(p);
         } catch (IOException e) {
             throw new FileException(e.getMessage());
         }
@@ -57,6 +59,7 @@ public class FileUtil {
     }
 
     public static Resource getResource(String filename) {
+        // download
         filename = "/" + filename;
         Path path = Paths.get(BASE_PATH.concat(filename));
         try {

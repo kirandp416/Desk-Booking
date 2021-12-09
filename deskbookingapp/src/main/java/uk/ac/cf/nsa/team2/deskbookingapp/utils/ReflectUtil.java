@@ -16,6 +16,7 @@ import java.util.Objects;
  */
 public class ReflectUtil {
     public static <T> T mapToBean(Map<String, Object> source, Class<T> clazz) {
+        // create hashmap and lineToHump to key from the database
         HashMap<String, Object> map = new HashMap<>();
         source.forEach((k, v) -> map.put(StringUtil.lineToHump(k), v));
         try {
@@ -25,6 +26,7 @@ public class ReflectUtil {
                 String fieldName = field.getName();
                 PropertyDescriptor descriptor = new PropertyDescriptor(fieldName, clazz);
                 Method writeMethod = descriptor.getWriteMethod();
+                // solve null pointers
                 if (Objects.nonNull(map.get(fieldName))) {
                     writeMethod.invoke(obj, map.get(fieldName));
                 }

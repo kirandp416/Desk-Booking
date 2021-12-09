@@ -48,6 +48,7 @@ public class CommentRepositoryImpl implements ICommentRepository {
         }
         // avoid sql injection by StringBuffer
         List objects = new ArrayList();
+        // inner join
         StringBuffer sql = new StringBuffer("select m.room_id,m.desk_id,m.username,d.desk_name,m.room_name,m.booking_date" +
                 " FROM desk d INNER JOIN (SELECT b.booking_id, b.username, b.booking_date,b.desk_id,b.room_id,r.room_name " +
                 "FROM booking b INNER JOIN room r WHERE b.room_id = r.room_id) m WHERE d.desk_id = m.desk_id");
@@ -96,6 +97,7 @@ public class CommentRepositoryImpl implements ICommentRepository {
 
     @Override
     public String removeById(Long deletedId) {
+        // soft deleted (Status delete)
         String sql = "update comment set deleted = \"Y\" where id = ?";
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql);

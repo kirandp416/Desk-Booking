@@ -23,6 +23,7 @@ public class XssFilter implements Filter {
 
     public List<String> excludes = new ArrayList<>();
 
+    // do filter
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
@@ -35,6 +36,7 @@ public class XssFilter implements Filter {
         filterChain.doFilter(xssRequest, response);
     }
 
+    // handle eclude url
     private boolean handleExcludeURL(HttpServletRequest request, HttpServletResponse response) {
         if (excludes == null || excludes.isEmpty()) {
             return false;
@@ -50,6 +52,7 @@ public class XssFilter implements Filter {
         return false;
     }
 
+    // init
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String isIncludeRichText = filterConfig.getInitParameter("isIncludeRichText");

@@ -9,6 +9,10 @@ import java.io.Serializable;
  * @author: yiting zheng
  * @time: 2021/11/20
  */
+
+/**
+ * DTOs are often used in conjunction with data access objects to retrieve data from a database.
+ */
 public class UploadFileDTO implements Serializable {
     @JsonProperty("fileName")
     private final String fileName;

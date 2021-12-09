@@ -28,6 +28,7 @@ public class CommentRestController {
 
     @GetMapping(value = "/fetchBooking")
     public R<List<BookingCommentDTO>> getOwnBooking(String username, Integer current, Integer size) {
+        // Pagination
         if (current == null) {
             current = 0;
         }
