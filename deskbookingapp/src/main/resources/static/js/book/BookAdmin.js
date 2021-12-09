@@ -83,7 +83,6 @@ function viewDesksButtonDataValidator() {
 // Start of code adapted from HI's manage_desks.js
 
 // Get elements.
-const quotaText = document.getElementById("quotaText");
 const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
 const dateSelect = document.getElementById("bookingDate");
@@ -321,6 +320,52 @@ function postBookingViaAdminPage(deskId) {
     // Send the booking post request to sever
 
     xhttp.send(params);
+
+}
+
+function deleteBookingViaAdminPage(id) {
+
+    // Set up HTTP request
+
+    let params = 'id=' + id;
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("DELETE", "/admin/booking/delete", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // Make the document listen for a change of state to the object
+    // that holds the HTTP request. If the state changes, see if that
+    // state change was that the HTTP request was a success and if so
+    // call a function to also remove that booking from the DOM. Otherwise,
+    // print what the state change was to the console.
+
+    xhttp.onreadystatechange = function () {
+
+        if (xhttp.readyState == 4) {
+            if (xhttp.status === 200) {
+
+                showLoaderById(id);
+
+                // After showing loader icon for a short period,
+                // reload the desks (this will remove the delete
+                // button too)
+                setTimeout(function () {
+                    getDesksForAdmin();
+                }, 1000);
+
+            } else {
+                console.error(xhttp.statusText);
+            }
+        }
+    }
+
+    // Send the HTTP request
+
+    xhttp.send(params);
+
+    // Return false to the form that called this function, to prevent
+    // that form from forming its own HTTP request and sending it.
+
+    return false;
 
 }
 

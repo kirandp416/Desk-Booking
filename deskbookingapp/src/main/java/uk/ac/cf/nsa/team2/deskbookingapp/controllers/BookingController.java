@@ -237,4 +237,26 @@ public class BookingController {
 
     }
 
+
+    @RequestMapping(path = "/admin/booking/delete", method = RequestMethod.DELETE)
+    public ModelAndView bookingDeleteAdmin(@RequestParam(value = "id", defaultValue = "null") String id) {
+
+        ModelAndView mav = new ModelAndView();
+
+        if (!id.equals("null")) {
+            Integer idInt = Integer.valueOf(id);
+            if (bookingRepository.deleteBooking(idInt)) {
+                mav.setViewName("/book/BookingDeleteSuccess");
+            } else {
+                mav.setViewName("/book/BookingDeleteFail");
+            }
+        } else {
+            mav.setViewName("/book/BookingDeleteFail");
+        }
+
+        return mav;
+
+    }
+
+
 }
