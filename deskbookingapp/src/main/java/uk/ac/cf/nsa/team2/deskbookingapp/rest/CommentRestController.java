@@ -26,6 +26,13 @@ public class CommentRestController {
     @Autowired
     private ICommentRepository commentRepository;
 
+    /**
+     *
+     * @param username
+     * @param current
+     * @param size
+     * @return list (JSON)
+     */
     @GetMapping(value = "/fetchBooking")
     public R<List<BookingCommentDTO>> getOwnBooking(String username, Integer current, Integer size) {
         // Pagination
@@ -38,16 +45,30 @@ public class CommentRestController {
         return R.success(commentRepository.getOwnBooking(username, current, size));
     }
 
+    /**
+     *
+     * @return list (JSON)
+     */
     @GetMapping(value = "/fetchAll")
     public R<List<CommentDTO>> getAllComment() {
         return R.success(commentRepository.findAll());
     }
 
+    /**
+     * if add success, it will return JSON about success
+     * @param commentDTO
+     * @return
+     */
     @PostMapping(value = "/add")
     public R<Integer> addComment(@RequestBody CommentDTO commentDTO) {
         return R.success(commentRepository.addComment(commentDTO));
     }
 
+    /**
+     * if delete success, it will return JSON about delete success
+     * @param id
+     * @return
+     */
     @DeleteMapping(value = "/delete/{id}")
     public R<Integer> deleteComment(@PathVariable Long id) {
         return R.success(commentRepository.removeById(id));
