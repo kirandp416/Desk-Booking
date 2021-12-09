@@ -36,8 +36,7 @@
             <p>
                 <label for="employee">Book for: </label>
                 <select id="employee" name="employee" required>
-                    <option th:each="employee : ${employees}" th:value="${employee.username}"
-                            th:text="${employee.username}"></option>
+                    <option th:each="employee : ${employees}" th:value="${employee.username}" th:text="${employee.username}"></option>
                 </select>
             </p>
             <p>
@@ -56,6 +55,7 @@
                 <th scope="col">Available</th>
                 <th scope="col">Booked By</th>
                 <th scope="col">Booking Id</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>

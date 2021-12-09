@@ -172,11 +172,11 @@ public class BookingController {
 
         // Print all employee usernames to check that variable employees
         // points to the right object
-        System.out.println("Printing all employees from controller:");
-
-        for (EmployeeDTO employee : employees.get()){
-            System.out.println(employee.getUsername());
-        }
+//        System.out.println("Printing all employees from controller:");
+//
+//        for (EmployeeDTO employee : employees.get()){
+//            System.out.println(employee.getUsername());
+//        }
 
         if (rooms.isEmpty()) {
             return new ModelAndView("redirect:/internal_server_error");
@@ -193,6 +193,47 @@ public class BookingController {
 
         return mav;
 
+
+    }
+
+    /**
+     * Post a new booking to the booking table in the database.
+     * If it was successful we direct the user to BookingAdded
+     * page. Otherwise, direct them to BookingNotAdded page.
+     *
+     * @param bookingForm A form object we can use to hold the html
+     *                    form data for one booking submission.
+     * @param br          A BindingResult object we can use to access
+     *                    validation errors in our form object
+     * @return A ModelAndView object
+     */
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = "/admin/booking/add/process_form", method = RequestMethod.POST)
+    public ModelAndView postBookingAdmin(BookingForm bookingForm, BindingResult br) {
+        System.out.println(bookingForm.getUsername());
+        System.out.println(bookingForm.getBookingDate());
+        System.out.println(bookingForm.getBookingDeskId());
+        System.out.println(bookingForm.getBookingRoomId());
+
+        ModelAndView mav = new ModelAndView();
+
+        if (br.hasErrors()) {
+            System.out.println("Binding Result Errors encountered.");
+            System.out.println(br.getAllErrors());
+            mav.setViewName("/book/BookingNotAdded");
+            return mav;
+        } else {
+            if (bookingRepository.addBooking(bookingForm)) {
+                System.out.println("You added a booking.");
+                mav.setViewName("/book/BookingAdded");
+                return mav;
+            } else {
+                System.out.println("No binding errors encountered but addBooking() method did not return true.");
+                mav.setViewName("/book/BookingNotAdded");
+                return mav;
+            }
+
+        }
 
     }
 

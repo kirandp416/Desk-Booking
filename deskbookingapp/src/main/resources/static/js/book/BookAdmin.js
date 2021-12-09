@@ -87,7 +87,7 @@ const quotaText = document.getElementById("quotaText");
 const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
 const dateSelect = document.getElementById("bookingDate");
-const usernameSelect = document.getElementById("username");
+const employeeSelect = document.getElementById("employee");
 
 // Table pagination state.
 const limit = 10;
@@ -223,11 +223,145 @@ function displayDesks(json) {
 
         // let availabilityCell = availabilityCellConfigurer(desk);
 
-        // let buttonCell = buttonCellConfigurer(desk);
+        let buttonCell = buttonCellConfigurerForAdminPage(desk);
 
-        row.append(id, name, type, notes, available, bookedBy, bookingId);
+        row.append(id, name, type, notes, available, bookedBy, bookingId, buttonCell);
 
         table.appendChild(row);
     });
+
+}
+
+/**
+ * Creates a table cell. If the desk that is being iterated
+ * over is available on the given day, add a booking button
+ * to that cell. If the person who logged in has booked it,
+ * show a delete button. If the person has one booking on
+ * that day but the desk is available, added a faded book
+ * button.
+ * @param desk A single desk object from a JSON of desks
+ * @returns {HTMLTableDataCellElement} The td to add to table
+ * row
+ */
+function buttonCellConfigurerForAdminPage(desk) {
+
+    // Create a cell and button that will be placed in last column in our table
+
+    let buttonCell = document.createElement("td");
+    let btn = document.createElement("button");
+
+    // If-else statement to set what is in the last cell of a desk row:
+
+    if (desk["available"] == true){
+        btn.innerHTML = "Book";
+        btn.className = "btn btn-success btn-sm"
+        btn.id = desk["id"];
+        btn.addEventListener("click", function () {
+            postBookingViaAdminPage(this.id);
+        });
+        buttonCell.appendChild(btn);
+    }
+    else if (desk["available"] == false){
+        btn.innerHTML = "Delete";
+        btn.className = "btn btn-danger btn-sm";
+        btn.id = desk["booking_id"];
+        btn.addEventListener("click", function () {
+            deleteBookingViaAdminPage(this.id);
+        });
+        buttonCell.appendChild(btn);
+    }
+    else{
+        console.log("Desk availability error.")
+    }
+
+    return buttonCell;
+
+}
+
+function postBookingViaAdminPage(deskId) {
+
+    let roomIdParam = roomSelect.value;
+    let dateParam = dateSelect.value;
+    let employeeParam = employeeSelect.value;
+
+    let params = 'bookingDeskId=' + deskId + '&bookingRoomId=' + roomIdParam + '&bookingDate=' + dateParam + '&username=' + employeeParam;
+    // console.log("Attempting to post a booking with following parameters:");
+    // console.log(params);
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/admin/booking/add/process_form", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // Configure the request object to listen for changes in state and if the right
+    // state is heard then hide button, show loading icon, then display "booked".
+
+    xhttp.onreadystatechange = function () {
+
+        if (xhttp.readyState == 4) {
+
+            if (xhttp.status === 200) {
+
+                // Show loading icon to user
+
+                showLoaderById(deskId);
+
+                // After short period of time, refresh desks in DOM
+
+                setTimeout(function () {
+                    getDesksForAdmin();
+                }, 1000);
+
+                // Otherwise, print errors to console if there were any
+
+            } else {
+                console.error(xhttp.statusText);
+            }
+        }
+    }
+
+    // Send the booking post request to sever
+
+    xhttp.send(params);
+
+}
+
+function showLoaderById(id) {
+
+    // We want to create the following piece of HTML and add it to our DOM
+
+    // <div className="spinner-border text-dark spinner-border-sm" role="status">
+    //     <span className="sr-only"></span>
+    // </div>
+
+    // Create a div with the above attributes and its own ID
+
+    let loaderDiv = document.createElement("div");
+    loaderDiv.className = "spinner-border text-dark spinner-border-sm";
+    loaderDiv.role = 'status';
+    loaderDiv.id = 'loaderDiv';
+
+    // Create span object with above attributes and put it in the
+    // div as above.
+
+    let loaderSpan = document.createElement("span");
+    loaderSpan.className = "sr-only";
+    loaderDiv.appendChild(loaderSpan);
+
+    // Test to see what we created:
+    // console.log("Element with id loaderDiv is:");
+    // console.log(loaderDiv);
+
+    // Create a variable that points to cell before
+    // we remove button from DOM
+
+    let cell = document.getElementById(id).parentElement;
+
+    // Remove button from DOM (when hiding it, it still
+    // took up space in table cell so better to remove it)
+
+    document.getElementById(id).remove();
+
+    // Add loader icon to parent of button, the cell
+
+    cell.appendChild(loaderDiv);
 
 }
