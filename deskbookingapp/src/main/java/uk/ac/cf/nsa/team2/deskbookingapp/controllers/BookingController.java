@@ -163,7 +163,7 @@ public class BookingController {
      *
       * @return
      */
-    @RequestMapping(path="/admin/book", method = RequestMethod.GET)
+    @RequestMapping(path="/admin/booking/add", method = RequestMethod.GET)
     public ModelAndView adminBook(){
 
         Optional<List<RoomDTO>> rooms = roomRepository.findAll();
@@ -237,7 +237,11 @@ public class BookingController {
 
     }
 
-
+    /**
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(path = "/admin/booking/delete", method = RequestMethod.DELETE)
     public ModelAndView bookingDeleteAdmin(@RequestParam(value = "id", defaultValue = "null") String id) {
 
