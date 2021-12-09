@@ -22,7 +22,7 @@ $(document).ready(setDateToToday);
  */
 function setDateToToday() {
     let todayFormattedString = todaysDateReturner();
-    console.log("Setting date to today's date...")
+    // console.log("Setting date to today's date...")
     document.getElementById("bookingDate").value = todayFormattedString;
 }
 
@@ -80,7 +80,7 @@ function viewDesksButtonDataValidator() {
         return true;
 }
 
-// Start of code adapted from HI's manage_desks.js
+// Pagination code and display desks adapted from HI's code in manage_desks.js
 
 // Get elements.
 const resultsText = document.getElementById("resultsText");
@@ -140,8 +140,6 @@ document.forms["form"].addEventListener("submit", function (e) {
 
 });
 
-// End of code adapted from HI's manage_desks.js
-
 /**
  * Gets desks (with their availability) using AJAX.
  */
@@ -166,7 +164,7 @@ function getDesksForAdmin() {
                 totalResults = json["total_results"];
 
                 // Display desks.
-                displayDesks(json);
+                displayDesksForAdmin(json);
 
                 // Update results text in table.
                 if (limit + offset > totalResults) {
@@ -185,96 +183,6 @@ function getDesksForAdmin() {
     }
 
     xhttp.send();
-}
-
-function displayDesks(json) {
-    // Get table body.
-    let table = document.getElementsByTagName("tbody")[0];
-
-    // Remove all child elements.
-    table.innerHTML = "";
-
-    // Create rows for each desk.
-    json["results"].forEach(function (desk) {
-
-        let row = document.createElement("tr");
-
-        let id = document.createElement("td");
-        id.innerText = desk["id"];
-
-        let name = document.createElement("td");
-        name.innerText = desk["name"];
-
-        let type = document.createElement("td");
-        type.innerText = desk["desk_type"]["name"];
-
-        let notes = document.createElement("td");
-        notes.innerText = desk["notes"];
-
-        let available = document.createElement("td");
-        available.innerText = desk["available"];
-
-        let bookedBy = document.createElement("td");
-        bookedBy.innerText = desk["booked_by"];
-
-        let bookingId = document.createElement("td");
-        bookingId.innerText = desk["booking_id"];
-
-        // let availabilityCell = availabilityCellConfigurer(desk);
-
-        let buttonCell = buttonCellConfigurerForAdminPage(desk);
-
-        row.append(id, name, type, notes, available, bookedBy, bookingId, buttonCell);
-
-        table.appendChild(row);
-    });
-
-}
-
-/**
- * Creates a table cell. If the desk that is being iterated
- * over is available on the given day, add a booking button
- * to that cell. If the person who logged in has booked it,
- * show a delete button. If the person has one booking on
- * that day but the desk is available, added a faded book
- * button.
- * @param desk A single desk object from a JSON of desks
- * @returns {HTMLTableDataCellElement} The td to add to table
- * row
- */
-function buttonCellConfigurerForAdminPage(desk) {
-
-    // Create a cell and button that will be placed in last column in our table
-
-    let buttonCell = document.createElement("td");
-    let btn = document.createElement("button");
-
-    // If-else statement to set what is in the last cell of a desk row:
-
-    if (desk["available"] == true){
-        btn.innerHTML = "Book";
-        btn.className = "btn btn-success btn-sm"
-        btn.id = desk["id"];
-        btn.addEventListener("click", function () {
-            postBookingViaAdminPage(this.id);
-        });
-        buttonCell.appendChild(btn);
-    }
-    else if (desk["available"] == false){
-        btn.innerHTML = "Delete";
-        btn.className = "btn btn-danger btn-sm";
-        btn.id = desk["booking_id"];
-        btn.addEventListener("click", function () {
-            deleteBookingViaAdminPage(this.id);
-        });
-        buttonCell.appendChild(btn);
-    }
-    else{
-        console.log("Desk availability error.")
-    }
-
-    return buttonCell;
-
 }
 
 function postBookingViaAdminPage(deskId) {
@@ -366,6 +274,181 @@ function deleteBookingViaAdminPage(id) {
     // that form from forming its own HTTP request and sending it.
 
     return false;
+
+}
+
+function displayDesksForAdmin(json) {
+    // Get table body.
+    let table = document.getElementsByTagName("tbody")[0];
+
+    // Remove all child elements.
+    table.innerHTML = "";
+
+    // Create rows for each desk.
+    json["results"].forEach(function (desk) {
+
+        let row = document.createElement("tr");
+
+        let id = document.createElement("td");
+        id.innerText = desk["id"];
+
+        let name = document.createElement("td");
+        name.innerText = desk["name"];
+
+        let type = document.createElement("td");
+        type.innerText = desk["desk_type"]["name"];
+
+        let notes = document.createElement("td");
+        notes.innerText = desk["notes"];
+
+        let bookedBy = document.createElement("td");
+        bookedBy.innerText = desk["booked_by"];
+
+        let availabilityCell = availabilityCellConfigurerForAdmin(desk);
+
+        let buttonCell = buttonCellConfigurerForAdminPage(desk);
+
+        row.append(id, name, type, notes, availabilityCell, bookedBy, buttonCell);
+
+        table.appendChild(row);
+    });
+
+}
+
+/**
+ * Creates a table cell. If the desk that is being iterated
+ * over is available on the given day, add a booking button
+ * to that cell. If the person who logged in has booked it,
+ * show a delete button. If the person has one booking on
+ * that day but the desk is available, added a faded book
+ * button.
+ * @param desk A single desk object from a JSON of desks
+ * @returns {HTMLTableDataCellElement} The td to add to table
+ * row
+ */
+function buttonCellConfigurerForAdminPage(desk) {
+
+    // Create a cell and button that will be placed in last column in our table
+
+    let buttonCell = document.createElement("td");
+    let btn = document.createElement("button");
+
+    // If-else statement to set what is in the last cell of a desk row:
+
+    if (desk["available"] == true){
+        btn.innerHTML = "Book";
+        btn.className = "btn btn-success btn-sm"
+        btn.id = desk["id"];
+        btn.addEventListener("click", function () {
+            postBookingViaAdminPage(this.id);
+        });
+        buttonCell.appendChild(btn);
+    }
+    else if (desk["available"] == false){
+        btn.innerHTML = "Delete";
+        btn.className = "btn btn-danger btn-sm";
+        btn.id = desk["booking_id"];
+        btn.addEventListener("click", function () {
+            deleteBookingViaAdminPage(this.id);
+        });
+        buttonCell.appendChild(btn);
+    }
+    else{
+        console.log("Desk availability error.")
+    }
+
+    return buttonCell;
+
+}
+
+/**
+ * Create function that will take a desk object in (as we are iterating over
+ * all desks) and populate the column titled "Available" with either a check
+ * (if it is available) and a cross (if it is not available).
+ * @param desk
+ * @returns {HTMLTableDataCellElement}
+ */
+function availabilityCellConfigurerForAdmin(desk) {
+
+    // For a check cell we would like to re-create the following html
+    // with Bootstrap class:
+
+    // <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+    //   <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+    // </svg>
+
+    // Reference: https://icons.getbootstrap.com/icons/check/
+
+    // and for a cross:
+
+    // <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+    //   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+    // </svg>
+
+    //Reference: https://icons.getbootstrap.com/icons/x/
+
+    // Create a cell for our availability icon
+
+    let availabilityCell = document.createElement("td");
+
+    // availabilityCell.style.textAlign = "center";
+
+    // If the desk is available on that day, show a check in the
+    // available column, else show a cross
+
+    if (desk["available"] === true) {
+
+        let checkIconSVG = checkIconReturner();
+        availabilityCell.appendChild(checkIconSVG);
+
+    } else {
+
+        let crossIconSVG = crossIconReturner();
+        availabilityCell.appendChild(crossIconSVG);
+
+    }
+
+    return availabilityCell;
+
+
+}
+
+function checkIconReturner(){
+
+    // Clone check element that is in DOM
+    // Reference: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_clonenode
+
+    let checkIconSVG = document.getElementById("bootstrapCheckIcon");
+    let checkIconSVGClone = checkIconSVG.cloneNode(true);
+
+    // Check what the default display of an svg is (remove display:none from
+    // it to check this)
+    // console.log("Default display of svg is:")
+    // console.log(window.getComputedStyle(checkIcon).display);
+
+    // Set style of SVG clone from none to the default
+
+    checkIconSVGClone.style.display = "inline";
+
+    return checkIconSVGClone;
+
+}
+
+function crossIconReturner(){
+
+    // Clone cross element that is in DOM
+    // Reference: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_clonenode
+
+    let crossIconSVG = document.getElementById("bootstrapCrossIcon");
+    let crossIconSVGClone = crossIconSVG.cloneNode(true);
+
+    // Set style of SVG clone from none to the default
+
+    crossIconSVGClone.style.display = "inline";
+
+    return crossIconSVGClone;
+
+
 
 }
 
