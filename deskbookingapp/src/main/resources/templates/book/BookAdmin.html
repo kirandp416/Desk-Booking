@@ -32,11 +32,13 @@
         <form id="form">
 
             <p>
+                <!-- Add label for accessibility -->
                 <label for="bookingDate">Date:</label>
                 <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
             </p>
 
             <p>
+                <!-- Add label for accessibility -->
                 <label for="room">Room: </label>
                 <select id="room" name="room" required>
                     <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
@@ -44,6 +46,7 @@
             </p>
 
             <p>
+                <!-- Add label for accessibility -->
                 <label for="employee">Book for: </label>
                 <select id="employee" name="employee" required>
                     <option th:each="employee : ${employees}" th:value="${employee.username}" th:text="${employee.username}"></option>

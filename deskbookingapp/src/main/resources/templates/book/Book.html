@@ -35,6 +35,7 @@
 
         <br>
         <form action="/booking/add/process_form" method="post">
+            <!-- Add label for accessibility -->
             <label for="bookingDate">Date:</label>
             <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
         </form>
@@ -46,6 +47,7 @@
 
         <form id="form">
             <p>
+                <!-- Add label for accessibility -->
                 <label for="room">Room: </label>
                 <select id="room" name="room" required>
                     <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
