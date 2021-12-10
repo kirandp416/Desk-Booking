@@ -69,7 +69,8 @@ function pastDateWarn() {
 
 /**
  * Create function that checks that the user has selected a date
- * @returns {boolean}
+ * @returns {boolean} returns true if a date ahs been selected,
+ *                    else false
  */
 function viewDesksButtonDataValidator() {
 
@@ -185,6 +186,15 @@ function getDesksForAdmin() {
     xhttp.send();
 }
 
+/**
+ * A function that the book buttons will fire off
+ * if clicked, that will making a booking post
+ * request to the booking database with all of the
+ * paramters needed to do so from the DOM.
+ * @param deskId The ID of the desk in question
+ * which will be stored in the button pressed
+ * as the element id.
+ */
 function postBookingViaAdminPage(deskId) {
 
     let roomIdParam = roomSelect.value;
@@ -231,6 +241,14 @@ function postBookingViaAdminPage(deskId) {
 
 }
 
+/**
+ * Function to delete a booking. The function also reloads desks
+ * table in DOM if the delete was a success. This ought to switch
+ * the desk's button back to a book button, since you just deleted
+ * the booking associated with it.
+ * @param id Booking ID
+ * @returns {boolean} Always returns false to prevent form submission
+ */
 function deleteBookingViaAdminPage(id) {
 
     // Set up HTTP request
@@ -277,6 +295,11 @@ function deleteBookingViaAdminPage(id) {
 
 }
 
+/**
+ * Displays desks in the table.
+ * @param json the JSON response that holds the data
+ *             on the desks.
+ */
 function displayDesksForAdmin(json) {
     // Get table body.
     let table = document.getElementsByTagName("tbody")[0];
@@ -413,6 +436,13 @@ function availabilityCellConfigurerForAdmin(desk) {
 
 }
 
+/**
+ * Finds the hidden svg in DOM that is for the Bootstrap styled check icon.
+ * Clones that element and points new variable to the clone. Changes display
+ * of clone from hidden to inline (this is svg's default display). Returns
+ * the cloned element.
+ * @returns {Node} An HTML svg element that shows a Bootstrap check icon.
+ */
 function checkIconReturner(){
 
     // Clone check element that is in DOM
@@ -434,6 +464,13 @@ function checkIconReturner(){
 
 }
 
+/**
+ * Finds the hidden svg in DOM that is for the Bootstrap styled cross icon.
+ * Clones that element and points new variable to the clone. Changes display
+ * of clone from hidden to inline (this is svg's default display). Returns
+ * the cloned element.
+ * @returns {Node} An HTML svg element that shows a Bootstrap cross icon.
+ */
 function crossIconReturner(){
 
     // Clone cross element that is in DOM
@@ -452,6 +489,12 @@ function crossIconReturner(){
 
 }
 
+/**
+ * Before sending the booking post request, we show the user
+ * a loading icon for a short period of time so that they
+ * know something has happened
+ * @param id The ID of the button pressed
+ */
 function showLoaderById(id) {
 
     // We want to create the following piece of HTML and add it to our DOM

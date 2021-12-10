@@ -16,8 +16,11 @@ public class EmployeeRepositoryJDBC implements EmployeeRepository {
     private JdbcTemplate jdbcTemplate;
 
     /**
-     * I did a thing and it was a blah
-     * @param jdbcTemplate
+     * A method to query the MySQL database for all employees. Currently,
+     * the employee table just has a username column, so we are in fact
+     * returning all the data on each employee in this query.
+     * @param jdbcTemplate JDBC object to handle connection to MySQL
+     *                     database.
      */
     public EmployeeRepositoryJDBC(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

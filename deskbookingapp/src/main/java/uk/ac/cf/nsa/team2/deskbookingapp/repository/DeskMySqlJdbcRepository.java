@@ -199,7 +199,9 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
         // The queryString below will be passed the following parameters:
 
         // parameter 1 is int roomId
-        // parameter 2 is String date
+        // parameter 2 is limit
+        // parameter 3 is offset
+        // parameter 4 is String date
 
         String queryString = "SELECT desk_with_type.desk_id, desk_with_type.room_id, desk_with_type.desk_name, desk_with_type.desk_type_id, desk_with_type.desk_type_name, desk_with_type.notes, CASE WHEN booking_id IS NULL THEN 1 ELSE 0 END AS available, booking.username as booked_by, booking.booking_id FROM (SELECT desk.desk_id, desk.room_id, desk.desk_name, desk.notes, desk_type.desk_type_id, desk_type.desk_type_name FROM desk INNER JOIN desk_type ON desk.desk_type_id = desk_type.desk_type_id WHERE desk.room_id = ? LIMIT ? OFFSET ?) AS desk_with_type LEFT JOIN (SELECT * FROM booking WHERE booking_date = ?) as booking ON desk_with_type.desk_id = booking.desk_id ORDER BY desk_id";
 
