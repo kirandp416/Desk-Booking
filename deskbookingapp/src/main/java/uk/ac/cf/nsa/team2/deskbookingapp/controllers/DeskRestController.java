@@ -96,6 +96,20 @@ public class DeskRestController {
         return new DesksAvailabilityDTO(desks.get(), desksCount.get());
     }
 
+    /**
+     * Route for admin to get a collection of desk-like objects. The desk-like objects
+     * store whether they are available on the date that is passed as one of the parameters.
+     * If they are not available, they also store the username of the person who booked them
+     * on that date and the booking id for the booking. All of these desk-like objects are then
+     * passed to the DesksAvailabilityAdminDTO constructor and returned, which effectively
+     * returns a JSON of all the desk-like objects.
+     * @param roomId The id of the room where the admin is looking to get desks from
+     * @param date The date the admin is interested in for getting desks
+     * @param offset The first desk that will be displayed in the current page in the pagination
+     * @param limit The number of desks to get per page in pagination
+     * @param response Object holding HTTP data
+     * @return DesksAvailabilityAdminDTO object
+     */
     @RequestMapping(path="/api/desks_available_admin", produces= "application/json")
     public DesksAvailabilityAdminDTO getDesksAvailabilityForAdmin(@RequestParam("room_id") int roomId, @RequestParam("date") String date, @RequestParam("offset") int offset,
                                                                   @RequestParam("limit") int limit, HttpServletResponse response){

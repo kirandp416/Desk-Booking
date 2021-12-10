@@ -80,6 +80,19 @@ public interface DeskRepository {
     Optional<List<DeskAvailabilityDTO>> findByRoomIncludeAvailability(String username, int roomId, String date, int offset, int limit);
 
 
+    /**
+     * Get a list of data objects that represents desks with their availability included
+     * in each of those objects. The availability of a desk object is for a particular room,
+     * on a particular date, and these are passed as arguments to the function. Offset and
+     * limit are also passed, which enables the pagination of the desk objects when they are
+     * being rendered. If the desk is not available, the username of the person who booked it
+     * and the booking id of the booking are included.
+     * @param roomId ID of the room in question
+     * @param date Date the admin is interested in
+     * @param offset The first desk id to be shown in the current page in pagination
+     * @param limit The total amount of desks to be shown per page in pagination.
+     * @return Optional<List<DeskAvailabilityAdminDTO>>
+     */
     Optional<List<DeskAvailabilityAdminDTO>> findByRoomIncludeAvailabilityForAdmin(int roomId, String date, int offset, int limit);
 
 }

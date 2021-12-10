@@ -178,6 +178,21 @@ public class DeskMySqlJdbcRepository implements DeskRepository {
 
     }
 
+    /**
+     * Implementation of the method with the same name in the DeskRepository interface. This
+     * implementation queries a MySQL database by joining multiple tables. The result of the
+     * query is a table of desks in a given room and given date. Additionally, columns have
+     * been added for whether the desks are available or not on that date. If they are not
+     * available then the username of the person who booked it and the booking id of the booking
+     * are included as columns too. If the booking username and booking id are not applicable
+     * to a desk then these fields will have null values. Once the query results come back they
+     * are mapped to a DTO object via DeskAvailabilityAdminRowMapper().
+     * @param roomId ID of the room in question
+     * @param date Date the admin is interested in
+     * @param offset The first desk id to be shown in the current page in pagination
+     * @param limit The total amount of desks to be shown per page in pagination.
+     * @return Optional<List<DeskAvailabilityAdminDTO>>
+     */
     @Override
     public Optional<List<DeskAvailabilityAdminDTO>> findByRoomIncludeAvailabilityForAdmin(int roomId, String date, int offset, int limit) {
 

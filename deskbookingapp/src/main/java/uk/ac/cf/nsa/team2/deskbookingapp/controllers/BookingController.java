@@ -70,8 +70,8 @@ public class BookingController {
     }
 
     /**
-     * Post a new booking to the booking table in the database.
-     * If it was successful we direct the user to BookingAdded
+     * Create route that allows employee to post a new booking to the booking
+     * table in the database. If it was successful we direct the user to BookingAdded
      * page. Otherwise, direct them to BookingNotAdded page.
      *
      * @param bookingForm A form object we can use to hold the html
@@ -160,7 +160,8 @@ public class BookingController {
         }
 
     /**
-     *
+     * Load booking page for admin. Load all rooms and employees into the
+     * model and view before loading this page.
       * @return
      */
     @RequestMapping(path="/admin/booking/add", method = RequestMethod.GET)
@@ -197,9 +198,9 @@ public class BookingController {
     }
 
     /**
-     * Post a new booking to the booking table in the database.
-     * If it was successful we direct the user to BookingAdded
-     * page. Otherwise, direct them to BookingNotAdded page.
+     * Create route for admin to post a new booking to the booking
+     * table in the database. If it was successful we direct the user
+     * to BookingAdded page. Otherwise, direct them to BookingNotAdded page.
      *
      * @param bookingForm A form object we can use to hold the html
      *                    form data for one booking submission.
@@ -238,9 +239,12 @@ public class BookingController {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Create route for admin to delete a booking. If the deletion was not
+     * successful then direct the admin to a view that indicates to them that
+     * it was not a success. Otherwise, direct them to a view that indicates
+     * it was a success.
+     * @param id Id of desk
+     * @return ModelAndView object
      */
     @RequestMapping(path = "/admin/booking/delete", method = RequestMethod.DELETE)
     public ModelAndView bookingDeleteAdmin(@RequestParam(value = "id", defaultValue = "null") String id) {
@@ -261,6 +265,5 @@ public class BookingController {
         return mav;
 
     }
-
 
 }

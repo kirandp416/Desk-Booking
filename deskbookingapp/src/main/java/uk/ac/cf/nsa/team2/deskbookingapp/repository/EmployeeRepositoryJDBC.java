@@ -15,6 +15,10 @@ public class EmployeeRepositoryJDBC implements EmployeeRepository {
 
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * I did a thing and it was a blah
+     * @param jdbcTemplate
+     */
     public EmployeeRepositoryJDBC(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
