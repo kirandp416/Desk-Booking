@@ -6,6 +6,7 @@ The problem with the Bootstrap tables was that they shifted around when buttons 
 .bootstrapAdjustTable{
     width: 100%;
     table-layout: fixed;
+    word-wrap: break-word;
 }
 
 /* Our desk table currently has three fields that we would like to each occupy a third
