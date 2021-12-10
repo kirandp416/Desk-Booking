@@ -34,8 +34,14 @@ $(document).ready(function () {
     fetchData();
 });
 
-// Add on change event listener to booking date picker.
-dateSelect.addEventListener("change", function () {
+// Add on change event listener to booking date picker and room select option.
+dateSelect.addEventListener("change", dateRoomChanged);
+roomSelect.addEventListener("change", dateRoomChanged);
+
+/**
+ * Date/room change handler.
+ */
+function dateRoomChanged() {
     // Validate date.
     // If valid, fetch data.
     // Else clear desk availability data.
@@ -43,33 +49,13 @@ dateSelect.addEventListener("change", function () {
         progressSpinner.classList.remove("visually-hidden");
         fetchData();
     } else {
-        clearDeskAvailabilityData();
+        desksAvailabilityTitle.innerText = "";
+        quotaText.innerText = "";
+        table.innerHTML = "";
+        resultsText.innerText = "";
+        offset = 0;
+        totalResults = 0;
     }
-});
-
-// Add on change event listener to room select option.
-roomSelect.addEventListener("change", function () {
-    // Validate date.
-    // If valid, fetch data.
-    // Else clear desk availability data.
-    if (validateDate()) {
-        progressSpinner.style.display = "block";
-        fetchData();
-    } else {
-        clearDeskAvailabilityData();
-    }
-});
-
-/**
- * Clears the desk availability data.
- */
-function clearDeskAvailabilityData() {
-    desksAvailabilityTitle.innerText = "";
-    quotaText.innerText = "";
-    table.innerHTML = "";
-    resultsText.innerText = "";
-    offset = 0;
-    totalResults = 0;
 }
 
 // Start of code that was adapted from Hassan's code in manage_desks.js
