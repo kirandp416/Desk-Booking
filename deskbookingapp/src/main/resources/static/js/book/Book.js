@@ -14,7 +14,7 @@ const quotaText = document.getElementById("quotaText");
 const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
 const table = document.getElementsByTagName("tbody")[0];
-const tableProgressSpinner = document.getElementById("tableProgressSpinner");
+const progressSpinner = document.getElementById("progressSpinner");
 const usernameSelect = document.getElementById("username");
 
 // Table pagination state.
@@ -40,7 +40,7 @@ dateSelect.addEventListener("change", function () {
     // If valid, fetch data.
     // Else clear desk availability data.
     if (validateDate()) {
-        tableProgressSpinner.classList.remove("visually-hidden");
+        progressSpinner.classList.remove("visually-hidden");
         fetchData();
     } else {
         clearDeskAvailabilityData();
@@ -53,7 +53,7 @@ roomSelect.addEventListener("change", function () {
     // If valid, fetch data.
     // Else clear desk availability data.
     if (validateDate()) {
-        tableProgressSpinner.style.display = "block";
+        progressSpinner.style.display = "block";
         fetchData();
     } else {
         clearDeskAvailabilityData();
@@ -216,7 +216,7 @@ async function fetchData() {
     desksAvailabilityTitle.innerText = "Showing desk availability for " + new Date(dateSelect.value).toLocaleDateString();
 
     // Hide table progress spinner.
-    tableProgressSpinner.classList.add("visually-hidden");
+    progressSpinner.classList.add("visually-hidden");
 }
 
 // Start of code that was adapted from Hassan's code in manage_desks.js
