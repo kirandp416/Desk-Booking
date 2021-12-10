@@ -41,11 +41,20 @@
                 </p>
             </form>
 
+            <!-- Loading progress spinner. -->
+            <div id="tableProgressSpinner" class="d-flex justify-content-center visually-hidden">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Desks availability subtitle. -->
+            <h5 id="desksAvailabilitySubtitle"></h5>
+
             <!-- Booking quota. -->
-            <p id="quotaText"></p>
+            <h6 id="quotaText"></h6>
 
             <!-- The table that will be populated with desks upon submission of the above button. -->
-
             <table class="table bootstrapAdjustTable">
                 <thead>
                     <tr>

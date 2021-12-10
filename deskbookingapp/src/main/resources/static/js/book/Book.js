@@ -9,10 +9,12 @@
 
 // Get elements.
 const dateSelect = document.getElementById("bookingDate");
+const desksAvailabilityTitle = document.getElementById("desksAvailabilitySubtitle");
 const quotaText = document.getElementById("quotaText");
 const resultsText = document.getElementById("resultsText");
 const roomSelect = document.getElementById("room");
 const table = document.getElementsByTagName("tbody")[0];
+const tableProgressSpinner = document.getElementById("tableProgressSpinner");
 const usernameSelect = document.getElementById("username");
 
 // Table pagination state.
@@ -38,6 +40,7 @@ dateSelect.addEventListener("change", function () {
     // If valid, fetch data.
     // Else clear desk availability data.
     if (validateDate()) {
+        tableProgressSpinner.classList.remove("visually-hidden");
         fetchData();
     } else {
         clearDeskAvailabilityData();
@@ -50,6 +53,7 @@ roomSelect.addEventListener("change", function () {
     // If valid, fetch data.
     // Else clear desk availability data.
     if (validateDate()) {
+        tableProgressSpinner.style.display = "block";
         fetchData();
     } else {
         clearDeskAvailabilityData();
@@ -60,8 +64,9 @@ roomSelect.addEventListener("change", function () {
  * Clears the desk availability data.
  */
 function clearDeskAvailabilityData() {
-    table.innerHTML = "";
+    desksAvailabilityTitle.innerText = "";
     quotaText.innerText = "";
+    table.innerHTML = "";
     resultsText.innerText = "";
     offset = 0;
     totalResults = 0;
@@ -90,6 +95,7 @@ document.getElementById("tableNextBtn").addEventListener("click", function () {
 
     // Update offset and get desks.
     offset += limit;
+
     fetchData();
 });
 
@@ -205,6 +211,12 @@ async function fetchData() {
     } else {
         resultsText.innerText = "Displaying " + (limit + offset) + " of " + totalResults + " results";
     }
+
+    // Set subtitle.
+    desksAvailabilityTitle.innerText = "Showing desk availability for " + new Date(dateSelect.value).toLocaleDateString();
+
+    // Hide table progress spinner.
+    tableProgressSpinner.classList.add("visually-hidden");
 }
 
 // Start of code that was adapted from Hassan's code in manage_desks.js
