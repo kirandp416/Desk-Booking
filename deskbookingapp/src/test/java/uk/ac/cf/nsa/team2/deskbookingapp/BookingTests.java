@@ -23,7 +23,7 @@ public class BookingTests {
      */
     @BeforeAll
     public static void before(){
-        bookingDTO = new BookingDTO(1, "2000-01-01", "Room 1", "Desk 1", "Standard", "Everyone's favourite desk.");
+        bookingDTO = new BookingDTO(1,"user1", "2000-01-01", "Room 1", "Desk 1", "Standard", "Everyone's favourite desk.");
     }
 
     // BookingDTO Tests

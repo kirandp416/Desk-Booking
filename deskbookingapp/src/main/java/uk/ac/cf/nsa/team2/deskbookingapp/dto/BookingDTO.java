@@ -12,6 +12,7 @@ import java.util.Date;
 public class BookingDTO {
 
     private int id;
+    private String username;
     private String date;
     private String dateOrderedForDisplay;
     private String roomName;
@@ -20,9 +21,10 @@ public class BookingDTO {
     private String deskNotes;
     private OffsetDateTime timestamp; // UTC offset timestamp of booking.
 
-    public BookingDTO(int id, String date, String roomName, String deskName, String deskType, String deskNotes,
+    public BookingDTO(int id, String username, String date, String roomName, String deskName, String deskType, String deskNotes,
                       OffsetDateTime timestamp) {
         this.id = id;
+        this.username = username;
         this.date = date;
         this.roomName = roomName;
         this.deskName = deskName;
@@ -62,6 +64,10 @@ public class BookingDTO {
 
     public String getDateOrderedForDisplay() {
         return dateOrderedForDisplay;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     // Create a method that takes the date of the booking on the database (which

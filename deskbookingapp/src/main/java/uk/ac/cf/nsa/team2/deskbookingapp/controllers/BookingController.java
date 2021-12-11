@@ -3,6 +3,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,10 +43,10 @@ public class BookingController {
      * Create route to booking page. As page loads we load in the
      * currently logged in user's details so that they can make
      * a booking for their own personal account
-     * @param principal An object containing the users details
      *
+     * @param principal An object containing the users details
      * @return ModelAndView object which is the booking page
-     *                      with user's details in the Model.
+     * with user's details in the Model.
      */
     @RequestMapping(path = "/booking/add")
     public ModelAndView book(Principal principal) {
@@ -106,9 +107,9 @@ public class BookingController {
     }
 
     /**
-     * Create a Model and View object that contains all of the bookings
-     * that have been made by a particular user in the Model and the
-     * Bookings page as the View
+     * Create controller method that handles route for the manage bookings page
+     * for the admin. This view will have a model that stores all the bookings
+     * that are in the system, in reverse chronological order.
      *
      * @return a Model and View object that contains all the bookings
      */
@@ -122,12 +123,12 @@ public class BookingController {
     }
 
     /**
-     * Create route that will attempt to delete a booking from the booking
-     * database, by booking id. If it is successful you will see a view that
-     * says successful and if it is not you will see a view that says it failed.
-     * We will be calling this method via AJAX so you will not see these views.
-     * However, if you would like to see the views and test it, please change
-     * request method below to GET and try the route with a valid id in the
+     * Create route for employee users that will attempt to delete a booking
+     * from the booking database, by booking id. If it is successful you will
+     * see a view that says successful and if it is not you will see a view that
+     * says it failed. We will be calling this method via AJAX so you will not see
+     * these views. However, if you would like to see the views and test it, please
+     * change request method below to GET and try the route with a valid id in the
      * address bar of browser.
      *
      * @param id the Booking id
@@ -152,6 +153,56 @@ public class BookingController {
 
         return mav;
 
+    }
+
+    /**
+     * Create controller method that handles route for the manage bookings page
+     * for the admin. This view will have a model that stores all the bookings
+     * that are in the system, in reverse chronological order.
+     * @return a Model and View object that contains all the bookings
+     */
+    @RequestMapping(path = "/admin/booking/all", method = RequestMethod.GET)
+    public ModelAndView getAdminBookingsPage() {
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("bookings", bookingRepository.findAllReverseChronologicalOrder());
+        mav.setViewName("/book/BookingsAdmin");
+        return mav;
+
+    }
+
+    /**
+     * Create route for admin that will attempt to delete a booking from the booking
+     * database, by booking id. If it is successful you will see a view that
+     * says successful and if it is not you will see a view that says it failed.
+     * We will be calling this method via AJAX so you will not see these views.
+     * However, if you would like to see the views and test it, please change
+     * request method below to GET and try the route with a valid id in the
+     * address bar of browser.
+     *
+     * @param id the Booking id
+     * @return ModelAndView object with a view that will tell you if deletion
+     * was a success.
+     */
+    @RequestMapping(path = "/admin/booking/delete", method = RequestMethod.DELETE)
+    public ModelAndView bookingDeleteAdmin(@RequestParam(value = "id", defaultValue = "null") String id) {
+
+        ModelAndView mav = new ModelAndView();
+
+        if (!id.equals("null")) {
+            Integer idInt = Integer.valueOf(id);
+            if (bookingRepository.deleteBooking(idInt)) {
+                mav.setViewName("/book/BookingDeleteSuccess");
+            } else {
+                mav.setViewName("/book/BookingDeleteFail");
+            }
+        } else {
+            mav.setViewName("/book/BookingDeleteFail");
         }
+
+        return mav;
+
+    }
+
 
 }
