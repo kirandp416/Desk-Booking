@@ -31,7 +31,7 @@ public class RoomMySqlJdbRepositoryTests {
      */
     @BeforeAll
     @Sql("/database_test.sql")
-    static void beforeAll() {
+    public static void beforeAll() {
         // Create test rooms.
         RoomDTO testRoom1 = new RoomDTO();
         testRoom1.setName("Room 1");
