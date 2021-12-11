@@ -47,7 +47,7 @@ function dateRoomChanged() {
     // Else clear desk availability data.
     if (validateDate()) {
         progressSpinner.classList.remove("visually-hidden");
-        fetchData();
+        setTimeout(fetchData, 500);
     } else {
         desksAvailabilityTitle.innerText = "";
         quotaText.innerText = "";
