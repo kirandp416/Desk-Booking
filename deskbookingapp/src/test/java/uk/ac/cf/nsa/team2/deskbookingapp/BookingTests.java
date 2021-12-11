@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,7 +26,8 @@ public class BookingTests {
      */
     @BeforeAll
     public static void before(){
-        bookingDTO = new BookingDTO(1, "2000-01-01", "Room 1", "Desk 1", "Standard", "Everyone's favourite desk.");
+        bookingDTO = new BookingDTO(1, "2000-01-01", "Room 1", "Desk 1", "Standard",
+                "Everyone's favourite desk.", OffsetDateTime.now(ZoneOffset.UTC));
     }
 
     // BookingDTO Tests
