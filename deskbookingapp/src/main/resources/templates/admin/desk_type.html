@@ -71,6 +71,7 @@
 
     function createTable() {
         $.ajax({
+
             url: "desk_type/list",
             success(data) {
                 $("#desksTable tbody").html("");
@@ -87,7 +88,7 @@
                     let input2 = document.createElement("input")
                     input2.type = "button"
                     input2.value = "update"
-                    input2.setAttribute("class", "btn btn-update btn-sm")
+                    input2.setAttribute("class", "btn btn-secondary btn-sm")
                     input2.onclick = function () {
                         updatedata(data[i])
                     }
@@ -98,7 +99,7 @@
                     let input = document.createElement("input")
                     input.type = "button"
                     input.value = "delete"
-                    input.setAttribute("class", "btn btn-delete btn-sm")
+                    input.setAttribute("class", "btn btn-danger btn-sm")
                     input.onclick = function () {
                         deleteData(data[i].deskTypeId)
                     }
@@ -152,7 +153,8 @@
                         let input3 = document.createElement("input")
                         input3.type = "button"
                         input3.value = "confirm"
-                        input3.setAttribute("class", "btn btn-confirm btn-sm")
+                        input3.setAttribute("class", "btn btn-success btn-sm")
+
                         input3.onclick = function () {
                             confirm(data[i])
                         }
@@ -162,7 +164,7 @@
                         let input4 = document.createElement("input")
                         input4.type = "button"
                         input4.value = "cancel"
-                        input4.setAttribute("class", "btn btn-confirm btn-sm")
+                        input4.setAttribute("class", "btn btn-info btn-sm")
                         input4.onclick = function () {
                             cancel(data[i])
                         }
