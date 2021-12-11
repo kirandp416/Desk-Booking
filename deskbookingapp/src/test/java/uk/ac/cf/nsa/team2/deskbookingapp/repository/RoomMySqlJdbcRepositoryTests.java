@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * Tests for the {@link RoomMySqlJdbcRepository} class.
  */
 @SpringBootTest
-public class RoomMySqlJdbRepositoryTests {
+public class RoomMySqlJdbcRepositoryTests {
 
     // Test rooms.
     private static List<RoomDTO> testRooms;
@@ -55,6 +55,7 @@ public class RoomMySqlJdbRepositoryTests {
         // Add test rooms to database.
         for (RoomDTO room : testRooms) {
             boolean result = roomRepository.add(room);
+            // Fail the test if adding failed.
             if (!result) {
                 fail("Query to add a room to the database failed");
             }
