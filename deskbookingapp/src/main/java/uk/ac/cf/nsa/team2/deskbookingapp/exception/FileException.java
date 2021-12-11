@@ -7,7 +7,7 @@ package uk.ac.cf.nsa.team2.deskbookingapp.exception;
  */
 
 /**
- * rewrite exceprtion of thr file
+ * rewrite exception of the file
  */
 public class FileException extends RuntimeException {
     public FileException(String message) {
