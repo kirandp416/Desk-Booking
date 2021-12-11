@@ -28,12 +28,12 @@ public class DeskServiceImpl implements DesktypeService{
     }
     /**find one desktype by id*/
     @Override
-    public DeskTypeDTO findUserById(int deskTypeId) {
+    public DeskTypeDTO findDeskTypeById(int deskTypeId) {
         return deskTypeRepository.finddesktypeById(deskTypeId);
     }
     /**find desk type list*/
     @Override
-    public List<DeskTypeDTO> findUserList() {
+    public List<DeskTypeDTO> findDeskTypeList() {
         return deskTypeRepository.finddesktypeist();
     }
 }

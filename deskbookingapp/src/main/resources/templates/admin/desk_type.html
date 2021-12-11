@@ -25,12 +25,6 @@
         </p>
 
         <p>
-            <label for="name">Photo:</label>
-            <input type="text" id="photo" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
-            <button onclick="uploadimg()">Upload</button>
-        </p>
-
-        <p>
             <label for="name">Desk Type Introduce:</label>
             <input type="text" id="Introduce" name="name" required pattern="([A-Za-z0-9]+)([A-Za-z0-9\s]*)">
         </p>
@@ -48,7 +42,6 @@
                 <th scope="col">ID</th>
                 <th scope="col">desk type</th>
                 <th scope="col">Desk type Introduce</th>
-                <th scope="col">Photo</th>
                 <th scope="col">Action</th>
 
             </tr>
@@ -115,10 +108,11 @@
     }
 
     function submit() {
+
         let data = {
             deskTypeName: document.getElementById("name").value,
             deskTypeIntroduce: document.getElementById("Introduce").value,
-            photo: document.getElementById("photo").value
+
         }
         if (data.deskTypeName) {
             $.ajax({
@@ -134,11 +128,9 @@
         console.log(data)
     }
 
-    function uploadimg() {
-
-    }
 
     function updatedata(data) {
+
         let tr = document.getElementsByClassName("table")[0].getElementsByTagName("tbody")[0].getElementsByTagName("tr")
         for (let i = 0; i < tr.length; i++) {
             let td = tr[i].getElementsByTagName("td")
@@ -195,7 +187,7 @@
             deskTypeId: list[0],
             deskTypeName: list[1],
             deskTypeIntroduce: list[2],
-            photo: list[3]
+
         }
         console.log(data)
         $.ajax({

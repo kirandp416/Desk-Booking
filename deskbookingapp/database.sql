@@ -43,10 +43,10 @@ CREATE TABLE booking
     CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE
 );
 
-INSERT INTO desk_type (desk_type_id, desk_type_name,photo,desk_type_introduce)
-VALUES (1, 'Standard','URL','A standard office desk,meet daily meeting requirements'),
-       (2, 'Standing','URL','Suitable for short meetings, in order to save space, can only stand'),
-       (3,'Computer','URL','A desk with a computer, which can be used for presentations in a computer team meeting');
+INSERT INTO desk_type (desk_type_id, desk_type_name,desk_type_introduce)
+VALUES (1, 'Standard','A standard office desk,meet daily meeting requirements'),
+       (2, 'Standing','Suitable for short meetings, in order to save space, can only stand'),
+       (3,'Computer','A desk with a computer, which can be used for presentations in a computer team meeting');
 
 INSERT INTO room(room_id, room_name)
 VALUES (1, 'Room 1');

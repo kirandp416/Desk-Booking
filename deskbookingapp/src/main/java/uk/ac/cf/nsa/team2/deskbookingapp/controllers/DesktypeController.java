@@ -2,10 +2,11 @@ package uk.ac.cf.nsa.team2.deskbookingapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.service.DesktypeService;
-
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/admin/desk_type")
@@ -19,8 +20,8 @@ public class DesktypeController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<DeskTypeDTO> getUsers() {
-        return desktypeService.findUserList();
+    public List<DeskTypeDTO> getDeskType() {
+        return desktypeService.findDeskTypeList();
     }
 
     /**
@@ -31,7 +32,7 @@ public class DesktypeController {
      */
     @RequestMapping(value = "/{deskTypeId}", method = RequestMethod.GET)
     public DeskTypeDTO getUserById(@PathVariable("deskTypeId") int deskTypeId) {
-        return desktypeService.findUserById(deskTypeId);
+        return desktypeService.findDeskTypeById(deskTypeId);
     }
 
     /**
@@ -71,6 +72,7 @@ public class DesktypeController {
      */
     @PostMapping(value = "/add")
     public String postUser(@RequestBody DeskTypeDTO deskTypeDTO) {
+
         int t = desktypeService.add(deskTypeDTO);
         if (t == 1) {
             return "Add success!";
@@ -79,6 +81,10 @@ public class DesktypeController {
         }
 
     }
+
+
+
+
 
 
 }

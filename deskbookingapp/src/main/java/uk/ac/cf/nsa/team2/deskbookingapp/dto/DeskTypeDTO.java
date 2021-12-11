@@ -11,13 +11,11 @@ public class DeskTypeDTO {
 
     @JsonProperty("deskTypeId")
     private int deskTypeId;
-
     @JsonProperty("deskTypeName")
     private String deskTypeName;
     @JsonProperty("deskTypeIntroduce")
     private String deskTypeIntroduce;
-    @JsonProperty("photo")
-    private String photo;
+
 
     public String getDeskTypeIntroduce() {
         return deskTypeIntroduce;
@@ -27,19 +25,13 @@ public class DeskTypeDTO {
         this.deskTypeIntroduce = deskTypeIntroduce;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 
-    public DeskTypeDTO(int deskTypeId, String deskTypeName, String deskTypeIntroduce, String photo) {
+    public DeskTypeDTO(int deskTypeId, String deskTypeName, String deskTypeIntroduce) {
         this.deskTypeId = deskTypeId;
         this.deskTypeName = deskTypeName;
         this.deskTypeIntroduce = deskTypeIntroduce;
-        this.photo = photo;
+
     }
 
     public DeskTypeDTO() {

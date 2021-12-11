@@ -20,12 +20,12 @@ public class DeskTypeRepositoryJDBC implements DeskTypeRepository {
 
     @Override
     public int add(DeskTypeDTO deskTypeDTO) {
-        return jdbcTemplate.update("insert into desk_type(desk_type_name,photo,desk_type_introduce)  values(?,?,?)", deskTypeDTO.getDeskTypeName(), deskTypeDTO.getPhoto(), deskTypeDTO.getDeskTypeIntroduce());
+        return jdbcTemplate.update("insert into desk_type(desk_type_name,desk_type_introduce)  values(?,?)", deskTypeDTO.getDeskTypeName(), deskTypeDTO.getDeskTypeIntroduce());
     }
 
     @Override
     public int update(DeskTypeDTO deskTypeDTO) {
-        return jdbcTemplate.update("UPDATE  desk_type SET desk_type_name =?,photo=?,desk_type_introduce=? WHERE desk_type_id= ?", deskTypeDTO.getDeskTypeName(), deskTypeDTO.getPhoto(), deskTypeDTO.getDeskTypeIntroduce(), deskTypeDTO.getDeskTypeId());
+        return jdbcTemplate.update("UPDATE  desk_type SET desk_type_name =?,desk_type_introduce=? WHERE desk_type_id= ?", deskTypeDTO.getDeskTypeName(),  deskTypeDTO.getDeskTypeIntroduce(), deskTypeDTO.getDeskTypeId());
     }
 
     @Override
