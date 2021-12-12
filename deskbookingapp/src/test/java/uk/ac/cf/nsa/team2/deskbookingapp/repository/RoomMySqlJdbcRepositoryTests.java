@@ -91,6 +91,46 @@ public class RoomMySqlJdbcRepositoryTests {
     }
 
     /**
+     * Tests deleting a room from the database.
+     * The deleted room should not be in the records found after deletion.
+     */
+    @Test
+    public void whenDeletingAnExistingRoom_ThenRoomIsNotInResults() {
+        // Add rooms.
+        List<Boolean> addRoomsResults = addRooms();
+
+        // Fail the test if adding failed.
+        if (addRoomsResults.contains(false)) {
+            fail("Failed to add rooms to the database");
+        }
+
+        // Delete room.
+        boolean result = roomRepository.deleteRoom(testRooms.get(0).getId());
+
+        // Fail the test if the deletion failed.
+        if (!result) {
+            fail("Query to delete room failed");
+        }
+
+        // Get rooms.
+        Optional<List<RoomDTO>> rooms = roomRepository.findAll();
+
+        // If optional is empty, query failed.
+        if (rooms.isEmpty()) {
+            fail("Query to find all rooms from the database failed");
+        }
+
+        // Stream to get names of rooms.
+        List<String> roomNames = rooms.get().stream()
+                .map(RoomDTO::getName)
+                .collect(Collectors.toList());
+
+        // Assert that the deleted room's name is not in the results.
+        assertFalse(roomNames.contains(testRooms.get(0).getName()));
+    }
+
+
+    /**
      * Adds rooms to the database.
      *
      * @return an array of booleans stating whether the operations succeeded.
