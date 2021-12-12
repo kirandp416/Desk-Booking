@@ -3,69 +3,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-    <!-- Header fragment containing links for both admin and employee based on authentication state. -->
-    <header th:fragment="header">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <!-- Mobile navigation button. -->
-                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-                        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <!-- Collapsable nav content. -->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Navbar brand. -->
-                    <a class="navbar-brand mt-2 mt-lg-0" href="/">
-                        <img src="/img/logo.svg" width="75" alt="Logo">
-                    </a>
-                    <!-- Left side content. -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <!-- Admin links. -->
-                        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                            <a class="nav-link dropdown-toggle" href="#" id="adminDesksDropdown"
-                               role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Desks
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="adminDesksDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="/admin/add_desk">Add a Desk</a>
-                                <li>
-                                    <a class="dropdown-item" href="/admin/manage_desks">Manage Desks</a>
-                                </li>
-
-                                <li>
-                                <a class="dropdown-item" href="/admin/desk_type">Manage Desk Type</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                            <a class="nav-link dropdown-toggle" href="#" id="adminRoomsDropdown"
-                               role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                                Rooms
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="adminRoomsDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="/admin/room/add">Add a Room</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/admin/rooms/all">Manage Rooms</a>
-                                </li>
-
-
-                        </li>
-                        <!-- Employee links. -->
-                        <li class="nav-item" sec:authorize="hasRole('USER')">
-                            <a class="nav-link" href="/booking/add">Book</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Right side content. -->
-                <div class="d-flex align-items-center">
-                    <!-- My bookings (employee). -->
-                    <a class="text-reset me-3" href="/booking/all" title="My Bookings" sec:authorize="hasRole('USER')">
-                        <i class="fas fa-calendar-day"></i>
-                    </a>
 <!-- Header fragment containing links for both admin and employee based on authentication state. -->
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -96,6 +33,9 @@
                             <li>
                                 <a class="dropdown-item" href="/admin/manage_desks">Manage Desks</a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="/admin/desk_type">Manage Desk Type</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
@@ -110,6 +50,7 @@
                             <li>
                                 <a class="dropdown-item" href="/admin/rooms/all">Manage Rooms</a>
                             </li>
+
                         </ul>
                     </li>
                     <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
