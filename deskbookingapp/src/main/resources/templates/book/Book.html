@@ -11,7 +11,7 @@
     <script src="/js/book/Book.js" defer></script>
 </head>
 <body>
-<header th:replace="fragments/header :: header"></header>
+    <header th:replace="fragments/header :: header"></header>
 
 <!-- Create two hidden SVGs for checks and crosses (Bootstrap styled) that we will use
  to populate our table with later. -->
@@ -28,137 +28,140 @@
     <!--    Hidden input that holds username that will be used to make a booking-->
     <input id="username" th:value="${user.getName()}" type="hidden">
 
-    <div class="container">
+        <div class="container">
 
-        <!-- Display a calendar. If a valid date (today or the future) is selected this
-            date will be used to reload DOM with available/unavailable desks for that day-->
+            <!-- Display a calendar. If a valid date (today or the future) is selected this
+                date will be used to reload DOM with available/unavailable desks for that day-->
 
-        <br>
-        <form action="/booking/add/process_form" method="post">
-            <!-- Add label for accessibility -->
-            <label for="bookingDate">Date:</label>
-            <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
-        </form>
-
-        <br>
-
-        <!-- The other input used to reload DOM showing desks, the room for the desk.
-        We also have the view desks button here which will load the DOM with desks-->
-
-        <form id="form">
-            <p>
+            <br>
+            <form action="/booking/add/process_form" method="post">
                 <!-- Add label for accessibility -->
-                <label for="room">Room: </label>
-                <select id="room" name="room" required>
-                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-                </select>
-            </p>
-            <p>
-                <input type="submit" class="btn btn-primary" value="View Desks">
-            </p>
-        </form>
+                <label for="bookingDate">Date:</label>
+                <input type="date" id="bookingDate" name="bookingDate">
+            </form>
 
-        <!-- Booking quota. -->
-        <p id="quotaText"></p>
+            <br>
 
-        <!-- The table that will be populated with desks upon submission of the above button. -->
+            <!-- The other input used to reload DOM showing desks, the room for the desk -->
 
-        <table class="table bootstrapAdjustTable">
-            <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Desk Name</th>
-                <th scope="col">Desk Type</th>
-                <th scope="col">Notes</th>
-                <th scope="col">Available</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+            <form id="form">
+                <p>
+                    <label for="room">Room: </label>
+                    <select id="room" name="room" required>
+                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+                </p>
+            </form>
 
-        <!-- Pagination functionality as seen the manage desks page. -->
-
-        <ul class="pagination justify-content-end" style="align-items: center;">
-            <li class="page-item" id="resultsText" style="margin-right: 8px;"></li>
-            <li class="page-item">
-                <button class="page-link" id="tablePreviousBtn">Previous</button>
-            </li>
-            <li class="page-item">
-                <button class="page-link" id="tableNextBtn">Next</button>
-            </li>
-        </ul>
-
-    </div>
-
-</main>
-
-<!-- To trigger the Bootstrap Modal below, just add the following attributes to a button:
-data-mdb-toggle="modal" data-mdb-target="#oneBookingPerDay"-->
-
-<!-- One booking a day modal -->
-<div class="modal top fade" id="oneBookingPerDay" tabindex="-1" aria-labelledby="oneBookingPerDayLabel" aria-hidden="true"
-     data-mdb-backdrop="true" data-mdb-keyboard="true">
-    <div class="modal-dialog  ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="oneBookingPerDayLabel">Woops!</h5>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            <!-- Loading progress spinner. -->
+            <div id="progressSpinner" class="d-flex justify-content-center visually-hidden">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
-            <div class="modal-body">You may only book one desk per day!</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
-                    Close
-                </button>
+
+            <!-- Desks availability subtitle. -->
+            <h5 id="desksAvailabilitySubtitle"></h5>
+
+            <!-- Booking quota. -->
+            <h6 id="quotaText"></h6>
+
+            <!-- The table that will be populated with desks upon submission of the above button. -->
+            <table class="table bootstrapAdjustTable">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Desk Name</th>
+                        <th scope="col">Desk Type</th>
+                        <th scope="col">Notes</th>
+                        <th scope="col">Available</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <!-- Pagination functionality as seen the manage desks page. -->
+
+            <ul class="pagination justify-content-end" style="align-items: center;">
+                <li class="page-item" id="resultsText" style="margin-right: 8px;"></li>
+                <li class="page-item">
+                    <button class="page-link" id="tablePreviousBtn">Previous</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" id="tableNextBtn">Next</button>
+                </li>
+            </ul>
+
+        </div>
+
+    </main>
+
+    <!-- To trigger the Bootstrap Modal below, just add the following attributes to a button:
+    data-mdb-toggle="modal" data-mdb-target="#oneBookingPerDay"-->
+
+    <!-- One booking a day modal -->
+    <div class="modal top fade" id="oneBookingPerDay" tabindex="-1" aria-labelledby="oneBookingPerDayLabel"
+         aria-hidden="true"
+         data-mdb-backdrop="true" data-mdb-keyboard="true">
+        <div class="modal-dialog  ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="oneBookingPerDayLabel">Woops!</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">You may only book one desk per day!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- To trigger the Bootstrap Modal below, just add the following attributes to a button:
-data-mdb-toggle="modal" data-mdb-target="#bookedOut"-->
+    <!-- To trigger the Bootstrap Modal below, just add the following attributes to a button:
+    data-mdb-toggle="modal" data-mdb-target="#bookedOut"-->
 
-<!-- Booked by another user modal -->
-<div class="modal top fade" id="bookedOut" tabindex="-1" aria-labelledby="bookedOutLabel" aria-hidden="true"
-     data-mdb-backdrop="true" data-mdb-keyboard="true">
-    <div class="modal-dialog  ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="bookedOutLabel">Woops!</h5>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">Somebody else has booked that desk out!</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- No quota remaining modal -->
-<div class="modal top fade" id="noQuotaRemaining" tabindex="-1" aria-labelledby="noQuotaRemainingLabel"
-     aria-hidden="true"
-     data-mdb-backdrop="true" data-mdb-keyboard="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="noQuotaRemainingLabel">Out of quota</h5>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">You have used all your quota for this room for this month.</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
-                    Close
-                </button>
+    <!-- Booked by another user modal -->
+    <div class="modal top fade" id="bookedOut" tabindex="-1" aria-labelledby="bookedOutLabel" aria-hidden="true"
+         data-mdb-backdrop="true" data-mdb-keyboard="true">
+        <div class="modal-dialog  ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookedOutLabel">Woops!</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">Somebody else has booked that desk out!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
+    <!-- No quota remaining modal -->
+    <div class="modal top fade" id="noQuotaRemaining" tabindex="-1" aria-labelledby="noQuotaRemainingLabel"
+         aria-hidden="true"
+         data-mdb-backdrop="true" data-mdb-keyboard="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="noQuotaRemainingLabel">Out of quota</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">You have used all your quota for this room for this month.</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

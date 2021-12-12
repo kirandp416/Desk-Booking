@@ -7,6 +7,86 @@
 //     console.log($(this).closest('form').serialize());
 // });
 
+// Get elements.
+const dateSelect = document.getElementById("bookingDate");
+const desksAvailabilityTitle = document.getElementById("desksAvailabilitySubtitle");
+const quotaText = document.getElementById("quotaText");
+const resultsText = document.getElementById("resultsText");
+const roomSelect = document.getElementById("room");
+const table = document.getElementsByTagName("tbody")[0];
+const progressSpinner = document.getElementById("progressSpinner");
+const usernameSelect = document.getElementById("username");
+
+// Table pagination state.
+const limit = 10;
+let offset = 0;
+let totalResults = 0;
+
+// Quota state.
+let quota = null;
+
+// Ready function.
+$(document).ready(function () {
+    // Set the date picker date to today's date.
+    setDateToToday();
+
+    // Fetch data.
+    fetchData();
+});
+
+// Add on change event listener to booking date picker and room select option.
+dateSelect.addEventListener("change", dateRoomChanged);
+roomSelect.addEventListener("change", dateRoomChanged);
+
+/**
+ * Date/room change handler.
+ */
+function dateRoomChanged() {
+    // Validate date.
+    // If valid, fetch data.
+    // Else clear desk availability data.
+    if (validateDate()) {
+        progressSpinner.classList.remove("visually-hidden");
+        setTimeout(fetchData, 500);
+    } else {
+        desksAvailabilityTitle.innerText = "";
+        quotaText.innerText = "";
+        table.innerHTML = "";
+        resultsText.innerText = "";
+        offset = 0;
+        totalResults = 0;
+    }
+}
+
+// Start of code that was adapted from Hassan's code in manage_desks.js
+
+// Add event listener to table previous button.
+document.getElementById("tablePreviousBtn").addEventListener("click", function () {
+    // If the offset is 0, there are no more previous records.
+    if (offset === 0) {
+        return;
+    }
+
+    // Update offset and get desks.
+    offset -= limit;
+    fetchData();
+});
+
+// Add event listener to table next button.
+document.getElementById("tableNextBtn").addEventListener("click", function () {
+    // If offset + limit becomes greater or equal to total results, there are no more records.
+    if (offset + limit >= totalResults) {
+        return;
+    }
+
+    // Update offset and get desks.
+    offset += limit;
+
+    fetchData();
+});
+
+// End of code adapted from Hassan's
+
 /**
  * Create a method that returns a date string that is formatted in such
  * a way that it can be passed to the html date input and it will load
@@ -19,11 +99,6 @@ function todaysDateReturner() {
     let today = new Date();
     return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + String(today.getDate()).padStart(2, '0');
 }
-
-/**
- * Set the date to today's date when we first load the page
- */
-$(document).ready(setDateToToday);
 
 /**
  * Create a function that we can use when we need to set the date back to today's date
@@ -54,101 +129,33 @@ function dateClearer() {
 }
 
 /**
- * If the user selects a date in the past, clear the calendar
+ * Validate the inputted date.
+ * If the user selects a date in the past, clear the calendar.
+ * @returns {boolean} true if the date is valid, false otherwise.
  */
-function pastDateWarn() {
+function validateDate() {
+    // Check if a date has been chosen.
+    if (dateSelect.value === "") {
+        return false;
+    }
 
     // If a change to the date form is heard by the event listener in the form,
     // create a date object that is formatted in such a way that we can compare
     // it the date they just clicked on
-
     let bookingDate = new Date(document.getElementById("bookingDate").value);
     let today = new Date();
     let todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
 
     // Compare the date they just put in to todays' date. If the date they
-    // put in was before today, tell them and then reset the date to today's
-    // date.
-
+    // put in was before today, tell them and then clear the current date.
     if (bookingDate < todayDate) {
         alert('You cannot choose a date in the past.');
-        dateClearer();
-    }
-}
-
-/**
- * Create function that checks that the user has selected a date.
- * @returns {boolean}
- */
-function viewDesksButtonDataValidator() {
-
-    if (document.getElementById("bookingDate").value.length == 0) {
-        console.log("You pressed view desks but there is no date");
+        dateSelect.value = "";
         return false;
-    } else
-        return true;
+    }
+
+    return true;
 }
-
-// Start of code that was adapted from Hassan's code in manage_desks.js
-
-// Get elements.
-const quotaText = document.getElementById("quotaText");
-const resultsText = document.getElementById("resultsText");
-const roomSelect = document.getElementById("room");
-const dateSelect = document.getElementById("bookingDate");
-const usernameSelect = document.getElementById("username");
-
-// Table pagination state.
-const limit = 10;
-let offset = 0;
-let totalResults = 0;
-
-// Quota state.
-let quota = null;
-
-// Add event listener to table previous button.
-document.getElementById("tablePreviousBtn").addEventListener("click", function () {
-    // If the offset is 0, there are no more previous records.
-    if (offset === 0) {
-        return;
-    }
-
-    // Update offset and get desks.
-    offset -= limit;
-    fetchData();
-});
-
-// Add event listener to table next button.
-document.getElementById("tableNextBtn").addEventListener("click", function () {
-    // If offset + limit becomes greater or equal to total results, there are no more records.
-    if (offset + limit >= totalResults) {
-        return;
-    }
-
-    // Update offset and get desks.
-    offset += limit;
-    fetchData();
-});
-
-// Add click listener for form submit
-document.forms["form"].addEventListener("submit", function (e) {
-    // Prevent default behaviour of form.
-    e.preventDefault();
-
-
-    // If the form is validated, load DOM with desks. Otherwise,
-    // let them know the error. Since there is only one place the
-    // form can currently go wrong and that is for an empty date
-    // input, we alert them to an empty date.
-    if (viewDesksButtonDataValidator() == true) {
-        // Fetch data.
-        fetchData();
-    } else {
-        alert('You must select a date!');
-    }
-
-
-});
 
 /**
  * Fetches booking quota and desk data via the API and renders the page.
@@ -190,6 +197,12 @@ async function fetchData() {
     } else {
         resultsText.innerText = "Displaying " + (limit + offset) + " of " + totalResults + " results";
     }
+
+    // Set subtitle.
+    desksAvailabilityTitle.innerText = "Showing desk availability for " + new Date(dateSelect.value).toLocaleDateString();
+
+    // Hide table progress spinner.
+    progressSpinner.classList.add("visually-hidden");
 }
 
 /**
@@ -198,9 +211,6 @@ async function fetchData() {
  *             on the desks.
  */
 function displayDesks(json) {
-    // Get table body.
-    let table = document.getElementsByTagName("tbody")[0];
-
     // Remove all child elements.
     table.innerHTML = "";
 
