@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the {@link RoomMySqlJdbcRepository} class.
  */
 @SpringBootTest
+@Sql("/database_test.sql")
 public class RoomMySqlJdbcRepositoryTests {
 
     // Test rooms.
@@ -30,16 +30,12 @@ public class RoomMySqlJdbcRepositoryTests {
 
     /**
      * Initialisation logic to be run once before all tests are executed.
-     * As well as creating test room objects, a SQL script is executed to create a test database.
      */
     @BeforeAll
-    @Sql("/database_test.sql")
     public static void beforeAll() {
         // Create test rooms.
-        RoomDTO testRoom1 = new RoomDTO();
-        testRoom1.setName("Room 1");
-        RoomDTO testRoom2 = new RoomDTO();
-        testRoom2.setName("Room 2");
+        RoomDTO testRoom1 = new RoomDTO(1, "Room 1");
+        RoomDTO testRoom2 = new RoomDTO(2, "Room 2");
 
         // Initialise list and add rooms.
         testRooms = new ArrayList<>(2);
@@ -52,14 +48,11 @@ public class RoomMySqlJdbcRepositoryTests {
      */
     @Test
     public void whenAddingRoom_ThenResultIsSuccessful() {
-        // Add test rooms to database.
-        for (RoomDTO room : testRooms) {
-            boolean result = roomRepository.add(room);
-            // Fail the test if adding failed.
-            if (!result) {
-                fail("Query to add a room to the database failed");
-            }
-        }
+        // Add rooms.
+        List<Boolean> results = addRooms();
+
+        // Assert.
+        assertFalse(results.contains(false));
     }
 
     /**
@@ -67,6 +60,14 @@ public class RoomMySqlJdbcRepositoryTests {
      */
     @Test
     public void whenFindingRooms_ThenTestRoomsAreInResults() {
+        // Add rooms.
+        List<Boolean> addRoomsResults = addRooms();
+
+        // Fail the test if adding failed.
+        if (addRoomsResults.contains(false)) {
+            fail("Failed to add rooms to the database");
+        }
+
         // Get rooms.
         Optional<List<RoomDTO>> rooms = roomRepository.findAll();
 
@@ -87,6 +88,23 @@ public class RoomMySqlJdbcRepositoryTests {
 
         // Assert.
         assertTrue(roomNames.containsAll(testRoomNames));
+    }
+
+    /**
+     * Adds rooms to the database.
+     *
+     * @return an array of booleans stating whether the operations succeeded.
+     */
+    private List<Boolean> addRooms() {
+        List<Boolean> results = new ArrayList<>();
+
+        // Add test rooms.
+        for (RoomDTO room : testRooms) {
+            boolean result = roomRepository.add(room);
+            results.add(result);
+        }
+
+        return results;
     }
 
 }
