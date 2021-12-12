@@ -1,0 +1,101 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.cover {
+    background: #626161;
+    position: absolute;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    filter: alpha(opacity=30);
+    opacity: 0.3;
+}
+
+.box {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+.my_dialog {
+    width: 30%;
+    margin: 0 auto;
+    border: 1px solid #999;
+    display: none;
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    z-index: 3;
+    background: #fff
+}
+
+.dialog_header {
+    padding: 20px 20px 10px;
+    background-color: #eef2f2;
+}
+
+.dialog_title {
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+
+.dialog_body {
+    padding: 30px 20px;
+    color: #606266;
+    font-size: 16px;
+    word-break: break-all;
+}
+
+.dialog_footer {
+    padding: 10px 20px 20px;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+.dialog_close {
+    float: right;
+    cursor: pointer;
+}
+
+/*.btn_cancel {*/
+/*    display: inline-block;*/
+/*    white-space: nowrap;*/
+/*    cursor: pointer;*/
+/*    background: #fff;*/
+/*    border: 1px solid #dcdfe6;*/
+/*    color: #606266;*/
+/*    -webkit-appearance: none;*/
+/*    text-align: center;*/
+/*    box-sizing: border-box;*/
+/*    outline: none;*/
+/*}*/
+
+/*.btn-submit {*/
+/*    display: inline-block;*/
+/*    white-space: nowrap;*/
+/*    cursor: pointer;*/
+/*    color: #fff;*/
+/*    background-color: #409eff;*/
+/*    border-color: #409eff;*/
+/*    -webkit-appearance: none;*/
+/*    text-align: center;*/
+/*    box-sizing: border-box;*/
+/*    outline: none;*/
+/*}*/
+
+/*.btn-submit:hover {*/
+/*    background: #66b1ff;*/
+/*    border-color: #66b1ff;*/
+/*    color: #fff;*/
+/*}*/
+
+/*.btn_cancel:hover {*/
+/*    background: #ecf5ff;*/
+/*}*/
+

@@ -5,7 +5,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomImgDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.RoomRowMapper;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,20 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
     }
 
     @Override
+    public boolean addRoomAndImg(RoomImgDTO room) {
+        final String sql = "INSERT INTO room(room_name,room_img_url) VALUES(?,?)";
+        int rowsAffected = 0;
+
+        try {
+            rowsAffected = jdbc.update(sql, room.getRoomName(),room.getRoomImgUrl());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return rowsAffected == 1;
+    }
+
+    @Override
     public Optional<List<RoomDTO>> findAll() {
         final String sql = "SELECT room_id, room_name FROM room;";
 
@@ -50,9 +66,11 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         // Return an empty optional if the query failed.
         return Optional.empty();
     }
+
     /**
      * Implement method from RoomRepository that deals with deleting
      * a single room from the table of bookings in the MySQL database
+     *
      * @param id The id of the booking that a delete is being attempted on
      * @return A boolean that will be true if 1 or more rows were affected
      * by the update. In all other cases, it will be false.
@@ -67,6 +85,7 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
 
     /**
      * Implement a method to get details of room by id
+     *
      * @param id The id of the room that needs to be fetched
      * @return A list of data that needs to be passed to the page.
      */
@@ -75,7 +94,7 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
         final String sql = "SELECT room_id, room_name FROM room WHERE room_id=?;";
 
         try {
-            return Optional.of(jdbc.query(sql, new RoomRowMapper(),id));
+            return Optional.of(jdbc.query(sql, new RoomRowMapper(), id));
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
@@ -85,14 +104,15 @@ public class RoomMySqlJdbcRepository implements RoomRepository {
     }
 
     /**
-     *This method will pick up the DTO passed from controller
+     * This method will pick up the DTO passed from controller
      * and sets the room_name and room_id by calling dto getter methods
      * and updates the database by injecting the sql.
+     *
      * @param dto data transfer object which contains name and id
      * @return
      */
     @Override
-    public boolean editRoomAjax(RoomDTO dto){
+    public boolean editRoomAjax(RoomDTO dto) {
         String sql = "UPDATE room SET room_name=? WHERE room_id=?";
         int rowsAffected = jdbc.update(sql, dto.getName(), dto.getId());
         return rowsAffected > 0;

@@ -32,6 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/font/**").permitAll()
                 .mvcMatchers("/img/**").permitAll()
                 .mvcMatchers("/js/mdb.min.js").permitAll()
+                .mvcMatchers("/upload/**").permitAll()
+                .mvcMatchers("/icon/**").permitAll()
+                .mvcMatchers("/js/bootstrap.bundle.min.js").permitAll()
                 .mvcMatchers("/booking/**").permitAll()
                 //.mvcMatchers("/admin/**").permitAll()
                 .mvcMatchers("/js/bootstrap.bundle.min.js").permitAll()
@@ -39,7 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/api/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/book").hasRole("USER")
+                .mvcMatchers("/user/**").hasRole("USER")
                 .mvcMatchers("/booking/**").hasRole("USER")
+                .mvcMatchers("/file/**").permitAll()
+                .mvcMatchers("/comment/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
@@ -62,8 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user1").password("{noop}user1").roles("USER")
                 .and()
                 .withUser("user2").password("{noop}user2").roles("USER");
-
-
     }
 
 }
