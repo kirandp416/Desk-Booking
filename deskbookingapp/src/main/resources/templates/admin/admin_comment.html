@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>comment</title>
-    <link rel="stylesheet" href=" /css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href=" /css/bootstrap.min.css">-->
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/dialog.css">
     <link rel="stylesheet" href="/css/loading.css">
     <link rel="stylesheet" href="/icon/close/iconfont.css">
-    <script src="/js/bootstrap.bundle.min.js" defer></script>
+<!--    <script src="/js/bootstrap.bundle.min.js" defer></script>-->
     <script src="/js/jquery.min.3.4.1.js"></script>
     <script src="/js/dialog.js"></script>
     <th:block th:insert="fragments/theme :: theme"/>
@@ -108,13 +108,15 @@
                     }
 
                     let td = document.createElement("td")
-                    let a = document.createElement("a")
-                    let img = data[i].img.split("/")
-                    let imgUrl = img.pop()
-                    a.innerHTML = "download"
-                    a.href = "/file/download/" + imgUrl
-                    a.target = "_blank"
-                    td.appendChild(a)
+                    if(data[i].img) {
+                        let a = document.createElement("a")
+                        let img = data[i].img.split("/")
+                        let imgUrl = img.pop()
+                        a.innerHTML = "download"
+                        a.href = "/file/download/" + imgUrl
+                        a.target = "_blank"
+                        td.appendChild(a)
+                    }
                     tr.appendChild(td)
                     tbody.appendChild(tr);
 

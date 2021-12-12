@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/dialog.css">
     <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/fileDropzone.css">
     <link rel="stylesheet" href="/icon/close/iconfont.css">
 <!--    <script src="/js/bootstrap.bundle.min.js" defer></script>-->
     <script src="/js/jquery.min.3.4.1.js"></script>
@@ -38,6 +39,7 @@
 
     // obtain username
     let username = document.getElementsByClassName("dropdown-item nav-username")[0].children[0].innerHTML
+
     // global variable
     let JSONData = {
         deskId: null,
@@ -226,11 +228,6 @@
 
 </script>
 <style>
-    #fileDropzone {
-        border: 3px dashed #aeb4ae;
-        border-radius: 2%;
-        box-shadow: 3px 3px 5px #888888
-    }
 
     .textarea_inner {
         margin-top: 5px;
@@ -254,9 +251,5 @@
         border-color: #c2e0ff;
     }
 
-    /*textarea:hover {*/
-    /*    outline: none;*/
-    /*    border-color: red;*/
-    /*}*/
 </style>
 </html>

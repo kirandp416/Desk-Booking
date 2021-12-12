@@ -1,6 +1,7 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomImgDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,8 @@ public interface RoomRepository {
      * @return true if the operation succeeded, false otherwise.
      */
     boolean add(RoomDTO room);
+
+    boolean addRoomAndImg(RoomImgDTO room);
 
     /**
      * Gets all rooms from the underlying store.

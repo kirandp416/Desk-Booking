@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/bootstrapAdjust.css">
     <script src="/js/jquery.min.3.4.1.js" defer></script>
     <script src="/js/book/Book.js" defer></script>
+    <script src="/js/jquery.min.3.4.1.js"></script>
 </head>
 <body>
 <header th:replace="fragments/header :: header"></header>
@@ -21,29 +22,36 @@
 
         <!-- Display a calendar. If a valid date (today or the future) is selected this
             date will be used to reload DOM with available/unavailable desks for that day-->
+        <div style="display: flex;flex-wrap: wrap;">
+            <div class="left">
+                <br>
+                <form action="/booking/add/process_form" method="post">
+                    <label for="bookingDate">Date:</label>
+                    <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
+                </form>
 
-        <br>
-        <form action="/booking/add/process_form" method="post">
-            <label for="bookingDate">Date:</label>
-            <input type="date" id="bookingDate" name="bookingDate" onchange="pastDateWarn()">
-        </form>
+                <br>
 
-        <br>
+                <!-- The other input used to reload DOM showing desks, the room for the desk.
+                We also have the view desks button here which will load the DOM with desks-->
 
-        <!-- The other input used to reload DOM showing desks, the room for the desk.
-        We also have the view desks button here which will load the DOM with desks-->
-
-        <form id="form">
-            <p>
-                <label for="room">Room: </label>
-                <select id="room" name="room" required>
-                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-                </select>
-            </p>
-            <p>
-                <input type="submit" class="btn btn-primary" value="View Desks">
-            </p>
-        </form>
+                <form id="form">
+                    <p>
+                        <label for="room">Room: </label>
+                        <select id="room" name="room" required>
+                            <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                        </select>
+                    </p>
+                    <p>
+                        <input type="submit" class="btn btn-primary" value="View Desks">
+                    </p>
+                </form>
+            </div>
+            <div class="right">
+                <br>
+                <img style="width: 70%;margin-left: 30px;" id="roomImg" src="" alt="">
+            </div>
+        </div>
 
         <!-- Booking quota. -->
         <p id="quotaText"></p>
@@ -85,7 +93,8 @@
 data-mdb-toggle="modal" data-mdb-target="#oneBookingPerDay"-->
 
 <!-- Modal -->
-<div class="modal top fade" id="oneBookingPerDay" tabindex="-1" aria-labelledby="oneBookingPerDayLabel" aria-hidden="true"
+<div class="modal top fade" id="oneBookingPerDay" tabindex="-1" aria-labelledby="oneBookingPerDayLabel"
+     aria-hidden="true"
      data-mdb-backdrop="true" data-mdb-keyboard="true">
     <div class="modal-dialog  ">
         <div class="modal-content">
@@ -149,3 +158,26 @@ data-mdb-toggle="modal" data-mdb-target="#bookedOut"-->
 </body>
 
 </html>
+<script type="application/javascript">
+
+    // fetch img
+    let roomId = document.getElementById("room").value
+    fetchImg(roomId)
+
+    $("select#room").change(function () {
+        fetchImg($(this).val())
+    })
+
+    function fetchImg(id) {
+        $.ajax({
+            url: "/Booking/Room/" + id,
+            success(res) {
+                if (res.records.roomImgUrl) {
+                    document.getElementById("roomImg").src = res.records.roomImgUrl
+                } else {
+                    document.getElementById("roomImg").src = ""
+                }
+            }
+        })
+    }
+</script>
