@@ -8,22 +8,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.BookingRepository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.RoomRepository;
+import uk.ac.cf.nsa.team2.deskbookingapp.service.BookingService;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+
 public class BookingController {
 
     private BookingRepository bookingRepository;
 
     private RoomRepository roomRepository;
+
+
 
     /**
      * Constructor that will be used by Sprint to instantiate
@@ -153,5 +158,7 @@ public class BookingController {
         return mav;
 
         }
+
+
 
 }

@@ -18,4 +18,6 @@ public interface BookingRepository {
     public List<BookingDTO> findAllUsersBookings(String username);
 
     public boolean deleteBooking(Integer id);
+
+    List<BookingDTO> findbookingList();
 }

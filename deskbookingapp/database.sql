@@ -14,7 +14,6 @@ CREATE TABLE desk_type
 (
     desk_type_id   INT AUTO_INCREMENT,
     desk_type_name VARCHAR(255) NOT NULL,
-    photo VARCHAR(255) NOT NULL,
     desk_type_introduce VARCHAR(255) NOT NULL,
     CONSTRAINT desk_type_pk_index PRIMARY KEY (desk_type_id)
 );

@@ -1,8 +1,10 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.repository;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.BookingMapper;
 
@@ -90,6 +92,16 @@ public class BookingRepositoryJDBC implements BookingRepository {
         int rowsAffected = jdbcTemplate.update(query, id);
 
         return rowsAffected > 0;
+    }
+
+    @Override
+    public List<BookingDTO> findbookingList() {
+        List<BookingDTO> list = jdbcTemplate.query("select * from booking", new Object[]{}, new BeanPropertyRowMapper(BookingDTO.class));
+        if(list!=null && list.size()>0){
+            return list;
+        }else{
+            return null;
+        }
     }
 
 
