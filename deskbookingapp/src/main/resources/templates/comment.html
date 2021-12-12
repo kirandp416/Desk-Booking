@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Comment</title>
+<!--    <link rel="stylesheet" href=" /css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/dialog.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/fileDropzone.css">
+    <link rel="stylesheet" href="/icon/close/iconfont.css">
+<!--    <script src="/js/bootstrap.bundle.min.js" defer></script>-->
+    <script src="/js/jquery.min.3.4.1.js"></script>
+    <script src="/js/dialog.js"></script>
+    <th:block th:insert="fragments/theme :: theme"/>
+    <!--upload-->
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+<body>
+
+</body>
+<header th:replace="fragments/header :: header"></header>
+<main>
+    <div class="container">
+        <div class="scrollbox">
+            <div id="table">
+
+            </div>
+        </div>
+
+    </div>
+    <y_dialog th:replace="components/dialog :: dialog"></y_dialog>
+    <y_loading th:replace="components/loading :: loading"></y_loading>
+</main>
+<script>
+
+    // obtain username
+    let username = document.getElementsByClassName("dropdown-item nav-username")[0].children[0].innerHTML
+
+    // global variable
+    let JSONData = {
+        deskId: null,
+        roomId: null,
+        comment: null,
+        img: null,
+        userName: username
+    }
+
+    // create table
+    this.getTable();
+
+    function addComment(room_id, desk_id) {
+        $('#showDialog').show();  //show dialog
+        $('#cover').css('display', 'block'); //show cover
+        // clear value in textarea
+        document.getElementsByTagName("textarea")[0].value = null
+        JSONData.deskId = desk_id
+        JSONData.roomId = room_id
+        JSONData.img = null
+        let objDZ = Dropzone.forElement("#fileDropzone");
+        // files[0].previewElement.remove();
+        objDZ.emit("reset");
+    }
+
+    function getTable() {
+        showLoading()
+        // ajax
+        $.ajax({
+            url: "/comment/fetchBooking?username=" + username,
+            success(res) {
+                let h1 = document.createElement("h1")
+                h1.innerHTML = "User Comment"
+                document.getElementById("table").appendChild(h1);
+
+                let data = res.records
+
+                let table = document.createElement("table");
+                // set table id
+                table.id = "desksTable"
+                // set table class1
+                table.setAttribute("class", "table align-middle")
+
+                let thead = document.createElement("thead");
+                table.appendChild(thead);
+                let tr = document.createElement("tr");
+                thead.appendChild(tr);
+                // set th
+                for (let key in data[0]) {
+                    if (key !== "roomId" && key !== "deskId") {
+                        let th = document.createElement("th");
+                        // Regular Expression
+                        let m = key.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
+                        th.innerHTML = m;
+                        tr.appendChild(th);
+                    }
+                }
+
+                if (data.length !== 0) {
+                    let th = document.createElement("th");
+                    th.innerHTML = "Action"
+                    tr.appendChild(th)
+                }
+                let tbody = document.createElement("tbody");
+                table.appendChild(tbody);
+                // set tr
+                for (let i = 0; i < data.length; i++) {
+                    let tr = document.createElement("tr");
+                    for (let key in data[i]) {
+                        if (key !== "roomId" && key !== "deskId") {
+                            let td = document.createElement("td");
+                            td.innerHTML = data[i][key];
+                            tr.appendChild(td);
+                        }
+                    }
+                    let td = document.createElement("td");
+                    let input = document.createElement("input")
+                    input.type = "button"
+                    input.value = "comment"
+                    input.setAttribute("class", "btn-info btn btn-sm")
+                    input.onclick = function () {
+                        addComment(data[i].roomId, data[i].deskId)
+                    }
+                    td.appendChild(input)
+                    tr.appendChild(td)
+                    tbody.appendChild(tr);
+                }
+                document.getElementById("table").appendChild(table);
+            },
+            error(res) {
+                alert("Internal Server Error")
+            },
+            complete() {
+                closeLoading()
+            }
+        })
+    }
+
+    function submit() {
+        JSONData.comment = document.getElementsByClassName("textarea_inner")[0].value
+        $.ajax({
+            url: "/comment/add",
+            contentType: "application/json",
+            data: JSON.stringify(JSONData),
+            method: "POST",
+            success(res) {
+                closeWindow()
+                // getTable()
+            }
+        })
+    }
+
+    // show loading
+    function showLoading() {
+        document.getElementById("loadingDiv").style.display = "block";
+    }
+
+    // close loading
+    function closeLoading() {
+        document.getElementById("loadingDiv").style.display = "none";
+    }
+
+    // upload
+    Dropzone.options.fileDropzone = {
+        paramName: "file",
+        maxFiles: 1,
+        maxFilesize: 1000,
+        filesizeBase: 1000,
+        acceptedFiles: ".bmp,.jpg,.png,.tif,.gif,.svg,.psd,.cdr,.pcd,dxf,ufo,eps,ai,raw,WMF,webp",
+        addRemoveLinks: true,
+        clickable: true,
+        autoProcessQueue: true,
+        parallelUploads: 1,
+        init: function () {
+            this.on("success", function (file, res) {
+                JSONData.img = res.fileDownloadUri
+            })
+            this.on("removedfile", function (file) {
+                JSONData.img = null
+            })
+            this.on('reset', function() {
+                if(this.files.length !== 0){
+                    for (let i = 0; i < this.files.length; i++) {
+                        this.files[i].previewElement.remove();
+                    }
+                    this.files.length = 0;
+                }
+            });
+        }
+    };
+
+    // set dialog height
+    $("#showDialog").css("top", "20%")
+
+    // set dialog_title
+    document.getElementsByClassName("dialog_title")[0].append("Add comment")
+    // set dialog_body
+    let p = document.createElement("p")
+    p.innerHTML = "comment:"
+    let textarea = document.createElement("textarea")
+    textarea.setAttribute("class", "textarea_inner")
+    p.appendChild(textarea)
+    document.getElementById("dialog_body").appendChild(p)
+
+    let p1 = document.createElement("p")
+    p1.innerHTML = "upload image:"
+    document.getElementById("dialog_body").appendChild(p1)
+    let html = "<form id=\"fileDropzone\" method=\"post\" action=\"/file/upload\" class=\"dropzone dz-clickable\">\n" +
+        "<div class=\"dz-default dz-message\">\n" +
+        "<div class=\"dz-icon icon-wrap icon-circle icon-wrap-md\">\n" +
+        "<i class=\"fa fa-cloud-upload fa-3x\"></i>\n" +
+        "</div>\n" +
+        "<div>\n" +
+        "<p class=\"dz-text\" style=\"color: #fe7979\">please click and upload image or drag image on it</p>\n" +
+        "<p style=\"color: #fe7979\">However, only one image can be uploaded</p>\n" +
+        "</div>\n" +
+        "</div>\n" +
+        "</form>"
+    let node = parseElement(html);
+    document.getElementById("dialog_body").appendChild(node)
+
+    // string to node
+    function parseElement(htmlString) {
+        return new DOMParser().parseFromString(htmlString, 'text/html').body.childNodes[0]
+    }
+
+</script>
+<style>
+
+    .textarea_inner {
+        margin-top: 5px;
+        display: block;
+        resize: vertical;
+        padding: 5px 15px;
+        line-height: 1.5;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: inherit;
+        color: #606266;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #dcdfe6;
+        border-radius: 4px;
+        transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    }
+
+    .textarea_inner:focus {
+        outline: none;
+        border-color: #c2e0ff;
+    }
+
+</style>
+</html>

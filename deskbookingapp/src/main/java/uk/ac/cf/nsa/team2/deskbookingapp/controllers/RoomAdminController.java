@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomImgDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomCreateForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.RoomEditForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.RoomRepository;
@@ -44,9 +45,10 @@ public class RoomAdminController {
     @PostMapping("/admin/room/add/process_form")
     public ModelAndView addRoomProcessForm(RoomCreateForm form) {
         // Create DTO and add room to repository store.
-        RoomDTO dto = new RoomDTO();
-        dto.setName(form.getName());
-        boolean result = roomRepository.add(dto);
+        RoomImgDTO dto = new RoomImgDTO();
+        dto.setRoomName(form.getName());
+        dto.setRoomImgUrl(form.getUrl());
+        boolean result = roomRepository.addRoomAndImg(dto);
 
         // Return a model and view, passing in the result of the operation to the view.
         return new ModelAndView("admin/add_room")
