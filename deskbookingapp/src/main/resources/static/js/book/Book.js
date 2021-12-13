@@ -114,19 +114,19 @@ function setDateToToday() {
  * Create a function that will clears the current date if and when
  * we call it.
  */
-function dateClearer() {
-    let date_input = document.getElementById("bookingDate");
-
-    //erase the input value
-    date_input.value = '';
-
-    //prevent error on older browsers (aka IE8)
-    if (date_input.type === 'date') {
-        //update the input content (visually)
-        date_input.type = 'text';
-        date_input.type = 'date';
-    }
-}
+// function dateClearer() {
+//     let date_input = document.getElementById("bookingDate");
+//
+//     //erase the input value
+//     date_input.value = '';
+//
+//     //prevent error on older browsers (aka IE8)
+//     if (date_input.type === 'date') {
+//         //update the input content (visually)
+//         date_input.type = 'text';
+//         date_input.type = 'date';
+//     }
+// }
 
 /**
  * Validate the inputted date.

@@ -23,8 +23,8 @@
                     <input class="btn btn-primary" type="submit" value="Submit">
                 </p>
             </form>
-            <p th:if="${result}">Successfully added room.</p>
-            <p th:if="${result != null && !result}">Failed to add room.</p>
+            <p class="alert alert-success" th:if="${result}">Successfully added room.</p>
+            <p class="alert alert-danger" th:if="${result != null && !result}">Failed to add room.</p>
         </div>
     </main>
 
