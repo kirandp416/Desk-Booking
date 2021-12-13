@@ -30,6 +30,9 @@ $(document).ready(function () {
     // Set the date picker date to today's date.
     setDateToToday();
 
+    // Set advance booking to 30 days maximum.
+    setMaxDate();
+
     // Fetch data.
     fetchData();
 });
@@ -108,6 +111,16 @@ function setDateToToday() {
     let todayFormattedString = todaysDateReturner();
     console.log("Setting date to today's date...")
     document.getElementById("bookingDate").value = todayFormattedString;
+}
+
+/**
+ * Sets the maximum date for the date picker to be 30 days from today.
+ */
+function setMaxDate() {
+    let max = new Date();
+    max.setDate(max.getDate() + 30);
+    // Canada uses YYYY-MM-DD so we'll use that as a shortcut to get the required date format.
+    dateSelect.setAttribute("max", max.toLocaleDateString("en-ca"));
 }
 
 /**
