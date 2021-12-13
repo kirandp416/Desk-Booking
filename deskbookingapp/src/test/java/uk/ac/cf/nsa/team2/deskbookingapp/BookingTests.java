@@ -4,8 +4,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,15 +23,34 @@ public class BookingTests {
 
     private static BookingDTO bookingDTO;
 
-
     /**
      * Instantiate a new BookingDTO object with some valid data for testing
+     * References: https://stackoverflow.com/questions/18915075/java-convert-string-to-timestamp
      */
     @BeforeAll
-    public static void before(){
-        bookingDTO = new BookingDTO(1, "2000-01-01", "Room 1", "Desk 1", "Standard",
-                "Everyone's favourite desk.", OffsetDateTime.now(ZoneOffset.UTC));
+    public static void before() {
+
+        try {
+
+            // Attempt to create valid OffsetDateTime object
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date parsedDate = dateFormat.parse("2021-11-22 12:15:00");
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+            OffsetDateTime offsetDateTime = timestamp.toInstant().atOffset(ZoneOffset.UTC);
+            System.out.println("Printing offsetDateTime from before method...");
+            System.out.println(offsetDateTime);
+
+            // Use the OffsetDateTime object (and other valid data) to create a new
+            // BookingDTO object
+
+            bookingDTO = new BookingDTO(1, "2000-01-01", "Room 1", "Desk 1", "Standard", "Everyone's favourite desk.", offsetDateTime);
+        } catch (Exception e) {
+            System.out.println("TimeStamp instantiation failed in before method");
+        }
+
     }
+
 
     // BookingDTO Tests
 
@@ -38,7 +60,10 @@ public class BookingTests {
      * that object.
      */
     @Test
-    public void whenGettingDeskIdThenReturnCorrectId(){
+    public void whenGettingDeskIdThenReturnCorrectId() {
+
+        OffsetDateTime offsetDT8 = OffsetDateTime.parse("2019-08-31T15:20:30+08:00");
+
         assertEquals(1, bookingDTO.getId());
     }
 
@@ -48,7 +73,7 @@ public class BookingTests {
      * that object.
      */
     @Test
-    public void whenGettingDateThenReturnCorrectDate(){
+    public void whenGettingDateThenReturnCorrectDate() {
         assertEquals("2000-01-01", bookingDTO.getDate());
     }
 
@@ -58,7 +83,7 @@ public class BookingTests {
      * that object.
      */
     @Test
-    public void whenGettingRoomNameThenReturnCorrectRoomName(){
+    public void whenGettingRoomNameThenReturnCorrectRoomName() {
         assertEquals("Room 1", bookingDTO.getRoomName());
     }
 
@@ -68,7 +93,7 @@ public class BookingTests {
      * that object.
      */
     @Test
-    public void whenGettingDeskNameThenReturnCorrectDeskName(){
+    public void whenGettingDeskNameThenReturnCorrectDeskName() {
         assertEquals("Desk 1", bookingDTO.getDeskName());
     }
 
@@ -78,7 +103,7 @@ public class BookingTests {
      * that object.
      */
     @Test
-    public void whenGettingDeskTypeThenReturnCorrectDeskType(){
+    public void whenGettingDeskTypeThenReturnCorrectDeskType() {
         assertEquals("Standard", bookingDTO.getDeskType());
     }
 
@@ -88,8 +113,36 @@ public class BookingTests {
      * that object.
      */
     @Test
-    public void whenGettingDeskNotesThenReturnCorrectDeskNotes(){
+    public void whenGettingDeskNotesThenReturnCorrectDeskNotes() {
         assertEquals("Everyone's favourite desk.", bookingDTO.getDeskNotes());
+    }
+
+    /**
+     * Test that calling the getTimestamp method on the BookingDTO instance, returns
+     * a value that is equal to the value of the offsetDateTime that we used to instantiate
+     * that object.
+     */
+    @Test
+    public void whenGettingOffsetDateTimeThenReturnCorrectOffsetDateTime() {
+        try {
+
+            // Attempt to create a valid OffSetDateTime object
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date parsedDate = dateFormat.parse("2021-11-22 12:15:00");
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+            OffsetDateTime offsetDateTime = timestamp.toInstant().atOffset(ZoneOffset.UTC);
+            System.out.println("Printing offsetDateTime from test method...");
+            System.out.println(offsetDateTime);
+
+            // Compare that OffSetDateTime instance to what getTimestamp() returns
+
+            assertEquals(offsetDateTime, bookingDTO.getTimestamp());
+
+        } catch (Exception e) {
+            System.out.println("OffsetDateTime test never reached, exception thrown.");
+        }
+
     }
 
     /**
@@ -99,7 +152,7 @@ public class BookingTests {
      * dd-mm-yy).
      */
     @Test
-    public void whenGettingDateOrderedForDisplayThenReturnCorrectDateOrderedForDisplay(){
+    public void whenGettingDateOrderedForDisplayThenReturnCorrectDateOrderedForDisplay() {
         assertEquals("01-01-00", bookingDTO.getDateOrderedForDisplay());
     }
 
@@ -110,7 +163,7 @@ public class BookingTests {
      * value equal to that but with format dd-mm-yy.
      */
     @Test
-    public void whenGettingReOrderedDateThenReturnsDesiredFormatOfDate(){
+    public void whenGettingReOrderedDateThenReturnsDesiredFormatOfDate() {
         assertEquals("15-12-00", bookingDTO.dateReOrderer("2000-12-15"));
     }
 
@@ -120,8 +173,8 @@ public class BookingTests {
      * that the method does not throw any exceptions.
      */
     @Test
-    public void whenPassingNonDateStringThenDoesNotThrowException(){
-        assertDoesNotThrow(()-> bookingDTO.dateReOrderer("hello"));
+    public void whenPassingNonDateStringThenDoesNotThrowException() {
+        assertDoesNotThrow(() -> bookingDTO.dateReOrderer("hello"));
     }
 
 }
