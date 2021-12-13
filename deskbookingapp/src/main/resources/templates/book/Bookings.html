@@ -6,7 +6,7 @@
     <title>Bookings</title>
     <th:block th:insert="fragments/theme :: theme"/>
     <link rel="stylesheet" href="/css/bootstrapAdjust.css">
-    <script src="/js/book/Book.js" defer></script>
+<!--    <script src="/js/book/Book.js" defer></script>-->
     <script src="/js/book/Bookings.js" defer></script>
     <!--    Reference for table styling: -->
     <!--    https://www.geeksforgeeks.org/bootstrap-4-tables/-->
@@ -46,7 +46,7 @@
                         <td th:text="${booking.deskType}"/>
                         <td th:text="${booking.deskNotes}"/>
                         <td>
-                            <button th:id="${booking.id}" onclick="deleteBookingViaManageBookingsPage(this.id)" class="btn btn-danger btn-sm">Delete
+                            <button th:id="${booking.id}" onclick="deleteBookingForEmployeeViaManageBookingsPage(this.id)" class="btn btn-danger btn-sm">Delete
                             </button>
                         </td>
                     </tr>

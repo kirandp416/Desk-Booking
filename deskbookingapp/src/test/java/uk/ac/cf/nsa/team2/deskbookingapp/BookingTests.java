@@ -23,6 +23,7 @@ public class BookingTests {
 
     private static BookingDTO bookingDTO;
 
+
     /**
      * Instantiate a new BookingDTO object with some valid data for testing
      * References: https://stackoverflow.com/questions/18915075/java-convert-string-to-timestamp
@@ -44,13 +45,12 @@ public class BookingTests {
             // Use the OffsetDateTime object (and other valid data) to create a new
             // BookingDTO object
 
-            bookingDTO = new BookingDTO(1, "2000-01-01", "Room 1", "Desk 1", "Standard", "Everyone's favourite desk.", offsetDateTime);
+            bookingDTO = new BookingDTO(1, "user1", "2000-01-01", "Room 1", "Desk 1", "Standard", "Everyone's favourite desk.", offsetDateTime);
         } catch (Exception e) {
             System.out.println("TimeStamp instantiation failed in before method");
         }
 
     }
-
 
     // BookingDTO Tests
 
