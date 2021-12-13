@@ -1,3 +1,11 @@
+INSERT INTO employee
+VALUES ('user3'),
+       ('user4'),
+       ('user5'),
+       ('user6'),
+       ('user7'),
+       ('user8');
+
 DROP TABLE IF EXISTS booking;
 
 CREATE TABLE booking
