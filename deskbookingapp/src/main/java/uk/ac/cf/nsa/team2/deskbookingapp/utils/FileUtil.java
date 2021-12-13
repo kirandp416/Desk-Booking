@@ -7,7 +7,9 @@ import uk.ac.cf.nsa.team2.deskbookingapp.Application;
 import uk.ac.cf.nsa.team2.deskbookingapp.exception.FileException;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,9 +22,15 @@ import java.nio.file.Paths;
 public class FileUtil {
 
     private static String BASE_PATH;
+
     // save path
     static {
-        String[] builds = Application.class.getResource("").getPath().split("build");
+        String[] builds = new String[0];
+        try {
+            builds = URLDecoder.decode(Application.class.getResource("").getPath(),"utf-8").split("build");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         BASE_PATH = builds[0] + "build/resources/main/static/upload";
         BASE_PATH = BASE_PATH.substring(1);
     }
