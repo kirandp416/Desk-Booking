@@ -20,6 +20,7 @@ function deleteRoom(id) {
             if (xhttp.status === 200){
                 console.log("Removing deleted item from DOM...")
                 removeMyParent(id);
+                document.getElementById("result").className="alert alert-success";
                 document.getElementById("result").innerText = "Successfully deleted room.";
             }
             else{
