@@ -10,7 +10,7 @@
 <body>
     <header th:replace="fragments/header :: header"></header>
 
-    <main>
+<main>
         <div class="container">
             <h1>Add Room</h1>
             <form method="post" action="/admin/room/add/process_form">
@@ -27,7 +27,5 @@
             <p class="alert alert-danger" th:if="${result != null && !result}">Failed to add room.</p>
         </div>
     </main>
-
-    <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>
