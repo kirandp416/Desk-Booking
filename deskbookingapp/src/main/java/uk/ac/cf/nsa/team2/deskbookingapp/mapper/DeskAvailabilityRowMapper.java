@@ -7,11 +7,14 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * A class used to override one method. Overriding this method allows us to
+ * instantiate DeskAvailabilityDTO objects from the rows that come back
+ * from our query that is performed in the JDBC implementation.
+ */
 public class DeskAvailabilityRowMapper implements RowMapper<DeskAvailabilityDTO> {
 
-    // Create a method that can translate a row coming back from
-    // the database that corresponds to a desk and then instantiate
-    // a DeskAvailabilityDTO object from that row
+
     @Override
     public DeskAvailabilityDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new DeskAvailabilityDTO(
