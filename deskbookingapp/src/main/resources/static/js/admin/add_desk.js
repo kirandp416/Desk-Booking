@@ -27,15 +27,18 @@ function onSubmit(e) {
         if (xhttp.readyState === 4) {
             // 201 created: success.
             if (xhttp.status === 201) {
+                document.getElementById("result").className = "alert alert-success";
                 document.getElementById("result").innerText = "Successfully create desk.";
             }
             // 409 conflict: desk with same name for the room already exists.
             else if (xhttp.status === 409) {
+                document.getElementById("result").className = "alert alert-warning";
                 document.getElementById("result").innerText =
                     "A desk with the same name already exists for the selected room.";
             }
             // Any other status.
             else {
+                document.getElementById("result").className = "alert alert-danger";
                 document.getElementById("result").innerText = "An error occurred.";
             }
         }
