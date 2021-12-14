@@ -7,6 +7,89 @@
 //     console.log($(this).closest('form').serialize());
 // });
 
+// Get elements.
+const dateSelect = document.getElementById("bookingDate");
+const desksAvailabilityTitle = document.getElementById("desksAvailabilitySubtitle");
+const quotaText = document.getElementById("quotaText");
+const resultsText = document.getElementById("resultsText");
+const roomSelect = document.getElementById("room");
+const table = document.getElementsByTagName("tbody")[0];
+const progressSpinner = document.getElementById("progressSpinner");
+const usernameSelect = document.getElementById("username");
+
+// Table pagination state.
+const limit = 10;
+let offset = 0;
+let totalResults = 0;
+
+// Quota state.
+let quota = null;
+
+// Ready function.
+$(document).ready(function () {
+    // Set the date picker date to today's date.
+    setDateToToday();
+
+    // Set advance booking to 30 days maximum.
+    setMaxDate();
+
+    // Fetch data.
+    fetchData();
+});
+
+// Add on change event listener to booking date picker and room select option.
+dateSelect.addEventListener("change", dateRoomChanged);
+roomSelect.addEventListener("change", dateRoomChanged);
+
+/**
+ * Date/room change handler.
+ */
+function dateRoomChanged() {
+    // Validate date.
+    // If valid, fetch data.
+    // Else clear desk availability data.
+    if (validateDate()) {
+        progressSpinner.classList.remove("visually-hidden");
+        setTimeout(fetchData, 500);
+    } else {
+        desksAvailabilityTitle.innerText = "";
+        quotaText.innerText = "";
+        table.innerHTML = "";
+        resultsText.innerText = "";
+        offset = 0;
+        totalResults = 0;
+    }
+}
+
+// Start of code that was adapted from Hassan's code in manage_desks.js
+
+// Add event listener to table previous button.
+document.getElementById("tablePreviousBtn").addEventListener("click", function () {
+    // If the offset is 0, there are no more previous records.
+    if (offset === 0) {
+        return;
+    }
+
+    // Update offset and get desks.
+    offset -= limit;
+    fetchData();
+});
+
+// Add event listener to table next button.
+document.getElementById("tableNextBtn").addEventListener("click", function () {
+    // If offset + limit becomes greater or equal to total results, there are no more records.
+    if (offset + limit >= totalResults) {
+        return;
+    }
+
+    // Update offset and get desks.
+    offset += limit;
+
+    fetchData();
+});
+
+// End of code adapted from Hassan's
+
 /**
  * Create a method that returns a date string that is formatted in such
  * a way that it can be passed to the html date input and it will load
@@ -15,15 +98,10 @@
  * date.
  * @returns {string}
  */
-function todaysDateReturner(){
+function todaysDateReturner() {
     let today = new Date();
     return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + String(today.getDate()).padStart(2, '0');
 }
-
-/**
- * Set the date to today's date when we first load the page
- */
-$(document).ready(setDateToToday);
 
 /**
  * Create a function that we can use when we need to set the date back to today's date
@@ -36,164 +114,116 @@ function setDateToToday() {
 }
 
 /**
- * Create a function that will clears the current date if and when
- * we call it.
+ * Sets the maximum date for the date picker to be 30 days from today.
  */
-function reset_date_native() {
-    let date_input = document.getElementById("bookingDate");
-
-    //erase the input value
-    date_input.value = '';
-
-    //prevent error on older browsers (aka IE8)
-    if (date_input.type === 'date') {
-        //update the input content (visually)
-        date_input.type = 'text';
-        date_input.type = 'date';
-    }
+function setMaxDate() {
+    let max = new Date();
+    max.setDate(max.getDate() + 30);
+    // Canada uses YYYY-MM-DD so we'll use that as a shortcut to get the required date format.
+    dateSelect.setAttribute("max", max.toLocaleDateString("en-ca"));
 }
 
 /**
- * If the user selects a date in the past, clear the calendar
+ * Create a function that will clears the current date if and when
+ * we call it.
  */
-function pastDateWarn() {
+// function dateClearer() {
+//     let date_input = document.getElementById("bookingDate");
+//
+//     //erase the input value
+//     date_input.value = '';
+//
+//     //prevent error on older browsers (aka IE8)
+//     if (date_input.type === 'date') {
+//         //update the input content (visually)
+//         date_input.type = 'text';
+//         date_input.type = 'date';
+//     }
+// }
+
+/**
+ * Validate the inputted date.
+ * If the user selects a date in the past, clear the calendar.
+ * @returns {boolean} true if the date is valid, false otherwise.
+ */
+function validateDate() {
+    // Check if a date has been chosen.
+    if (dateSelect.value === "") {
+        return false;
+    }
 
     // If a change to the date form is heard by the event listener in the form,
     // create a date object that is formatted in such a way that we can compare
     // it the date they just clicked on
-
     let bookingDate = new Date(document.getElementById("bookingDate").value);
     let today = new Date();
     let todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, -today.getTimezoneOffset());
 
     // Compare the date they just put in to todays' date. If the date they
-    // put in was before today, tell them and then reset the date to today's
-    // date.
-
+    // put in was before today, tell them and then clear the current date.
     if (bookingDate < todayDate) {
         alert('You cannot choose a date in the past.');
-        reset_date_native();
-    }
-}
-
-function viewDesksButtonDataValidator(){
-
-    if (document.getElementById("bookingDate").value.length == 0){
-        console.log("You pressed view desks but there is no date");
+        dateSelect.value = "";
         return false;
     }
-    else
-        return true;
+
+    return true;
 }
 
-// Start of code that was adapted from Hassan's code in manage_desks.js
-
-// Get elements.
-const resultsText = document.getElementById("resultsText");
-const roomSelect = document.getElementById("room");
-const dateSelect = document.getElementById("bookingDate");
-const usernameSelect = document.getElementById("username")
-
-// Table pagination state.
-const limit = 10;
-let offset = 0;
-let totalResults = 0;
-
-// Add event listener to table previous button.
-document.getElementById("tablePreviousBtn").addEventListener("click", function () {
-    // If the offset is 0, there are no more previous records.
-    if (offset === 0) {
-        return;
-    }
-
-    // Update offset and get desks.
-    offset -= limit;
-    getDesks();
-});
-
-// Add event listener to table next button.
-document.getElementById("tableNextBtn").addEventListener("click", function () {
-    // If offset + limit becomes greater or equal to total results, there are no more records.
-    if (offset + limit >= totalResults) {
-        return;
-    }
-
-    // Update offset and get desks.
-    offset += limit;
-    getDesks();
-});
-
-// Add click listener for form submit
-document.forms["form"].addEventListener("submit", function (e) {
-    // Prevent default behaviour of form.
-    e.preventDefault();
-
-
-    // If the form is validated, load DOM with desks. Otherwise,
-    // let them know the error. Since there is only one place the
-    // form can currently go wrong and that is for an empty date
-    // input, we alert them to an empty date.
-    if (viewDesksButtonDataValidator() == true){
-        // Get desks.
-        getDesks();
-    }
-    else{
-        alert('You must select a date!');
-    }
-
-
-});
-
 /**
- * Gets desks (with their availability) using AJAX.
+ * Fetches booking quota and desk data via the API and renders the page.
  */
-function getDesks() {
+async function fetchData() {
+    // Use Fetch API to get booking quota and desks.
+    const quotaResponse = await fetch("/api/booking_quota/rooms/" + roomSelect.value +
+        "/users/" + usernameSelect.value);
+    const desksResponse = await fetch("/api/desks_available?" + "username=" + usernameSelect.value +
+        "&room_id=" + roomSelect.value + "&date=" + dateSelect.value + "&offset=" + offset + "&limit=" + limit);
 
-    let xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/api/desks_available?" + "username="+ usernameSelect.value+
-            "&room_id=" + roomSelect.value +
-        "&date=" + dateSelect.value +
-        "&offset=" + offset +
-        "&limit=" + limit, true);
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4) {
-            if (xhttp.status === 200) {
-                // Parse JSON.
-                const json = JSON.parse(xhttp.responseText);
-
-                // Store total results count.
-                totalResults = json["total_results"];
-
-                // Display desks.
-                displayDesks(json);
-
-                // Update results text in table.
-                if (limit + offset > totalResults) {
-                    resultsText.innerText = "Displaying " + totalResults + " of " + totalResults + " results";
-                } else {
-                    resultsText.innerText = "Displaying " + (limit + offset) + " of " + totalResults + " results";
-                }
-
-
-
-            } else {
-                // Redirect to error page.
-                window.location.replace("/internal_server_error");
-            }
-        }
+    // If there was an error, redirect to 500 page.
+    if (!quotaResponse.ok || !desksResponse.ok) {
+        window.location.replace("/internal_server_error");
+        return;
     }
 
-    xhttp.send();
+    // Parse responses.
+    const quotaJson = await quotaResponse.json();
+    const desksJson = await desksResponse.json();
+
+    // Process.
+
+    // Store quota.
+    quota = quotaJson;
+
+    // Display remaining quota.
+    quotaText.innerText = "Remaining quota: " + quota["remaining"];
+
+    // Store desks total results count.
+    totalResults = desksJson["total_results"];
+
+    // Display desks.
+    displayDesks(desksJson);
+
+    // Update results text in table.
+    if (limit + offset > totalResults) {
+        resultsText.innerText = "Displaying " + totalResults + " of " + totalResults + " results";
+    } else {
+        resultsText.innerText = "Displaying " + (limit + offset) + " of " + totalResults + " results";
+    }
+
+    // Set subtitle.
+    desksAvailabilityTitle.innerText = "Showing desk availability for " + new Date(dateSelect.value).toLocaleDateString();
+
+    // Hide table progress spinner.
+    progressSpinner.classList.add("visually-hidden");
 }
 
 /**
  * Displays desks in the table.
- * @param json the JSON response.
+ * @param json the JSON response that holds the data
+ *             on the desks.
  */
 function displayDesks(json) {
-    // Get table body.
-    let table = document.getElementsByTagName("tbody")[0];
-
     // Remove all child elements.
     table.innerHTML = "";
 
@@ -225,7 +255,7 @@ function displayDesks(json) {
 
 }
 
-// End of code adapted from Hassan's
+// End of code adapted from Hassan's code in manage_desks.js
 
 /**
  * Creates a table cell. If the desk that is being iterated
@@ -251,7 +281,7 @@ function buttonCellConfigurer(desk) {
     // 3) Faded book button = You cannot book this button (either because
     // other user has booked it or you already have a booking that day)
 
-    if (desk["does_user_have_that_desk_booked_on_that_day"] == true){
+    if (desk["does_user_have_that_desk_booked_on_that_day"] == true) {
         let btn = document.createElement("button");
         btn.innerHTML = "Delete";
         btn.className = "btn btn-danger btn-sm"
@@ -260,8 +290,17 @@ function buttonCellConfigurer(desk) {
             deleteBookingViaBookPage(this.id);
         });
         buttonCell.appendChild(btn);
-    }
-    else if (desk["available"] === true && desk["does_user_have_booking_on_that_day"] == false) {
+    } else if (quota["remaining"] === 0 && !desk["does_user_have_booking_on_that_day"]) {
+        let btn = document.createElement("button");
+        btn.innerHTML = "Book";
+        btn.className = "btn btn-success btn-sm"
+        btn.id = desk["id"];
+        btn.style.opacity = "0.6";
+        btn.setAttribute("data-mdb-toggle", "modal");
+        btn.setAttribute("data-mdb-target", "#noQuotaRemaining");
+        btn.setAttribute('title', 'You have no quota remaining.');
+        buttonCell.appendChild(btn);
+    } else if (desk["available"] === true && desk["does_user_have_booking_on_that_day"] == false) {
         let btn = document.createElement("button");
         btn.innerHTML = "Book";
         btn.className = "btn btn-success btn-sm"
@@ -270,28 +309,26 @@ function buttonCellConfigurer(desk) {
             postBooking(this.id);
         });
         buttonCell.appendChild(btn);
-    }
-    else if  (desk["available"] === false && desk["does_user_have_that_desk_booked_on_that_day"] == false){
+    } else if (desk["available"] === false && desk["does_user_have_that_desk_booked_on_that_day"] == false) {
         let btn = document.createElement("button");
         btn.innerHTML = "Book";
         btn.className = "btn btn-success btn-sm"
         btn.id = desk["id"];
         // Attributes needed for modal:
         // data-mdb-toggle="modal" data-mdb-target="#bookedOut"
-        btn.style.opacity="0.6";
+        btn.style.opacity = "0.6";
         btn.setAttribute("data-mdb-toggle", "modal");
         btn.setAttribute("data-mdb-target", "#bookedOut");
         btn.setAttribute('title', 'Someone else has booked this desk out.');
         buttonCell.appendChild(btn);
-    }
-    else{
+    } else {
         let btn = document.createElement("button");
         btn.innerHTML = "Book";
         btn.className = "btn btn-success btn-sm"
         btn.id = desk["id"];
         // Attributes needed for modal:
         // data-mdb-toggle="modal" data-mdb-target="#oneBookingPerDay"
-        btn.style.opacity="0.6";
+        btn.style.opacity = "0.6";
         btn.setAttribute("data-mdb-toggle", "modal");
         btn.setAttribute("data-mdb-target", "#oneBookingPerDay");
         btn.setAttribute('title', 'You may only book one desk per day.');
@@ -309,35 +346,54 @@ function buttonCellConfigurer(desk) {
  * @param desk
  * @returns {HTMLTableDataCellElement}
  */
-function availabilityCellConfigurer(desk){
+function availabilityCellConfigurer(desk) {
+
+    // For a check cell we need to load the following html in:
+
+    // <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+    //   <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+    // </svg>
+
+    // Reference: https://icons.getbootstrap.com/icons/check/
+
+    // and for a cross we need to load the following html in:
+
+    // <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+    //   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+    // </svg>
+
+    //Reference: https://icons.getbootstrap.com/icons/x/
+
+    // Both of the above svgs are in our Book.html as hidden elements. We will
+    // access these using the DOM, clone them, switch the clones to default display
+    // instead of hidden and then use these cloned elements to add check icons and
+    // cross icons to our table (in the available column)
 
     // Create a cell for our availability icon
 
     let availabilityCell = document.createElement("td");
-    let spanText = document.createElement("i");
+
+    // Uncomment the following to centre the check/cross icon in the
+    // column
+
+    // availabilityCell.style.textAlign = "center";
 
     // If the desk is available on that day, show a check in the
     // available column, else show a cross
 
-    if (desk["available"] === true){
+    if (desk["available"] === true) {
 
-        spanText.innerHTML = "✓";
-        // add bootstrap styling for check marks
-        spanText.className = "bi bi-check";
-        availabilityCell.appendChild(spanText);
+        let checkIconSVG = checkIconReturner();
+        availabilityCell.appendChild(checkIconSVG);
 
-    } else{
+    } else {
 
-        spanText.innerHTML = "✕";
-        // add bootstrap styling for cross marks
-        spanText.className = "bi bi-x";
-        availabilityCell.appendChild(spanText);
+        let crossIconSVG = crossIconReturner();
+        availabilityCell.appendChild(crossIconSVG);
 
     }
 
     return availabilityCell;
-
-
 
 }
 
@@ -381,7 +437,7 @@ function postBooking(deskId) {
                 // After short period of time, refresh desks in DOM
 
                 setTimeout(function () {
-                    getDesks();
+                    fetchData();
                 }, 1000);
 
                 // Otherwise, print errors to console if there were any
@@ -446,9 +502,14 @@ function showLoaderById(id) {
 
 }
 
-// Function to delete a booking. The function reloads desks
-// when delete was a success, which will switch the desk row
-// back to having a book button.
+/**
+ * Function to delete a booking. The function also reloads desks
+ * table in DOM if the delete was a success. This ought to switch
+ * the desk's button back to a book button, since you just deleted
+ * the booking associated with it.
+ * @param id Booking ID
+ * @returns {boolean} Always returns false to prevent form submission
+ */
 function deleteBookingViaBookPage(id) {
 
     // Set up HTTP request
@@ -466,8 +527,8 @@ function deleteBookingViaBookPage(id) {
 
     xhttp.onreadystatechange = function () {
 
-        if (xhttp.readyState == 4){
-            if (xhttp.status === 200){
+        if (xhttp.readyState == 4) {
+            if (xhttp.status === 200) {
 
                 showLoaderById(id);
 
@@ -476,11 +537,10 @@ function deleteBookingViaBookPage(id) {
                 // reload the desks (this will remove the delete
                 // button too)
                 setTimeout(function () {
-                    getDesks();
+                    fetchData();
                 }, 1000);
 
-            }
-            else{
+            } else {
                 console.error(xhttp.statusText);
             }
         }
@@ -497,3 +557,55 @@ function deleteBookingViaBookPage(id) {
 
 }
 
+/**
+ * Finds the hidden svg in DOM that is for the Bootstrap styled check icon.
+ * Clones that element and points new variable to the clone. Changes display
+ * of clone from hidden to inline (this is svg's default display). Returns
+ * the cloned element.
+ * @returns {Node} An HTML svg element that shows a Bootstrap check icon.
+ */
+function checkIconReturner(){
+
+    // Clone check element that is in DOM
+    // Reference: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_clonenode
+
+    let checkIconSVG = document.getElementById("bootstrapCheckIcon");
+    let checkIconSVGClone = checkIconSVG.cloneNode(true);
+
+    // Check what the default display of an svg is (remove display:none from
+    // it to check this)
+    // console.log("Default display of svg is:")
+    // console.log(window.getComputedStyle(checkIcon).display);
+
+    // Set style of SVG clone from none to the default
+
+    checkIconSVGClone.style.display = "inline";
+
+    return checkIconSVGClone;
+
+}
+
+/**
+ * Finds the hidden svg in DOM that is for the Bootstrap styled cross icon.
+ * Clones that element and points new variable to the clone. Changes display
+ * of clone from hidden to inline (this is svg's default display). Returns
+ * the cloned element.
+ * @returns {Node} An HTML svg element that shows a Bootstrap cross icon.
+ */
+function crossIconReturner(){
+
+    // Clone cross element that is in DOM
+    // Reference: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_clonenode
+
+    let crossIconSVG = document.getElementById("bootstrapCrossIcon");
+    let crossIconSVGClone = crossIconSVG.cloneNode(true);
+
+    // Set style of SVG clone from none to the default
+
+    crossIconSVGClone.style.display = "inline";
+
+    return crossIconSVGClone;
+
+
+
+}
