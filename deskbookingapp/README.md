@@ -26,7 +26,7 @@ add tables for your tests and have Spring execute the script before tests.
 3. Add the `@Sql` annotation at the class level. The database script is executed before each test.
     ```java
    @SpringBootTest
-   @Test("/database_test.sql")
+   @Sql("/database_test.sql")
    public class MyTestClass {
    }
    ```
