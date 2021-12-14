@@ -7,6 +7,11 @@ import java.util.Date;
  * @author: yiting zheng
  * @time: 2021/12/4
  */
+
+/**
+ * DTOs are often used in conjunction with data access objects to retrieve data from a database.
+ */
+
 public class BookingCommentDTO {
 
     private int roomId;

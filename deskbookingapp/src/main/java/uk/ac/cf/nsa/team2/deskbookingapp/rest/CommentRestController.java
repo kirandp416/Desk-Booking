@@ -46,7 +46,7 @@ public class CommentRestController {
     }
 
     /**
-     *
+     * get all comment
      * @return list (JSON)
      */
     @GetMapping(value = "/fetchAll")

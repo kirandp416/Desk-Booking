@@ -9,7 +9,12 @@ import org.jsoup.safety.Whitelist;
  * @author: yiting zheng
  * @time: 2021/12/2
  */
+
+/**
+ *  white list
+ */
 public class XssFilterUtil {
+
     private static final Whitelist whitelist = Whitelist.basicWithImages();
 
     private static final Document.OutputSettings outputSettings = new Document.OutputSettings().prettyPrint(false);

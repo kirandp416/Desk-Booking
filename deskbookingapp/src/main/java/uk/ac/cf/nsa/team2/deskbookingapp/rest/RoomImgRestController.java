@@ -14,12 +14,21 @@ import uk.ac.cf.nsa.team2.deskbookingapp.utils.R;
  * @author: yiting zheng
  * @time: 2021/12/12
  */
+
+/**
+ * rest api
+ */
 @RestController
 @RequestMapping("/Booking/Room")
 public class RoomImgRestController {
     @Autowired
     private IRoomImgRepository roomImgRepository;
 
+    /**
+     * select data by id
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public R<RoomImgDTO> fetchImg(@PathVariable("id") int id) {
         return R.success(roomImgRepository.findImgById(id));

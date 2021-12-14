@@ -50,23 +50,30 @@
         $.ajax({
             url: "/comment/fetchAll",
             success(res) {
+                // set h1
                 let h1 = document.createElement("h1")
                 h1.innerHTML = "Comment"
                 document.getElementById("table").appendChild(h1);
 
+                // get json data(Array or Object)
                 let data = res.records
 
+                // get dom of the table
                 let table = document.createElement("table");
+
                 // set table id
                 table.id = "desksTable"
                 // set table class1
                 table.setAttribute("class", "table align-middle")
-
+                // create thead
                 let thead = document.createElement("thead");
+                // append
                 table.appendChild(thead);
+                // create tr
                 let tr = document.createElement("tr");
+                // append
                 thead.appendChild(tr);
-                // set th
+                // set th (for)
                 for (let key in data[0]) {
                     let th = document.createElement("th");
                     if (key !== "deleted" && key !== "roomId") {
@@ -75,7 +82,7 @@
                     }
                 }
                 if (data.length != 0) {
-
+                    // create th
                     let th = document.createElement("th");
                     th.innerHTML = "download"
                     tr.appendChild(th)
@@ -84,8 +91,9 @@
                     th1.innerHTML = "action"
                     tr.appendChild(th1)
                 }
-
+                // set tbody
                 let tbody = document.createElement("tbody");
+                // append
                 table.appendChild(tbody);
                 // set tr
                 for (let i = 0; i < data.length; i++) {
@@ -119,7 +127,7 @@
                     }
                     tr.appendChild(td)
                     tbody.appendChild(tr);
-
+                    // create button
                     let td1 = document.createElement("td");
                     let input = document.createElement("input")
                     input.type = "button"

@@ -12,6 +12,9 @@ import java.sql.SQLException;
  * @author: yiting zheng
  * @time: 2021/12/4
  */
+/**
+ * Used to match the column fields in the database to the properties in the java bean
+ */
 public class BookingCommentMapper implements RowMapper<BookingCommentDTO> {
     @Override
     public BookingCommentDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

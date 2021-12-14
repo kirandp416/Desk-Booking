@@ -21,10 +21,15 @@ public class ReflectUtil {
         source.forEach((k, v) -> map.put(StringUtil.lineToHump(k), v));
         try {
             T obj = clazz.newInstance();
+            // A field that gets all the declarations for a class
             Field[] fields = clazz.getDeclaredFields();
+            // for
             for (Field field : fields) {
+                // get field name
                 String fieldName = field.getName();
+                // takes the name of a simple property, and method names for reading and writing the property.
                 PropertyDescriptor descriptor = new PropertyDescriptor(fieldName, clazz);
+                // get write method
                 Method writeMethod = descriptor.getWriteMethod();
                 // solve null pointers
                 if (Objects.nonNull(map.get(fieldName))) {

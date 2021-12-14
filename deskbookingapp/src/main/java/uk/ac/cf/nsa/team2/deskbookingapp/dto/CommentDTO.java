@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
  * @author: yiting zheng
  * @time: 2021/12/1
  */
+
+/**
+ * DTOs are often used in conjunction with data access objects to retrieve data from a database.
+ */
 public class CommentDTO {
     // solve the problem of the JS cannot access long ig due to IEEE 754
     @JsonSerialize(using = ToStringSerializer.class)

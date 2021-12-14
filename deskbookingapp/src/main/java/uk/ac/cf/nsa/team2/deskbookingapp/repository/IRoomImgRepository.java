@@ -8,5 +8,6 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomImgDTO;
  * @time: 2021/12/12
  */
 public interface IRoomImgRepository {
+    // method
     RoomImgDTO findImgById(int id);
 }

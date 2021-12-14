@@ -15,8 +15,11 @@ public class StringUtil {
      * because in the database, the name in fields always use camel case, but Java does not.
      */
     public static String lineToHump(String str) {
+        // compile
         Pattern linePattern = Pattern.compile("_(\\w)");
+        // regex
         Matcher matcher = linePattern.matcher(str);
+        // string buffer
         StringBuffer sb = new StringBuffer();
         // tries to find the occurrence of a regex pattern within a given string
         while (matcher.find()) {

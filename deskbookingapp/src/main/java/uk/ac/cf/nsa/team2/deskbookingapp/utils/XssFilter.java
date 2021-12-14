@@ -36,7 +36,7 @@ public class XssFilter implements Filter {
         filterChain.doFilter(xssRequest, response);
     }
 
-    // handle eclude url
+    // handle exclude url
     private boolean handleExcludeURL(HttpServletRequest request, HttpServletResponse response) {
         if (excludes == null || excludes.isEmpty()) {
             return false;

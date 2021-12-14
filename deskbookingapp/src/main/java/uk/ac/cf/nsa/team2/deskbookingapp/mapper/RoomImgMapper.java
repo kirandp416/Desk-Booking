@@ -11,6 +11,10 @@ import java.sql.SQLException;
  * @author: yiting zheng
  * @time: 2021/12/12
  */
+
+/**
+ * Used to match the column fields in the database to the properties in the java bean
+ */
 public class RoomImgMapper implements RowMapper<RoomImgDTO> {
 
     @Override
