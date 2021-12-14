@@ -40,6 +40,8 @@ public class FileUtil {
         // eg : if file.doc exist , it will create file(0).file
         ClassLoader classLoader = Application.class.getClassLoader();
         String filename = file.getOriginalFilename();
+        // solve problem if the filename has space
+        filename = filename.replaceAll("\\s*","");
         Path path = Paths.get(BASE_PATH, filename);
         try {
             if (Files.notExists(path.getParent())) {
