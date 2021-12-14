@@ -1,24 +1,24 @@
 # Testing
 
-## Setting up for running tests
+## Configuration for running tests
 
 Before running tests, remember to create an application.properties file in `test/resources` to ensure your main database
 is not written with test data. This may cause unexpected behaviour and cause tests to fail.
 
 ```properties
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/deskbookingtest
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/deskbookingtest?createDatabaseIfNotExist=true
 spring.datasource.username=your username
 spring.datasource.password=your password
 ```
 
-## Testing with a test database
+## Creating tests with a database
 
 In the `test/resources` directory, there is a test database script named `database_test.sql`. You can use this script to
 add tables for your tests and have Spring execute the script before tests.
 
 1. Create an application.properties file in the test/resources folder:
     ```properties
-    spring.datasource.url=jdbc:mysql://127.0.0.1:3306/deskbookingtest
+    spring.datasource.url=jdbc:mysql://127.0.0.1:3306/deskbookingtest?createDatabaseIfNotExist=true
     spring.datasource.username=your username
     spring.datasource.password=your password
     ```
