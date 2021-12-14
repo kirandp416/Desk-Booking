@@ -57,9 +57,9 @@ On click function is taken when you click on delete which triggers ajax function
                                             <h5 class="modal-title" id="deleteModalLabel">Delete Room</h5>
                                             <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body"> Are you sure want to delete : <div style="font-weight: bold" th:text="${room.name}"></div></div>
+                                        <div class="modal-body"> Are you sure want to delete? <div style="font-weight: bold" th:text="${room.name}"></div></div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary btn-sm" data-mdb-dismiss="modal">
+                                            <button type="button" class="btn btn-secondary btn-sm" style="background-color: grey" data-mdb-dismiss="modal">
                                                 Cancel
                                             </button>
                                             <button type="button" th:id="${room.id}" onclick="deleteRoom(this.id)" class="btn btn-danger btn-sm" data-mdb-dismiss="modal">Delete</button>
@@ -78,7 +78,6 @@ On click function is taken when you click on delete which triggers ajax function
         <br>
         <br>
         <br>
-        <footer th:replace="fragments/footer :: footer">Default</footer>
     </main>
 </body>
 

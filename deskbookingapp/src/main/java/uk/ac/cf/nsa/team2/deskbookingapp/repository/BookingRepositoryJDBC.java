@@ -65,7 +65,7 @@ public class BookingRepositoryJDBC implements BookingRepository {
     @Override
     public List<BookingDTO> findAllUsersBookings(String username) {
         String queryString =
-                "SELECT booking_id, booking_date, book_timestamp, room_name, desk_name, desk_type_name, notes\n" +
+                "SELECT booking_id, username, booking_date, book_timestamp, room_name, desk_name, desk_type_name, notes\n" +
                         "FROM booking bookings\n" +
                         "LEFT OUTER JOIN room rooms\n" +
                         "ON bookings.room_id = rooms.room_id\n" +
@@ -93,6 +93,30 @@ public class BookingRepositoryJDBC implements BookingRepository {
         int rowsAffected = jdbcTemplate.update(query, id);
 
         return rowsAffected > 0;
+    }
+
+    /**
+     *
+     * Implement method from BookingRepository that deals with returning all
+     * bookings that are in the system to the admin user. This is achieved by
+     * querying the MySQL database for all bookings. Note that the bookings come
+     * back in reverse chronological order i.e. bookings that are for days furtherest
+     * into the future will be at the top of the query.
+     *
+     * @return List of BookingDTO objects
+     */
+    @Override
+    public List<BookingDTO> findAllReverseChronologicalOrder(){
+        String queryString =
+                "SELECT booking_id, username, booking_date, book_timestamp, room_name, desk_name, desk_type_name, notes " +
+                "FROM booking bookings " +
+                "LEFT OUTER JOIN room rooms " +
+                "ON bookings.room_id = rooms.room_id " +
+                "LEFT OUTER JOIN (SELECT desk_id, room_id, desk.desk_type_id, desk_name, notes, desk_type_name FROM desk INNER JOIN desk_type ON desk.desk_type_id = desk_type.desk_type_id) desks_with_type " +
+                "ON bookings.desk_id = desks_with_type.desk_id " +
+                "ORDER BY booking_date DESC ";
+
+        return jdbcTemplate.query(queryString, new BookingMapper());
     }
 
 

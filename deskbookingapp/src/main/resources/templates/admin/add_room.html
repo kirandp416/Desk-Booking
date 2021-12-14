@@ -10,7 +10,7 @@
 <body>
     <header th:replace="fragments/header :: header"></header>
 
-    <main>
+<main>
         <div class="container">
             <h1>Add Room</h1>
             <form method="post" action="/admin/room/add/process_form">
@@ -23,11 +23,9 @@
                     <input class="btn btn-primary" type="submit" value="Submit">
                 </p>
             </form>
-            <p th:if="${result}">Successfully added room.</p>
-            <p th:if="${result != null && !result}">Failed to add room.</p>
+            <p class="alert alert-success" th:if="${result}">Successfully added room.</p>
+            <p class="alert alert-danger" th:if="${result != null && !result}">Failed to add room.</p>
         </div>
     </main>
-
-    <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>
