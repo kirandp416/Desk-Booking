@@ -5,6 +5,7 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneOffset;
 
 
 /**
@@ -32,11 +33,13 @@ public class BookingMapper implements RowMapper <BookingDTO> {
     public BookingDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new BookingDTO(
                 rs.getInt("booking_id"),
+                rs.getString("username"),
                 rs.getString("booking_date"),
                 rs.getString("room_name"),
                 rs.getString("desk_name"),
                 rs.getString("desk_type_name"),
-                rs.getString("notes")
+                rs.getString("notes"),
+                rs.getTimestamp("book_timestamp").toInstant().atOffset(ZoneOffset.UTC)
         );
     }
 }

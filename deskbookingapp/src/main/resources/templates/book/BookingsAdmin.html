@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Bookings</title>
+    <th:block th:insert="fragments/theme :: theme"/>
+    <link rel="stylesheet" href="/css/bootstrapAdjust.css">
+    <script src="/js/book/Bookings.js" defer></script>
+</head>
+<body>
+
+<header th:replace="fragments/header :: header"></header>
+
+<main>
+    <div class="container">
+        <h1>Bookings</h1>
+
+        <!--    Thymeleaf for loop over all bookings that are currently in the
+                system where each booking corresponds to one row in an HTML table.
+                 At the end of each row, a cell for a deletion button is also rendered.-->
+
+        <table class="table bootstrapAdjustTable">
+            <thead>
+            <tr>
+                <th scope="col">Booking ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">Date (dd-mm-yy)</th>
+                <th scope="col">Room Name</th>
+                <th scope="col">Desk Name</th>
+                <th scope="col">Desk Type</th>
+                <th scope="col">Desk Notes</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking: ${bookings}" th:data-id="${booking.id}">
+                <td th:text="${booking.id}"/>
+                <td th:text="${booking.username}"/>
+                <td th:text="${booking.dateOrderedForDisplay}"/>
+                <td th:text="${booking.roomName}"/>
+                <td th:text="${booking.deskName}"/>
+                <td th:text="${booking.deskType}"/>
+                <td th:text="${booking.deskNotes}"/>
+                <td>
+                    <button th:id="${booking.id}" onclick="deleteBookingForAdminViaManageBookingsPage(this.id)" class="btn btn-danger btn-sm">Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</main>
+
+</body>
+</html>

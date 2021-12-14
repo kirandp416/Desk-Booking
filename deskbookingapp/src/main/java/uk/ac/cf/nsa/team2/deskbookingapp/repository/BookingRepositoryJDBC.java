@@ -6,6 +6,8 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.BookingDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.form.BookingForm;
 import uk.ac.cf.nsa.team2.deskbookingapp.mapper.BookingMapper;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -39,10 +41,11 @@ public class BookingRepositoryJDBC implements BookingRepository {
         // System.out.println("addBooking supplied the following date");
         // System.out.println(bookingForm.getBookingDate());
 
-        String query = "insert into booking (username, booking_date, room_id, desk_id) values(?,?,?,?)";
+        String query = "insert into booking (username, booking_date, room_id, desk_id, book_timestamp) values(?,?,?,?,?)";
 
         int rows = jdbcTemplate.update(query,
-                new Object[]{bookingForm.getUsername(), bookingForm.getBookingDate(), bookingForm.getBookingRoomId(), bookingForm.getBookingDeskId()}
+                new Object[]{bookingForm.getUsername(), bookingForm.getBookingDate(), bookingForm.getBookingRoomId(), bookingForm.getBookingDeskId(),
+                        OffsetDateTime.now(ZoneOffset.UTC)}
         );
 
         if (rows > 0)
@@ -62,7 +65,7 @@ public class BookingRepositoryJDBC implements BookingRepository {
     @Override
     public List<BookingDTO> findAllUsersBookings(String username) {
         String queryString =
-                "SELECT booking_id, booking_date, room_name, desk_name, desk_type_name, notes\n" +
+                "SELECT booking_id, username, booking_date, book_timestamp, room_name, desk_name, desk_type_name, notes\n" +
                         "FROM booking bookings\n" +
                         "LEFT OUTER JOIN room rooms\n" +
                         "ON bookings.room_id = rooms.room_id\n" +
@@ -90,6 +93,30 @@ public class BookingRepositoryJDBC implements BookingRepository {
         int rowsAffected = jdbcTemplate.update(query, id);
 
         return rowsAffected > 0;
+    }
+
+    /**
+     *
+     * Implement method from BookingRepository that deals with returning all
+     * bookings that are in the system to the admin user. This is achieved by
+     * querying the MySQL database for all bookings. Note that the bookings come
+     * back in reverse chronological order i.e. bookings that are for days furtherest
+     * into the future will be at the top of the query.
+     *
+     * @return List of BookingDTO objects
+     */
+    @Override
+    public List<BookingDTO> findAllReverseChronologicalOrder(){
+        String queryString =
+                "SELECT booking_id, username, booking_date, book_timestamp, room_name, desk_name, desk_type_name, notes " +
+                "FROM booking bookings " +
+                "LEFT OUTER JOIN room rooms " +
+                "ON bookings.room_id = rooms.room_id " +
+                "LEFT OUTER JOIN (SELECT desk_id, room_id, desk.desk_type_id, desk_name, notes, desk_type_name FROM desk INNER JOIN desk_type ON desk.desk_type_id = desk_type.desk_type_id) desks_with_type " +
+                "ON bookings.desk_id = desks_with_type.desk_id " +
+                "ORDER BY booking_date DESC ";
+
+        return jdbcTemplate.query(queryString, new BookingMapper());
     }
 
 
