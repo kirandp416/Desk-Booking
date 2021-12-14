@@ -14,7 +14,6 @@ CREATE TABLE desk_type
 (
     desk_type_id   INT AUTO_INCREMENT,
     desk_type_name VARCHAR(255) NOT NULL,
-    photo VARCHAR(255) NOT NULL,
     desk_type_introduce VARCHAR(255) NOT NULL,
     CONSTRAINT desk_type_pk_index PRIMARY KEY (desk_type_id)
 );
@@ -31,16 +30,25 @@ CREATE TABLE desk
     CONSTRAINT desk_desk_type_id FOREIGN KEY (desk_type_id) REFERENCES desk_type (desk_type_id)
 );
 
+CREATE TABLE employee
+(
+    username VARCHAR(255) NOT NULL,
+    CONSTRAINT employee_pk_index PRIMARY KEY (username)
+
+);
+
 CREATE TABLE booking
 (
-    booking_id   INT AUTO_INCREMENT,
-    username     VARCHAR(255) NOT NULL,
-    booking_date DATE,
-    room_id      INT,
-    desk_id      INT,
+    booking_id     INT AUTO_INCREMENT,
+    username       VARCHAR(255) NOT NULL,
+    booking_date   DATE,
+    room_id        INT,
+    desk_id        INT,
+    book_timestamp DATETIME     NOT NULL,
     CONSTRAINT booking_pk_index PRIMARY KEY (booking_id),
     CONSTRAINT booking_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE,
-    CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE
+    CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE,
+    CONSTRAINT booking_user_fk_index FOREIGN KEY (username) REFERENCES employee (username) ON DELETE CASCADE
 );
 
 INSERT INTO desk_type (desk_type_id, desk_type_name,desk_type_introduce)
@@ -64,7 +72,14 @@ VALUES (1, 1, 1, 'Desk 1'),
        (10, 1, 1, 'Desk 10'),
        (11, 1, 1, 'Desk 11');
 
+INSERT INTO employee (username) VALUES ('user1'), ('user2');
 
-INSERT INTO booking (username, booking_date, room_id, desk_id)
-VALUES ('user1', '2021-12-03', 1, 1),
-       ('user2', '2021-12-03', 1, 2);
+INSERT INTO booking (username, booking_date, room_id, desk_id, book_timestamp)
+VALUES ('user1', '2021-12-09', 1, 1, '2021-11-22 12:15:00'),
+       ('user1', '2021-12-09', 1, 2, '2021-11-22 12:21:00'),
+       ('user1', '2021-12-09', 1, 3, '2021-11-22 12:23:00'),
+       ('user2', '2021-12-09', 1, 4, '2021-11-22 16:03:00'),
+       ('user2', '2021-12-09', 1, 5, '2021-11-22 16:03:29');
+
+
+
