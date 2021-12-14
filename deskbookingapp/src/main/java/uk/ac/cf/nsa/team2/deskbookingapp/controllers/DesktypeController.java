@@ -7,6 +7,9 @@ import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.service.DesktypeService;
 import java.util.List;
 
+/**
+ * A controller for routes to manage desk type by an admin.
+ */
 
 @RestController
 @RequestMapping("/admin/desk_type")
@@ -16,7 +19,8 @@ public class DesktypeController {
 
     /**
      * query desk type list
-     *
+     * Generate a table of ids, Desk types and descriptions
+     * and actions (update or delete) on this data.
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -26,7 +30,7 @@ public class DesktypeController {
 
     /**
      * query a desk type by id
-     *
+     *The administrator queries a specific Desk type by id
      * @param deskTypeId
      * @return
      */
@@ -37,9 +41,10 @@ public class DesktypeController {
 
     /**
      * delete a desk type
-     *
+     *The admindeletes unnecessary data
      * @param deskTypeId
-     * @return
+     * @return Return "delete success!！" on successful deletion
+     *      and "delete  fail！！"on unsuccessful deletion
      */
     @DeleteMapping(value = "/{deskTypeId}")
     public String delUserById(@PathVariable("deskTypeId") int deskTypeId) {
@@ -52,8 +57,13 @@ public class DesktypeController {
     }
 
     /**
-     * modify desk type information
-     *
+     * Modify desk type information
+     *The admin can modify related data of Desk type,
+     * connect to the database
+     * and modify the database in real time
+     * return
+     * If the message "Modified successfully" is displayed
+     * if the message "please input id!" is displayed.
 
      */
     @PutMapping(value = "/edit")
@@ -68,6 +78,9 @@ public class DesktypeController {
 
     /**
      * Add new desk type
+     * Before adding a new Desk type
+     * the administrator needs to fill in required information and
+     * generate detailed data about the Desk type
 
      */
     @PostMapping(value = "/add")

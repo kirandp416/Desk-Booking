@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/booking/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
+                //Do not intercept the login interface, because the SecurityConfig login interface is not perfect
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();

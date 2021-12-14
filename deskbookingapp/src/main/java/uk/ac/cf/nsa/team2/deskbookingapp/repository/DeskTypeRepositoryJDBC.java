@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 
 import java.util.List;
-
+/*** A MYSQL JDBC implementation of the  DeskTypeRepository interface that we have created.*/
 @Repository
 public class DeskTypeRepositoryJDBC implements DeskTypeRepository {
 
@@ -17,17 +17,21 @@ public class DeskTypeRepositoryJDBC implements DeskTypeRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
+ /** Implement method from DeskTypeRepository that deals with adding
+     * a new desk type to the desk type list table in MySQL database.
+  */
     @Override
     public int add(DeskTypeDTO deskTypeDTO) {
         return jdbcTemplate.update("insert into desk_type(desk_type_name,desk_type_introduce)  values(?,?)", deskTypeDTO.getDeskTypeName(), deskTypeDTO.getDeskTypeIntroduce());
     }
-
+/**Implement method from DeskTypeRepository that deals with update
+ *modify desk type to the desk type list table in MySQL database.*/
     @Override
     public int update(DeskTypeDTO deskTypeDTO) {
         return jdbcTemplate.update("UPDATE  desk_type SET desk_type_name =?,desk_type_introduce=? WHERE desk_type_id= ?", deskTypeDTO.getDeskTypeName(),  deskTypeDTO.getDeskTypeIntroduce(), deskTypeDTO.getDeskTypeId());
     }
-
+/** * Implement method from BookingRepository that deals with deleting
+ * a single desk type from the table of desk type in the MySQL database */
     @Override
     public int delete(int deskTypeId) {
         return jdbcTemplate.update("DELETE FROM desk_type  where desk_type_id=?", deskTypeId);
@@ -46,6 +50,10 @@ public class DeskTypeRepositoryJDBC implements DeskTypeRepository {
         }
     }
 
+
+    /** Implement method from DeskTypeRepository that deals with returning all
+     * manage desktype that a admin has made by querying the MySQL database using that desk type id
+     * @return Bookings returned as a List of desktypelist objects*/
     @Override
     public List<DeskTypeDTO> finddesktypeist() {
         List<DeskTypeDTO> list = jdbcTemplate.query("select * from desk_type", new Object[]{}, new BeanPropertyRowMapper(DeskTypeDTO.class));
