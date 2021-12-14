@@ -26,7 +26,6 @@ public class RoomImgRepositoryImpl implements IRoomImgRepository {
         // avoid sql injection by StringBuffer
         List objects = new ArrayList();
         objects.add(room_id);
-        // inner join
         StringBuffer sql = new StringBuffer("select * from room where room_id = ?");
         List<RoomImgDTO> list = jdbcTemplate.query(sql.toString(), objects.toArray(), new RoomImgMapper());
         if (list != null && list.size() > 0) {
