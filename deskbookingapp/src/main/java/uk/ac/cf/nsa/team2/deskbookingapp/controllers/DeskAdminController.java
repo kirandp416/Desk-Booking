@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.dto.DeskTypeDTO;
 import uk.ac.cf.nsa.team2.deskbookingapp.dto.RoomDTO;
+import uk.ac.cf.nsa.team2.deskbookingapp.repository.DeskTypeRepository;
 import uk.ac.cf.nsa.team2.deskbookingapp.repository.RoomRepository;
 
 import java.util.List;
@@ -18,14 +21,18 @@ public class DeskAdminController {
 
     private final RoomRepository roomRepository;
 
+    private final DeskTypeRepository deskTypeRepository;
+
     /**
      * Initialises a new instance of the controller.
      *
      * @param roomRepository a room repository injected by Spring.
+     * @param deskTypeRepository
      */
     @Autowired
-    public DeskAdminController(RoomRepository roomRepository) {
+    public DeskAdminController(RoomRepository roomRepository, DeskTypeRepository deskTypeRepository) {
         this.roomRepository = roomRepository;
+        this.deskTypeRepository = deskTypeRepository;
     }
 
     /**
@@ -37,7 +44,7 @@ public class DeskAdminController {
     public ModelAndView addDeskPage() {
         // Get rooms from repository.
         Optional<List<RoomDTO>> rooms = roomRepository.findAll();
-
+        Optional<List<DeskTypeDTO>> deskTypes = Optional.ofNullable(deskTypeRepository.finddesktypeist());
         // If the optional is empty, redirect user to server error page.
         if (rooms.isEmpty()) {
             return new ModelAndView("redirect:/internal_server_error");
@@ -46,7 +53,9 @@ public class DeskAdminController {
         // Return a model and view for the add desk page,
         // passing the rooms into the view.
         return new ModelAndView("admin/add_desk")
-                .addObject("rooms", rooms.get());
+                .addObject("rooms", rooms.get())
+                .addObject("deskTypes",deskTypes.get())
+               ;
     }
 
     /**
@@ -70,4 +79,8 @@ public class DeskAdminController {
                 .addObject("rooms", rooms.get());
     }
 
+    @GetMapping("/admin/desk_type")
+    public String deskType(){
+        return "admin/desk_type";
+    }
 }

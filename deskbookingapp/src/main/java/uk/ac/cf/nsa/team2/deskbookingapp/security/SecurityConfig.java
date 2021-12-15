@@ -25,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/font/**").permitAll()
                 .mvcMatchers("/img/**").permitAll()
                 .mvcMatchers("/js/mdb.min.js").permitAll()
+                .mvcMatchers("/booking/**").permitAll()
+                //.mvcMatchers("/admin/**").permitAll()
+                .mvcMatchers("/js/bootstrap.bundle.min.js").permitAll()
                 .mvcMatchers("/upload/**").permitAll()
                 .mvcMatchers("/icon/**").permitAll()
                 .mvcMatchers("/js/bootstrap.bundle.min.js").permitAll()
@@ -38,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/comment/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();
         http.cors().and().csrf().disable();

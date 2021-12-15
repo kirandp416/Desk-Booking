@@ -4,16 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/bootstrap.bundle.min.js" defer></script>
+
+    <link rel="stylesheet" href="/">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: url("[[@{/}]]img/officedesk.jpg");
+            /*background: url(${img/officedesk.jpg}) no-repeat;*/
+            background-size: cover;
+        }
+
+        .box {
+            width: 1200px;
+            height: 640px;
+            background: rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 2%;
+
+        }
+
+        .box .left a {
+            display: block;
+            width: 250px;
+            height: 90px;
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 20px;
+            color: #fff;
+            text-decoration: none;
+            padding-left: 15px;
+            line-height: 90px;
+        }
+
+        .box .left a:hover {
+            background-color: #ff6700;
+        }
+
+        .left {
+            float: left;
+            width: 230px;
+            height: 640px;
+            background-color: cadetblue;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .right {
+            float: right;
+            width: 970px;
+            height: 640px;
+            background-color: rgba(152, 233, 233, 0.2);;
+
+        }
+
+        .right > div {
+            float: left;
+            width: 470px;
+            height: 640px;
+            background: rgba(0, 0, 0, 0.2);
+            margin-left: 14px;
+            margin-bottom: 14px;
+        }
+
+        .right .one {
+            background-color: rgb(152, 233, 233);
+        }
+
+        .right .photo {
+            width: 490px;
+            height: 640px;
+        }
+
+        .right .one h1 {
+            color: white;
+            font-size: 60px;
+        }
+
+        .right .one p {
+            font-size: 40px;
+            font-weight: 500;
+            color: rgb(28 173 184);
+            font-style: italic;
+        }
+    </style>
+
     <th:block th:insert="fragments/theme :: theme"/>
 </head>
-<body>
-    <header th:replace="fragments/header :: header"></header>
+<body th:src="@{'/img/desk1.jpg'}">
+    <header th:replace="Fragments/header :: header"></header>
 
     <main>
         <div class="container-fluid">
             <h1>Welcome Home!</h1>
+
+
+
+
+        </div>
+        <div class="box">
+            <div class="left">
+                <a href="/admin/room/add">Admin/Add room</a>
+                <a href="/admin/add_desk">Admin/Add desk</a>
+                <a href="/admin/manage_desks">Admin/Manage desks</a>
+                <a href="/admin/rooms/all" >Admin/Manage room</a>
+                <a href="/admin/desk_type" >Admin/Manage desk type</a>
+                <a href="/booking/all" target="_blank">Employee/Book desk</a>
+                <a href="/" target="_blank">Homepage</a>
+            </div>
+            <div class="right">
+                <div class="one">
+                    <h1>Daily notices</h1>
+                    <p>We are a group that loves learning and is positive</p>
+                    <p>Successful or failing, we should always feel hopeful about the future.</p>
+                </div>
+                <div>
+                    <img th:src="@{'/img/desk1.jpg'}" alt="" class="photo">
+                </div>
+            </div>
         </div>
     </main>
+
+    <footer th:replace="Fragments/footer :: footer"></footer>
 </body>
 
 </html>

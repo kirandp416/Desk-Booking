@@ -31,9 +31,10 @@
                 <p>
                     <label for="deskType">Desk Type: </label>
                     <select id="deskType" name="deskType" required>
-                        <option value="1">Standard</option>
-                        <option value="2">Standing</option>
+                        <option th:each="deskType : ${deskTypes}" th:value="${deskType.deskTypeId}" th:text="${deskType.deskTypeName}"></option>
                     </select>
+
+
                 </p>
                 <!-- Notes input. -->
                 <p>
