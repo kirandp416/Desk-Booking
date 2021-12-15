@@ -1,13 +1,17 @@
-DROP DATABASE IF EXISTS deskbooking;
+DROP
+DATABASE IF EXISTS deskbooking;
 
-CREATE DATABASE deskbooking;
+CREATE
+DATABASE deskbooking;
 
-USE deskbooking;
+USE
+deskbooking;
 
 CREATE TABLE room
 (
-    room_id   INT PRIMARY KEY AUTO_INCREMENT,
-    room_name VARCHAR(255) NOT NULL
+    room_id      INT PRIMARY KEY AUTO_INCREMENT,
+    room_name    VARCHAR(255) NOT NULL,
+    room_img_url VARCHAR(255)
 );
 
 CREATE TABLE desk_type
@@ -29,11 +33,19 @@ CREATE TABLE desk
     CONSTRAINT desk_desk_type_id FOREIGN KEY (desk_type_id) REFERENCES desk_type (desk_type_id)
 );
 
-CREATE TABLE employee
+CREATE TABLE `comment`
 (
-    username VARCHAR(255) NOT NULL,
-    CONSTRAINT employee_pk_index PRIMARY KEY (username)
-
+    `id`           bigint                                                        NOT NULL,
+    `room_id`      int                                                           NOT NULL,
+    `desk_id`      int NULL DEFAULT NULL,
+    `comment`      varchar(255),
+    `user_name`    varchar(255),
+    `img`          varchar(255),
+    `down_url`     varchar(255),
+    `created_time` datetime NULL DEFAULT NULL,
+    `updated_time` datetime NULL DEFAULT NULL,
+    `deleted`      varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT 'N',
+    INDEX          `username`(`user_name`) USING BTREE
 );
 
 CREATE TABLE booking
@@ -46,8 +58,7 @@ CREATE TABLE booking
     book_timestamp DATETIME     NOT NULL,
     CONSTRAINT booking_pk_index PRIMARY KEY (booking_id),
     CONSTRAINT booking_room_fk_index FOREIGN KEY (room_id) REFERENCES room (room_id) ON DELETE CASCADE,
-    CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE,
-    CONSTRAINT booking_user_fk_index FOREIGN KEY (username) REFERENCES employee (username) ON DELETE CASCADE
+    CONSTRAINT booking_desk_fk_index FOREIGN KEY (desk_id) REFERENCES desk (desk_id) ON DELETE CASCADE
 );
 
 
@@ -71,8 +82,6 @@ VALUES (1, 1, 1, 'Desk 1'),
        (9, 1, 2, 'Desk 9'),
        (10, 1, 1, 'Desk 10'),
        (11, 1, 1, 'Desk 11');
-
-INSERT INTO employee (username) VALUES ('user1'), ('user2');
 
 INSERT INTO booking (username, booking_date, room_id, desk_id, book_timestamp)
 VALUES ('user1', '2021-12-09', 1, 1, '2021-11-22 12:15:00'),
