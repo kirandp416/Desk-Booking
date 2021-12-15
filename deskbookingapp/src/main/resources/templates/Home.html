@@ -25,7 +25,7 @@ o that the whole box is located in the middle of the page, and the title bar is 
 remind users of the color change by clicking, greatly increasing the ease of use.*/
         .box {
             width: 1200px;
-            height: 640px;
+            height: 740px;
             background: rgba(0, 0, 0, 0.2);
             margin: 0 auto;
             text-align: center;
@@ -52,7 +52,7 @@ remind users of the color change by clicking, greatly increasing the ease of use
         .left {
             float: left;
             width: 230px;
-            height: 640px;
+            height: 740px;
             background-color: cadetblue;
             background: rgba(0, 0, 0, 0.2);
         }
@@ -60,7 +60,7 @@ remind users of the color change by clicking, greatly increasing the ease of use
         .right {
             float: right;
             width: 970px;
-            height: 640px;
+            height: 740px;
             background-color: rgba(152, 233, 233, 0.2);;
 
         }
@@ -68,7 +68,7 @@ remind users of the color change by clicking, greatly increasing the ease of use
         .right > div {
             float: left;
             width: 470px;
-            height: 640px;
+            height: 740px;
             background: rgba(0, 0, 0, 0.2);
             margin-left: 14px;
             margin-bottom: 14px;
@@ -80,7 +80,7 @@ remind users of the color change by clicking, greatly increasing the ease of use
 
         .right .photo {
             width: 490px;
-            height: 640px;
+            height: 740px;
         }
 
         .right .one h1 {
@@ -117,7 +117,8 @@ remind users of the color change by clicking, greatly increasing the ease of use
                 <a href="/admin/rooms/all" >Admin/Manage room</a>
                 <a href="/admin/desk_type" >Admin/Manage desk type</a>
                 <a href="/booking/all" target="_blank">Employee/Book desk</a>
-                <a href="/" target="_blank">Homepage</a>
+                <a href="/admin/comment/all" target="_blank">Admin/Comment</a>
+                <a href="/user/comment" target="_blank">Employee/Comment</a>
             </div>
             <div class="right">
                 <div class="one">
@@ -132,7 +133,6 @@ remind users of the color change by clicking, greatly increasing the ease of use
         </div>
     </main>
 
-    <footer th:replace="Fragments/footer :: footer"></footer>
 </body>
 
 </html>
