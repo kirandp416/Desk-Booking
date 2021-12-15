@@ -239,7 +239,7 @@ function displayDesks(json) {
         name.innerText = desk["name"];
 
         let type = document.createElement("td");
-        type.innerText = desk["desk_type"]["name"];
+        type.innerText = desk["desk_type"]["deskTypeName"];
 
         let notes = document.createElement("td");
         notes.innerText = desk["notes"];
