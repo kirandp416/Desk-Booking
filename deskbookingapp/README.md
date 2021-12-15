@@ -1,32 +1,35 @@
-# Testing
+## About application.yml and application.properties
 
-## Configuration for running tests
+if you want to run this project, please add application.yml or application.properties on src/resource. Besides, you should import database.sql.
 
-Before running tests, remember to create an application.properties file in `test/resources` to ensure your main database
-is not written with test data. This may cause unexpected behaviour and cause tests to fail.
-
-```properties
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/deskbookingtest?createDatabaseIfNotExist=true
-spring.datasource.username=your username
-spring.datasource.password=your password
+``` application.yml
+spring:
+  datasource:
+    username: root
+    password: comsc
+    url: jdbc:mysql://localhost:3306/deskbooking?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 215MB
+      file-size-threshold: 2KB
+  main:
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    cache: false
 ```
 
-## Creating tests with a database
-
-In the `test/resources` directory, there is a test database script named `database_test.sql`. You can use this script to
-add tables for your tests and have Spring execute the script before tests.
-
-1. Create an application.properties file in the test/resources folder:
-    ```properties
-    spring.datasource.url=jdbc:mysql://127.0.0.1:3306/deskbookingtest?createDatabaseIfNotExist=true
-    spring.datasource.username=your username
-    spring.datasource.password=your password
-    ```
-2. Create your Java test file.
-3. Add the `@Sql` annotation at the class level. The database script is executed before each test.
-    ```java
-   @SpringBootTest
-   @Sql("/database_test.sql")
-   public class MyTestClass {
-   }
-   ```
+``` application.properties
+spring.servlet.multipart.enabled=true
+spring.servlet.multipart.max-file-size=200MB
+spring.servlet.multipart.max-request-size=215MB
+spring.servlet.multipart.file-size-threshold=2KB
+spring.main.allow-bean-definition-overriding=true
+spring.datasource.url=jdbc:mysql://localhost:3306/deskbooking?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+spring.datasource.username=root
+spring.datasource.password=comsc
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.thymeleaf.cache=false
+```
