@@ -43,7 +43,7 @@ public class FileController {
                 .path("/file/download/")
                 .path(fileName)
                 .toUriString();
-        String dbSave = "/upload/" + FileUtil.upload(file);
+        String dbSave = "/upload/" + fileName;
         return new UploadFileDTO(fileName,dbSave,fileDownloadUri,file.getContentType(),file.getSize());
     }
 
