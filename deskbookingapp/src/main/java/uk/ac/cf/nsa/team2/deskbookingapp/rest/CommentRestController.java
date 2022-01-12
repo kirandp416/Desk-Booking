@@ -27,7 +27,6 @@ public class CommentRestController {
     private ICommentRepository commentRepository;
 
     /**
-     *
      * @param username
      * @param current
      * @param size
@@ -42,7 +41,11 @@ public class CommentRestController {
         if (size == null) {
             size = 10;
         }
-        return R.success(commentRepository.getOwnBooking(username, current, size));
+        if (username != null) {
+            return R.success(commentRepository.getOwnBooking(username, current, size));
+        }
+        return R.fail("username can not be null", null);
+
     }
 
     /**

@@ -16,6 +16,8 @@ public class R<T> {
     private final static String SUCCESS_CODE = "000000";
     // success msg
     private final static String SUCCESS_MSG = "success";
+    // error code
+    private final static String ERROR_CODE = "100000";
 
     private String code;
     private String message;
@@ -32,8 +34,8 @@ public class R<T> {
         return new R(SUCCESS_CODE, SUCCESS_MSG, data);
     }
     // fail
-    public R fail(String code, String message, Object records) {
-        return new R(code, message, records);
+    public static R fail(String message, Object records) {
+        return new R(ERROR_CODE, message, records);
     }
 
     public String getCode() {
