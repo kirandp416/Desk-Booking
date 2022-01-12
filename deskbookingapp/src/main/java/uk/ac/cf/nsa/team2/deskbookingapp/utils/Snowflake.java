@@ -14,7 +14,7 @@ public class Snowflake {
     /**
      * timestamp 2021-12-01 00:00:00
      */
-    private final long twepoch = 1638288000000L;
+    private final long twepoch = 1606752000000L;
 
     /**
      * Number of digits occupied by machine ID
