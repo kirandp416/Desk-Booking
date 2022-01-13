@@ -31,7 +31,7 @@ public class ReflectUtil {
                 PropertyDescriptor descriptor = new PropertyDescriptor(fieldName, clazz);
                 // get write method
                 Method writeMethod = descriptor.getWriteMethod();
-                // solve null pointers
+                // solve illegal argument exception
                 if (Objects.nonNull(map.get(fieldName))) {
                     writeMethod.invoke(obj, map.get(fieldName));
                 }
