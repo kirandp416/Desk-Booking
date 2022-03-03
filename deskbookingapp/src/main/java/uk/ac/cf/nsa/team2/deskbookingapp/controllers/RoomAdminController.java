@@ -132,5 +132,9 @@ public class RoomAdminController {
             }
         return mav;
     }
+    @GetMapping("/Home")
+    public ModelAndView homePage() {
+        return new ModelAndView("/Home");
+    }
 
 }

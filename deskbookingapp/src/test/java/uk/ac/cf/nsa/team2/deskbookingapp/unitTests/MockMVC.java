@@ -31,8 +31,13 @@ class MockMVCTests {
     private RoomRepository roomRepository;
 
     @Test
-    public void a_testGreeting() throws Exception {
+    public void loginScreen() throws Exception {
         this.mockMvc.perform(get("/login")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Username")));
+    }
+    @Test
+    public void homeScreen() throws Exception{
+        this.mockMvc.perform(get("/Home")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Welcome")));
     }
 }

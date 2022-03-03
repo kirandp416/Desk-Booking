@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .mvcMatchers("/").permitAll()
+                .mvcMatchers("/Home").permitAll()
                 .mvcMatchers("/css/**").permitAll()
                 .mvcMatchers("/font/**").permitAll()
                 .mvcMatchers("/img/**").permitAll()
