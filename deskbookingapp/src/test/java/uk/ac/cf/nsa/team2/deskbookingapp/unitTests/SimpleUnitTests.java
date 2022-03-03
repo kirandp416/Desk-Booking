@@ -25,5 +25,4 @@ public class SimpleUnitTests {
         assertEquals(desk1.getNotes(),"Normal");
 
     }
-
 }
