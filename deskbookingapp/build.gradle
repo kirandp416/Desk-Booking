@@ -18,10 +18,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    implementation 'junit:junit:4.12'
+    implementation 'junit:junit:4.12'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    testImplementation 'com.h2database:h2'
+
+    testImplementation group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.32'
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '3.13.0'
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.13.0'
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.13.0'
 }
 
 test {
