@@ -23,7 +23,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-    testImplementation 'com.h2database:h2'
+//    testImplementation 'com.h2database:h2'
 
     testImplementation group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.32'
     testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
