@@ -78,5 +78,8 @@ sudo unzip -d /opt/gradle gradle-7.2-bin.zip
 export PATH=$PATH:/opt/gradle/gradle-7.2/bin
 gradle -v
 
+cd team-2-office-desk-booking/
+cd deskbookingapp/
+
 gradle build
 gradle bootrun
