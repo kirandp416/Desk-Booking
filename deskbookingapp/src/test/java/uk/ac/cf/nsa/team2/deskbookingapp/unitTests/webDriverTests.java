@@ -1,6 +1,8 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.unitTests;
 
 import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.assertTrue;
 
 
-
+@Disabled()
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
@@ -32,8 +34,6 @@ public class webDriverTests {
     @Value("${local.server.port}")
     private int port;
 
-
-    @Ignore
     @Test
    public void testingPageContents() {
        System.setProperty("webdriver.chrome.driver", "C:\\Users\\c21091401\\Downloads\\chromedriver_win32 (1)\\chromedriver.exe");
