@@ -1,5 +1,6 @@
 package uk.ac.cf.nsa.team2.deskbookingapp.unitTests;
 
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class webDriverTests {
     private int port;
 
 
-
+    @Ignore
     @Test
    public void testingPageContents() {
        System.setProperty("webdriver.chrome.driver", "C:\\Users\\c21091401\\Downloads\\chromedriver_win32 (1)\\chromedriver.exe");
