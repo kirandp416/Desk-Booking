@@ -50,6 +50,8 @@ public class webDriverTests {
         this.webDriver.findElement(By.name("password")).sendKeys("admin");
         this.webDriver.findElement(By.tagName("button")).click();
         assertTrue(webDriver.findElement(By.cssSelector("body > main > div > h1")).getText().contains("Rooms"));
+
+
         webDriver.quit();
     }
 

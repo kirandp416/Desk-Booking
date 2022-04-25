@@ -18,7 +18,7 @@
 // * Tests for the {@link RoomMySqlJdbcRepository} class.
 // */
 //@SpringBootTest
-//@Sql("/database_test.sql")
+//@Sql("/schema.sql")
 //public class RoomMySqlJdbcRepositoryTests {
 //
 //    // Test rooms.

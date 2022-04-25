@@ -1,0 +1,1 @@
+INSERT INTO room(room_id, room_name) VALUES (2, 'Room 2');

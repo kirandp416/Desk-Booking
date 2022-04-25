@@ -1,8 +1,5 @@
-DROP DATABASE IF EXISTS deskbookingtest;
-
-CREATE DATABASE deskbookingtest;
-
-USE deskbookingtest;
+-- USE db;
+DROP TABLE IF EXISTS room;
 
 CREATE TABLE room
 (
@@ -10,3 +7,5 @@ CREATE TABLE room
     room_name VARCHAR(255) NOT NULL,
     CONSTRAINT room_pk_index PRIMARY KEY (room_id)
 );
+
+INSERT INTO room(room_id, room_name) VALUES (1, 'Room 1');
